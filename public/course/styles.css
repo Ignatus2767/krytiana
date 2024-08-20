@@ -1,0 +1,97 @@
+.course-content {
+  width: 100%;
+  padding: 0px;
+}
+
+.sessions {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+
+.sessions-wrapper {
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.sessions-wrapper::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, Opera */
+}
+
+.session {
+  display: inline-block;
+  padding: 15px 16.5px;
+  margin: 0 6px;
+  background-color: rgba(87, 127, 0, 0.315);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.session.active {
+  background-color: rgb(87, 127, 0);
+  color: white;
+}
+
+.scroll-button {
+  background-color: rgba(0, 0, 0, 0.87);
+  border-color: rgb(87, 127, 0);
+  border-width: 2px;
+  font-size: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgb(87, 127, 0);
+}
+
+.content {
+  margin-top: 20px;
+}
+
+.content h2 {
+  color: rgb(87, 127, 0);
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  background-color: #f2f2f2;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.section-title.active {
+  background-color: rgb(87, 127, 0); /* Red background for active state */
+  color: white; /* White text for active state */
+}
+
+.section-title.active .arrow {
+  transform: rotate(180deg); /* Arrow faces up when active */
+}
+
+.section-title .arrow {
+  font-size: 1em;
+  transition: transform 0.3s; /* Smooth transition for rotation */
+  transform: rotate(0deg); /* Arrow faces down when inactive */
+}
+
+.section-content {
+  display: none;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-left: 3px solid rgb(87, 127, 0);
+  border-radius: 0 0 5px 5px;
+}

@@ -1,0 +1,150 @@
+/* offer.css */
+
+
+
+.offer-container {
+  background-color: #fff;
+  border: 1px solid #587e00;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%; /* Stretch to fit 100% of the screen width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.offer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.offer-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.offer-badge {
+  background-color: #ff007f;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: none;
+}
+
+.offer-price {
+  margin: 10px 0;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.discount {
+  display: block;
+  margin-top: 8px;
+  color: #888;
+  font-size: 14px;
+}
+
+.sale-badge {
+  display: block;
+  background-color: #ff6f00;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-top: 10px;
+  position: absolute;
+  top: 40px;
+  right: 20px;
+}
+
+.buy-button {
+  background-color: #689400;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.buy-button:hover {
+  color: #720800;
+  background-color: #689400e3;
+
+}
+
+.offer-timer {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #f44336;
+}
+
+.timer {
+  font-weight: bold;
+}
+
+.offer-description {
+  margin-top: 10px;
+  font-size: 14px;
+ 
+}
+
+.offer-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+.image_preview4{
+  width: 268px;
+  margin-top: 6px;
+  background-color: #a01207;
+}
+.course-details {
+  background-color: #fff;
+  border: 1px solid #519700;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-details h3 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #689400;
+}
+
+.course-details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-details li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #4d9100;
+}
+
+.course-details li:last-child {
+  border-bottom: none;
+}
+
+.course-details img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+

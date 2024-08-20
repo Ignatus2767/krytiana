@@ -1,0 +1,29 @@
+<!-- public/reviews.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Review</title>
+    <link rel="stylesheet" href="reviews.css">
+</head>
+<body>
+    <div id="review-form" class="form-container">
+        <h2>Submit a Review</h2>
+        <form id="reviewForm">
+            <input type="text" id="review-username" name="username" placeholder="Your Username" required>
+            <input type="text" id="product-id" name="productId" placeholder="Product ID" required>
+            <input type="number" id="rating" name="rating" placeholder="Rating (1-5)" min="1" max="5" required>
+            <textarea id="comment" name="comment" placeholder="Your Review" required></textarea>
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+
+    <div id="reviews">
+        <h2>Reviews</h2>
+        <ul id="reviews-list"></ul>
+    </div>
+
+    <script src="reviews.js"></script>
+</body>
+</html>
