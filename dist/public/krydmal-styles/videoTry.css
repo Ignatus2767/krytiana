@@ -1,0 +1,145 @@
+.new_49{
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  float: left;
+  margin: 0px;
+  padding: 0px;
+}
+
+.new_video9{
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  margin-bottom: 20px;
+  margin-left: 0px;
+  margin-right: 20px;
+  margin-top: 0px;
+  min-width: auto;
+  overflow-x: visible;
+  overflow-y: visible;
+  padding: 0px;
+  direction: ltr;
+  text-align: left;
+  text-size-adjust: auto;
+  font-feature-settings: normal;
+  font-kerning: auto;
+  font-optical-sizing: auto;
+}
+.video_div9{
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
+  z-index: 0;
+  color: black;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: rgb(255, 255, 255);
+  background-image: none;
+  background-origin: border-box;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  background-repeat: repeat;
+  background-size: auto;
+  box-shadow: rgb(170, 170, 170) 5px 5px 5px 0px;
+  overflow-wrap: normal;
+  
+}
+
+
+.image_div9{
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  margin: 0px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding: 0px;
+  z-index: 1;
+  
+  height: 250px;
+  width: 100%;
+}
+
+.about_div9{
+  position: static;
+  box-sizing: border-box;
+  display: block;
+  flex-basis: auto;
+  flex-grow: 1;
+  flex-shrink: 0;
+  margin: 0px;
+  padding-left: 9px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  padding-right: 9px;
+  
+  height: 170px;
+  width: 100%;
+
+}
+
+.type_div9{
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  margin-bottom: 9px;
+  margin-left: 9px;
+  margin-right: 9px;
+  margin-top: 0px;
+  padding-top: 11px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  height: 20px;
+  width: 95%;
+  border-top-color: rgb(255, 0, 0);
+  border-top-width: 2px;
+  border-top-style: solid;
+  overflow-wrap: normal;
+
+}
+
+.content9{
+  box-sizing: border-box;
+  display: inline;
+  height: auto;
+  width: auto;
+}
+.img-responsive9{
+  position: absolute;
+  box-sizing: border-box;
+  display: block;
+  height: 280px;
+  max-width: none;
+  overflow-y: clip;
+  overflow-x: clip;
+  width: 100%;
+  z-index: 2;
+  padding: 1.4px;
+}
+@media (max-width: 500px) {
+  .image_div9{
+    height: 130px;
+  }
+  .img-responsive9{
+    position: absolute;
+    box-sizing: border-box;
+    display: block;
+    height: 160px;
+    max-width: none;
+    overflow-y: clip;
+    overflow-x: clip;
+    width: 100%;
+    z-index: 2;
+    padding: 1.4px;
+  }
+}

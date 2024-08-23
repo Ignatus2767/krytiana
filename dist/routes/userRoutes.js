@@ -8,3 +8,4 @@ router.post('/signup', userController_1.handleSignUp);
 router.post('/signin', userController_1.handleSignIn);
 router.post('/forgot-password', userController_1.handleForgotPassword);
 exports.default = router;
+//# sourceMappingURL=userRoutes.js.map

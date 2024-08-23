@@ -7,3 +7,4 @@ const router = (0, express_1.Router)();
 router.get('/all', reviewController_1.getReviews);
 router.post('/add', reviewController_1.addReview);
 exports.default = router;
+//# sourceMappingURL=reviewRoutes.js.map

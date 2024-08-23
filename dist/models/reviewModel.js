@@ -10,3 +10,4 @@ const getReviews = () => {
     return reviews;
 };
 exports.getReviews = getReviews;
+//# sourceMappingURL=reviewModel.js.map

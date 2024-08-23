@@ -1,0 +1,160 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.switcher {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.switcher button {
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.switcher button.active {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px 5px 0 0;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-container input, .form-container select, .form-container button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.form-container .terms {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-container .terms input {
+  margin-right: 10px;
+}
+
+.form-container button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+.hidden {
+  display: none;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgot-password p {
+  margin: 0;
+}
+
+.forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+#feedback-message {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+  display: none;
+  z-index: 1000;
+}
+
+#feedback-message.success {
+  background-color: #4CAF50;
+}
+
+#feedback-message.error {
+  background-color: #F44336;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 480px) {
+  .switcher {
+    
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .switcher button {
+    
+    font-size: 14px;
+    padding: 10px 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    
+  }
+
+  .form-container {
+      padding: 15px;
+  }
+
+  .form-container input, .form-container select, .form-container button {
+      padding: 8px;
+  }
+
+  .form-container h2 {
+      font-size: 18px;
+  }
+
+  .forgot-password {
+      margin-top: 15px;
+  }
+}

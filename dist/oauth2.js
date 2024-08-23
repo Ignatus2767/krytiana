@@ -48,3 +48,4 @@ function sendMail(to, subject, text) {
         }
     });
 }
+//# sourceMappingURL=oauth2.js.map
