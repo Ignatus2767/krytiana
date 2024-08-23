@@ -27,3 +27,4 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 exports.default = app;
+//# sourceMappingURL=app.js.map

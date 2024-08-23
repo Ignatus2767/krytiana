@@ -1,0 +1,1 @@
+{"version":3,"file":"reviewModel.js","sourceRoot":"","sources":["../../src/models/reviewModel.ts"],"names":[],"mappings":";;;AAQA,MAAM,OAAO,GAAa,EAAE,CAAC;AAGtB,MAAM,SAAS,GAAG,CAAC,MAAc,EAAE,EAAE;IAC1C,OAAO,CAAC,IAAI,CAAC,MAAM,CAAC,CAAC;AACvB,CAAC,CAAC;AAFW,QAAA,SAAS,aAEpB;AAEK,MAAM,UAAU,GAAG,GAAG,EAAE;IAC7B,OAAO,OAAO,CAAC;AACjB,CAAC,CAAC;AAFW,QAAA,UAAU,cAErB"}
