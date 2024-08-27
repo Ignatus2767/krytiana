@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const signupBtn = document.getElementById('signup-btn');
     const signinBtn = document.getElementById('signin-btn');
-    const signupFormElement = document.getElementById('signupForm');
-    const signinFormElement = document.getElementById('signinForm');
+    const signupFormElement = document.getElementById('signup-form'); // Updated ID
+    const signinFormElement = document.getElementById('signin-form'); // Updated ID
     const forgotPasswordLink = document.getElementById('forgot-password-link');
     const forgotPasswordForm = document.getElementById('forgot-password-form');
     const forgotPasswordFormElement = document.getElementById('forgotPasswordForm');
@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function toggleActiveForm(activeForm) {
+        console.log('Toggling form:', activeForm); // Debugging line
         signupBtn.classList.remove('active');
         signinBtn.classList.remove('active');
 
