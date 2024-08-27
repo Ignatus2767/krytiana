@@ -11,22 +11,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const signupBtn = document.getElementById('signup-btn');
     const signinBtn = document.getElementById('signin-btn');
-    const signupFormElement = document.getElementById('signupForm');
-    const signinFormElement = document.getElementById('signinForm');
+    const signupFormElement = document.getElementById('signup-form');
+    const signinFormElement = document.getElementById('signin-form');
     const forgotPasswordLink = document.getElementById('forgot-password-link');
     const forgotPasswordForm = document.getElementById('forgot-password-form');
     const forgotPasswordFormElement = document.getElementById('forgotPasswordForm');
 
+    //Debugging: Check if elements are properly selected
+    //console.log('Signup button:', signupBtn);
+    //console.log('Signin button:', signinBtn);
+    //console.log('Signup form element:', signupFormElement);
+    //console.log('Signin form element:', signinFormElement);
+    //console.log('Forgot password link:', forgotPasswordLink);
+    //console.log('Forgot password form:', forgotPasswordForm);
+    //console.log('Forgot password form element:', forgotPasswordFormElement);
+
+    // Ensure elements exist
+    if (!signupBtn || !signinBtn || !signupFormElement || !signinFormElement || !forgotPasswordLink || !forgotPasswordForm || !forgotPasswordFormElement) {
+        //console.error('One or more elements are missing');
+        return;
+    }
+
     // Switch between forms
     signupBtn.addEventListener('click', function() {
+        //console.log('Signup button clicked');
         toggleActiveForm('signup');
     });
 
     signinBtn.addEventListener('click', function() {
+       // console.log('Sign In button clicked');
         toggleActiveForm('signin');
     });
 
     function toggleActiveForm(activeForm) {
+        //console.log('Toggling form to:', activeForm);
+
         signupBtn.classList.remove('active');
         signinBtn.classList.remove('active');
 
@@ -46,6 +65,15 @@ document.addEventListener('DOMContentLoaded', function() {
         forgotPasswordForm.classList.toggle('hidden');
     });
 
+    const createFormData = (formElement) => {
+        if (formElement instanceof HTMLFormElement) {
+            return new FormData(formElement);
+        } else {
+            console.error('Form element is not an HTMLFormElement');
+            return null;
+        }
+    };
+
     function validatePassword(password) {
         const minLength = 8;
         const hasLetter = /[a-zA-Z]/.test(password);
@@ -53,10 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return password.length >= minLength && hasLetter && hasNumber;
     }
 
-    signupFormElement.addEventListener('submit', function(event) {
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
-        const formData = new FormData(signupFormElement);
+        const formData = createFormData(this);
+        if (!formData) return; // Exit if formData creation failed
+
         const password = formData.get('password');
         const confirmPassword = formData.get('confirm-password');
 
@@ -92,9 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    signinFormElement.addEventListener('submit', function(event) {
+    document.getElementById('signinForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const formData = new FormData(signinFormElement);
+
+        const formData = createFormData(this);
+        if (!formData) return; // Exit if formData creation failed
 
         fetch('/api/users/signin', {
             method: 'POST',
@@ -118,9 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    forgotPasswordFormElement.addEventListener('submit', function(event) {
+    document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const formData = new FormData(forgotPasswordFormElement);
+
+        const formData = createFormData(this);
+        if (!formData) return; // Exit if formData creation failed
 
         fetch('/api/users/forgot-password', {
             method: 'POST',
