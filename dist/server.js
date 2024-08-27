@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const userRoutes_1 = __importDefault(require("./routes/userRoutes")); // Import the routes
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -19,7 +20,9 @@ app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, 'public', 'index.html'));
 });
-// Add any other routes as needed
+// Mount user routes under /api/users
+app.use('/api/users', userRoutes_1.default); // This mounts your user routes
+// Define other routes as needed
 app.get('/example', (req, res) => {
     res.send('This is an example route.');
 });

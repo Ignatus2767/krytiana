@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import bodyParser from 'body-parser';
+import userRoutes from './routes/userRoutes'; // Import the routes
 
 dotenv.config();
 
@@ -20,7 +21,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Add any other routes as needed
+// Mount user routes under /api/users
+app.use('/api/users', userRoutes); // This mounts your user routes
+
+// Define other routes as needed
 app.get('/example', (req, res) => {
   res.send('This is an example route.');
 });
