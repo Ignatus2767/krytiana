@@ -15,7 +15,11 @@ const reviewDbPool = createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME_REVIEW,
+  database: process.env.DB_NAME_SIGNUP, // Ensure this is correctly set
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+
 });
 
 // Test database connections
