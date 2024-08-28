@@ -8,3 +8,4 @@ router.get('/all', getReviews);
 router.post('/add', addReview);
 
 export default router;
+
