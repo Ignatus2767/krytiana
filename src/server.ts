@@ -2,7 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import bodyParser from 'body-parser';
-import userRoutes from './routes/userRoutes'; // Import the routes
+import userRoutes from './routes/userRoutes';
+import reviewRoutes from './routes/reviewRoutes'; // Import the review routes
 
 dotenv.config();
 
@@ -22,7 +23,10 @@ app.get('/', (req, res) => {
 });
 
 // Mount user routes under /api/users
-app.use('/api/users', userRoutes); // This mounts your user routes
+app.use('/api/users', userRoutes);
+
+// Mount review routes under /api/reviews
+app.use('/api/reviews', reviewRoutes); // This mounts your review routes
 
 // Define other routes as needed
 app.get('/example', (req, res) => {
