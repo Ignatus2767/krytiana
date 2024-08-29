@@ -13,7 +13,7 @@ exports.addReview = exports.getReviews = void 0;
 const db_1 = require("../db"); // Ensure the correct pool is imported
 const getReviews = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const [rows] = yield db_1.reviewDbPool.query('SELECT * FROM reviews');
+        const [rows] = yield db_1.reviewDbPool.query('SELECT * FROM reviews ORDER BY created_at DESC');
         res.json(rows);
     }
     catch (error) {

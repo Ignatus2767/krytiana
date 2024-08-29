@@ -4,7 +4,7 @@ import { reviewDbPool } from '../db'; // Ensure the correct pool is imported
 
 export const getReviews = async (req: Request, res: Response) => {
   try {
-    const [rows] = await reviewDbPool.query('SELECT * FROM reviews');
+    const [rows] = await reviewDbPool.query('SELECT * FROM reviews ORDER BY created_at DESC');
     res.json(rows);
   } catch (error) {
     console.error('Error fetching reviews:', error); // Log the error
