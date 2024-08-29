@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="preview_styles/style2_preview.css">
   <link rel="stylesheet" href="preview_styles/style3_preview.css">
   <link rel="stylesheet" href="preview_styles/offer.css">
+  <link rel="stylesheet" href="preview_styles/reviews.css">
 
 
   </head>
@@ -237,12 +238,25 @@
                     </div>
                   
                     <div id="content3" class="hidden-content">
-                      <div style="margin-top: 200px;
-                        margin-bottom: 200px; height: auto; width: auto;">
-                        <div style="display: flex; justify-content: center; align-items: center;"> 
-                          <p style="color: black; font-size: 32px; font-weight: bolder; align-self: center; display: block;">
-                            No Review 
-                          </p>
+                      <div >
+                        <div> 
+                          
+                          <div>
+                            <div class="container">
+                              <h1>Add Your Reviews</h1>
+                      
+                              <form id="reviewForm">
+                                  <input type="text" id="username" name="username" placeholder="Your Name" required>
+                                  <textarea id="comment" name="comment" placeholder="Your Review" required></textarea>
+                                  <input type="number" id="rating" name="rating" min="1" max="5" placeholder="Rating (1-5)" required>
+                                  <button type="submit">Submit Review</button>
+                              </form>
+                      
+                              <div id="reviews-container">
+                                  <!-- Reviews will be dynamically loaded here -->
+                              </div>
+                            </div>
+                          </div>
                           
                         </div>
                       </div>
@@ -336,5 +350,6 @@
 
 
     <script src="script_preview.js"></script>
+    <script src="reviews.js"></script>
   </body>
 </html>
