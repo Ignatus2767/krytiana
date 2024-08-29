@@ -51,11 +51,14 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.success) {
               reviewForm.reset(); // Clear form
               fetchReviews(); // Refresh the reviews list
+              //alert('Review submitted successfully!');
           } else {
               console.error('Error adding review:', data.message);
           }
       } catch (error) {
           console.error('Error submitting review:', error);
+          alert('Error submitting review. Please try again later.');
+
       }
   });
 
