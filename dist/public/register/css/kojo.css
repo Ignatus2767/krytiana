@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: rgba(87, 127, 0, 0.24);
   display: block;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@ body {
 }
 
 .switcher button.active {
-  background-color: #007bff;
+  background-color: rgb(104, 148, 0);
   color: #fff;
   border-radius: 5px 5px 0 0;
 }
@@ -36,7 +36,7 @@ body {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgb(0, 0, 0);
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
@@ -45,7 +45,9 @@ body {
 
 .form-container h2 {
   margin-bottom: 20px;
+ 
   text-align: center;
+  
 }
 
 .form-container input, .form-container select, .form-container button {
@@ -68,7 +70,7 @@ body {
 }
 
 .form-container button {
-  background-color: #007bff;
+  background-color: rgb(104, 148, 0);
   color: #fff;
   border: none;
   border-radius: 3px;
@@ -76,7 +78,7 @@ body {
 }
 
 .form-container button:hover {
-  background-color: #0056b3;
+  background-color: rgb(87, 127, 0);
 }
 
 .hidden {
@@ -151,8 +153,8 @@ body {
   }
 
   .form-container h2 {
-      font-size: 18px;
-  }
+      font-size: 38px;
+      
 
   .forgot-password {
       margin-top: 15px;
