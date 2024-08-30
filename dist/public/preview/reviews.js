@@ -65,3 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial fetch of reviews
   fetchReviews();
 });
+document.getElementById('toggleText').addEventListener('click', function() {
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm.style.display === 'none' || reviewForm.style.display === '') {
+        reviewForm.style.display = 'block';
+    } else {
+        reviewForm.style.display = 'none';
+    }
+});
