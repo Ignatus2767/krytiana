@@ -940,6 +940,9 @@
 
 .li{
   margin-bottom: 12px;
+  margin-top: 8px;
+  font-size: medium;
+  
 }
 
 .py-3{
