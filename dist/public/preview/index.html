@@ -30,14 +30,14 @@
                 <div class="course-header-new">
                   
                   <div class="topic_div">
-                    <h1 class="new_title">
-                      <a href="../register/">
-                        Introduction to AI with Python  
+                    <h1 id="course-title" class="new_title">
+                      <a id="course-link" href="#">
+                        <!-- Course title will be dynamically inserted here -->
                       </a>
                     </h1>
 
                     <div class="video_cover">
-                      <img class="thumbnail" src="pics/web.png" title="Numbers, units and arithmetic" alt="Numbers, units and arithmetic" data-copyright-type="https://www.open.edu/openlearn/theme/image.php/openlearnng/theme_openlearnng/1719392919/icon-copyright-free" data-copyright-text="Copyright%20free">
+                      <img class="thumbnail" id="course-image" src="" title="Numbers, units and arithmetic" alt="Numbers, units and arithmetic" data-copyright-type="" data-copyright-text="Copyright%20free">
                     </div>
 
                     <div class="image_preview2">
@@ -83,7 +83,7 @@
                     <div id="content1" class="hidden-content" style="width: auto; padding: 8px;" >
 
                       <div class="discription_note">
-                        <p property="schema:description" id="yui">Do fractions and decimals make you apprehensive about maths? Do you lack confidence in dealing with numbers? If so, then this free course, Numbers, units and arithmetic, is for you. The course will explain the basics of working with positive and negative numbers and how to multiply and divide with fractions and decimals.</p>
+                        <p property="schema:description" id="course-description"></p>
                       </div>
 
                       <div class="clearfix">
@@ -94,15 +94,9 @@
                         </div>
 
                         <div class="title_note">
-                          <p id="yui_3_18_1_1_1719420544353_53">After studying this course, you should be able to:</p>
+                          <p>After studying this course, you should be able to:</p>
 
-                          <ul id="yui_3_18_1_1_1719420544353_56">
-                            <li class="li" id="yui_3_18_1_1_1719420544353_55">write whole numbers and decimals in place-value columns and compare their sizes</li>
-                            <li class="li">multiply and divide whole numbers and decimals by 10, 100, 1000 and so on</li>
-                            <li class="li">indicate given fractions on a diagram and find equivalent fractions for a given fraction</li>
-                            <li class="li">mark numbers on a number line</li>
-                            <li class="li">choose appropriate units for a given purpose.</li>
-                          </ul>
+                          <ul id="outcome-list"></ul>
                         </div>
                       </div>
 
@@ -114,7 +108,7 @@
                         </div>
 
                         <div class="title_note">
-                          <p id="yui_3_18_1_1_1719420544353_53">Anyone interested in learning the basics of machine learning.:</p>
+                          <ul id="who-list"></ul>
 
                         </div>
                       </div>
@@ -127,7 +121,7 @@
                         </div>
 
                         <div class="title_note">
-                          <p id="yui_3_18_1_1_1719420544353_53">To carry out this course, you will need basic knowledge of Python.
+                          <ul id="requirements-list"></ul>
                         </div>
                       </div>
 
@@ -141,96 +135,73 @@
 
                       
                       <div class="course-content-stats">
-                        
                         <div class="box-shaded">
                           <div class="container">
                             <div class="outcome_div">
                               <h2 class="h2">
-                                Course summary
+                                Course Summary
                               </h2>
                             </div>
                             <ul class="row">
-
                               <li class="col-sm-6">
                                 <i class="a-icon-film"> 
                                   <img style="height: 100%; width: 100%;"
                                   src="pics/notification2.svg"> 
                                 </i>
-                                31 lessons
-                                <span class="course-content-stats__sub">
-                                (2h 18m)
+                                <span id="lessons"></span>
+                                <span id="duration" class="course-content-stats__sub">
+                                
                                 </span>
                               </li>
-
                               <li class="col-sm-6">
                                 <i class="a-icon-file">
                                   <img style="height: 100%; width: 100%;"
                                   src="pics/notification2.svg">
                                 </i>
-                                13 downloads
-                                <span class="course-content-stats__sub">
-                                (9 files)
+                                <span id="downloads"></span>
+                                <span id="files" class="course-content-stats__sub">
+                                
                                 </span>
                               </li>
-
                               <li class="col-sm-6">
                                 <i class="a-icon-comprass">
                                   <img style="height: 100%; width: 100%;"
                                   src="pics/notification2.svg">
                                 </i>
-                                16 exercises
+                                <span id="exercises"></span>
                               </li>
-
                               <li class="col-sm-6">
                                 <i class="a-icon-lectern">
                                   <img style="height: 100%; width: 100%;"
                                   src="pics/notification2.svg">
                                 </i>
-                                Course final project
+                                <span id="project"></span>
                               </li>
-
                             </ul>
                           </div>
                         </div>
                       </div>
+                      
 
                       <div class="clearfix">
                         <div class="outcome_div">
-                          <h2 class="h2">
-                            U1: Introduction
-                          </h2>
+                          <h2 class="h2" id="u1"></h2>
                         </div>
 
                         <div class="title_note">
-                          
-
-                          <ul id="yui_3_18_1_1_1719420544353_56">
-                            <li class="li" id="yui_3_18_1_1_1719420544353_55">write whole numbers and decimals in place-value columns and compare their sizes</li>
-                            <li class="li">multiply and divide whole numbers and decimals by 10, 100, 1000 and so on</li>
-                            <li class="li">indicate given fractions on a diagram and find equivalent fractions for a given fraction</li>
-                            <li class="li">mark numbers on a number line</li>
-                            <li class="li">choose appropriate units for a given purpose.</li>
-                          </ul>
+                          <ul id="u1-list"></ul>
                         </div>
                       </div>
 
                       <div class="clearfix">
                         <div class="outcome_div">
-                          <h2 class="h2">
-                            U2: HTML structure
-                          </h2>
+                          <h2 class="h2" id="u2"></h2>
                         </div>
 
                         <div class="title_note">
                           
 
-                          <ul id="yui_3_18_1_1_1719420544353_56">
-                            <li class="li" id="yui_3_18_1_1_1719420544353_55">write whole numbers and decimals in place-value columns and compare their sizes</li>
-                            <li class="li">multiply and divide whole numbers and decimals by 10, 100, 1000 and so on</li>
-                            <li class="li">indicate given fractions on a diagram and find equivalent fractions for a given fraction</li>
-                            <li class="li">mark numbers on a number line</li>
-                            <li class="li">choose appropriate units for a given purpose.</li>
-                          </ul>
+                          <ul id="u2-list"></ul>
                         </div>
 
                       </div>
@@ -354,5 +325,6 @@
 
     <script src="script_preview.js"></script>
     <script src="reviews.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
