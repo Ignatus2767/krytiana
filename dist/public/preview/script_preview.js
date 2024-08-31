@@ -203,6 +203,7 @@ window.addEventListener('DOMContentLoaded', () => {
     course.who?.forEach(who => {
       const listItem = document.createElement('li');
       listItem.textContent = who;
+      listItem.classList.add('li');
       whoList.appendChild(listItem);
     });
 
@@ -211,6 +212,7 @@ window.addEventListener('DOMContentLoaded', () => {
     course.requirements?.forEach(requirement => {
       const listItem = document.createElement('li');
       listItem.textContent = requirement;
+      listItem.classList.add('li');
       requirementsList.appendChild(listItem);
     });
 
@@ -241,6 +243,7 @@ window.addEventListener('DOMContentLoaded', () => {
     course.u2_list?.forEach(item => {
       const listItem = document.createElement('li');
       listItem.textContent = item;
+      listItem.classList.add('li');
       u2List.appendChild(listItem);
     });
   } else {
