@@ -1,7 +1,7 @@
 .footer{
   height: max-content;
   width: 100%;
-  background-color: rgb(6, 26, 48);
+  background-color: rgb(11, 36, 65);
 }
 
 .Courses_h3{
@@ -93,7 +93,7 @@
 .course-categories .left-list, 
 .course-categories .right-list {
   flex: 1;
-  min-width: 150px;
+  min-width: 100px;
 }
 
 .course-categories ul {
@@ -135,7 +135,7 @@
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   display: inline-block;
-  margin-right: 16px;
+  margin-right: 6px;
   color: #ffffff;
 
 }
@@ -215,6 +215,11 @@
     font-size: 14px; 
    
     
+  }
+
+  .course-categories li {
+    font-size: 12px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
   
   .icon{
