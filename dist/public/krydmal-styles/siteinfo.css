@@ -39,18 +39,13 @@
 
 .AboutUs2 {
   width: 30%;           
-  height: 454px;         
-   
-  border-radius: 2px;
-  border-color: black;
- 
-  
-  border-style: solid;
-  border-radius: 14px;
-  border-color: rgb(0, 0, 0);
+  height: max-content;
+  border-color: wheat;
+  border-style:  ;
+  border-radius: ;
   margin-right: 27px;
   margin-bottom: 12px;
-  
+  background-color: whitesmoke;
 }
 
 
