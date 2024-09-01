@@ -37,7 +37,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 20;
   -webkit-box-orient: vertical;
   max-height: 3 * (1.2em); /* Adjust line height as needed */
   
@@ -55,7 +55,7 @@
   color: rgb(255, 255, 255);
   margin-left: 7%;
   margin-right: 7%;  
-  text-align: left;
+  text-align: center;
   line-height: 38px;
   font-family: source Sans Pro, Tahoma, Verdana;
  
@@ -87,14 +87,14 @@
 }
 @media screen and (max-width: 500px) {
   .h2{
-    font-size: 14px;
-    line-height: 19px;
+    font-size: 24px;
+    line-height: 30px;
   }
   .welcome_2{
     display: none;
   }
   .welcome_1{
-    font-size: 14px;
+    font-size: 24px;
   }
   .image{
     height: 300px;
@@ -115,7 +115,7 @@
     display: none;
   }
   .header{
-    height: 50px;
+    height: 60px;
   }
   .right-section {
     width: 40%;
@@ -138,7 +138,7 @@
 .pro-picture {
   height: 40px;
   width: 40px;
-  margin-right: -10px;
+  margin-right: 10px;
   border-radius: 20px;
   
 }
