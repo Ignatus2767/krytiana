@@ -1,7 +1,7 @@
 .footer{
-  height: 300px;
+  height: max-content;
   width: 100%;
-  background-color: rgb(0, 0, 17);
+  background-color: rgb(6, 26, 48);
 }
 
 .Courses_h3{
@@ -92,7 +92,7 @@
 .course-categories .left-list, 
 .course-categories .right-list {
   flex: 1;
-  min-width: 200px;
+  min-width: 150px;
 }
 
 .course-categories ul {
@@ -207,14 +207,16 @@
    margin-top: 0px;
    
   }
-  .course-categories {
-    flex-direction: column;
-    align-items: flex-start;
-}
 
-.right-list {
-    margin-top: 20px;
-}
+ 
+  
+  .icon{
+    font-size: 12px;
+  }
+
+  .right-list {
+      margin-top: 2px;
+  }
 
 }
 
