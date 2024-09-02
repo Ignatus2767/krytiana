@@ -107,6 +107,11 @@ const courses = [
     files: "(9 files)",
     project: "12 Course final project",
     u1: "U1: Introduction",
+    OfferTitle: "Best Price with Unlimited Offer",
+    badge: "PLUS",
+    price: "$0.99",
+    discount: "95% Disc. <s>$19.99 USD</s>",
+    saleBadge: "Promotion!",
     u1_list: [
       "Write whole numbers and decimals in place-value columns and compare their sizes",
       "Multiply and divide whole numbers and decimals by 10, 100, 1000 and so on",
@@ -150,6 +155,11 @@ const courses = [
     files: "(94 files)",
     project: "72 Course final project",
     u1: "U1: Introduction",
+    OfferTitle: "Best Price with Unlimited Offer",
+    badge: "PLUS",
+    price: "$7.99",
+    discount: "455% Disc. <s>$19.99 USD</s>",
+    saleBadge: "Promotion!",
     u1_list: [
       "Analyze case studies of popular apps and hardware innovations to learn from real-world examples.",
       "Introduction to Mobile Operating Systems: Overview of Android and iOS, their history, and market influence.",
@@ -223,6 +233,11 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloads').textContent = `${course.downloads}`;
     document.getElementById('files').textContent = `${course.files}`;
     document.getElementById('project').textContent = `${course.project}`;
+    document.getElementById('badge').textContent = `${course.badge}`;
+    document.getElementById('Price').textContent = `${course.price}`;
+    document.getElementById('discount').textContent = `${course.discount}`;
+    document.getElementById('offer-title').textContent = `${course.OfferTitle}`;
+    document.getElementById('saleSadge').textContent = `${course.saleBadge}`;
 
     // Populate course units
     const u1Element = document.getElementById('u1');
