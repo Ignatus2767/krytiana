@@ -131,7 +131,7 @@ const courses = [
 
   {
     id: 2,
-    title: "Full Stack Development",
+    title: "Complete mobile repaire course",
     description: "This course offers an in-depth exploration of Android and iOS smartphones, covering both software development and hardware design. It is designed for learners who want to master the intricacies of mobile technology from the ground up.",
     image: "./pics/repaire.jpg",
     outcomes: [
