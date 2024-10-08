@@ -329,8 +329,16 @@ h1 {
 }
 
 @media (max-width: 480px) {
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0px;
+        padding: 0px;
+        
+    }
     main {
-        background-color: #6fbe6457;
+        background-color: #fff;
         padding: 0px;
         border-radius: 5px;
         width: 100%;
