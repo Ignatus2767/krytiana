@@ -41,3 +41,27 @@ export const authenticateToken = (req: RequestWithUser, res: Response, next: Nex
     next();
   });
 };
+
+// Refresh Token Endpoint
+export const refreshToken = (req: Request, res: Response) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.sendStatus(401); // Unauthorized
+  }
+
+  // Verify the refresh token
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string, (err: VerifyErrors | null, decodedToken: JwtPayload | string | undefined) => {
+    if (err) {
+      console.log('Refresh token verification failed:', err);
+      return res.sendStatus(403); // Forbidden
+    }
+
+    // Ensure decodedToken is of type CustomJwtPayload
+    const customDecodedToken = decodedToken as CustomJwtPayload;
+
+    // Generate a new access token
+    const accessToken = jwt.sign({ username: customDecodedToken.username }, process.env.JWT_SECRET as string, { expiresIn: '15m' });
+    res.json({ accessToken });
+  });
+};

@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 showFeedback('Signup successful!', 'success');
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('refreshToken', data.refreshToken);
                 window.location.href = '/dashboard';
             } else {
                 showFeedback(data.message, 'error');
@@ -141,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 showFeedback('Sign-in successful!', 'success');
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('refreshToken', data.refreshToken);
                 window.location.href = '/dashboard';
             } else {
                 showFeedback(data.message, 'error');

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticateToken = void 0;
+exports.refreshToken = exports.authenticateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const authenticateToken = (req, res, next) => {
     var _a;
@@ -28,4 +28,24 @@ const authenticateToken = (req, res, next) => {
     });
 };
 exports.authenticateToken = authenticateToken;
+// Refresh Token Endpoint
+const refreshToken = (req, res) => {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+        return res.sendStatus(401); // Unauthorized
+    }
+    // Verify the refresh token
+    jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decodedToken) => {
+        if (err) {
+            console.log('Refresh token verification failed:', err);
+            return res.sendStatus(403); // Forbidden
+        }
+        // Ensure decodedToken is of type CustomJwtPayload
+        const customDecodedToken = decodedToken;
+        // Generate a new access token
+        const accessToken = jsonwebtoken_1.default.sign({ username: customDecodedToken.username }, process.env.JWT_SECRET, { expiresIn: '15m' });
+        res.json({ accessToken });
+    });
+};
+exports.refreshToken = refreshToken;
 //# sourceMappingURL=authMiddleware.js.map
