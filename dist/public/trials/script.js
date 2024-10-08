@@ -1,41 +1,129 @@
-const courses = [
-  // Existing course objects
-  {
-      id: 1,
-      title: "Full Stack Development",
-      description: "A comprehensive course on full stack development.",
-      // other properties...
-  },
-  
-  // More courses...
-];
 
-function generateObject() {
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const image = document.getElementById("image").value;
-  const outcomes = document.getElementById("outcomes").value.split(',');
-  const who = document.getElementById("who").value.split(',');
-  const requirements = document.getElementById("requirements").value.split(',');
 
-  const newCourseId = courses.length + 1; // Dynamically generate ID based on the length of the courses array
+// Example data for dynamic content (could be retrieved from an API in a real application)
+const userData = {
+    username: "krytian",
+    coursesInProgress: 2,
+    CourseCompletionPercentage: 37,
+    CoursesCompleted: 1,
+    
+    courses: [
+        {
+            name: "Full Stack Development",
+            progress: 79,
+            lastActive: "Today",
+            imageUrl: "./web.png", // Replace with actual image URL
+        },
+        {
+            name: "Compelete android and ios repaire course",
+            progress: 100,
+            lastActive: "Today",
+            imageUrl: "./repaire.jpg", // Replace with actual image URL
+        },
+        {
+            name: "Web Development with HTML and CSS for Beginners",
+            progress: 27,
+            lastActive: "Yesterday",
+            imageUrl: "./android1.jpg", // Replace with actual image URL
+        }
+    ]
+};
 
-  const courseObject = {
-      id: newCourseId,
-      title: title,
-      description: description,
-      image: image,
-      outcomes: outcomes.map(outcome => outcome.trim()),
-      who: who.map(person => person.trim()),
-      requirements: requirements.map(req => req.trim()),
-      lessons: "31 lessons", // Default value or another form field
-      duration: "(2h 18m)", // Default value or another form field
-      // Add other fields as necessary
-  };
+// Update the dashboard with dynamic data
+document.getElementById("username").textContent = `${userData.username}'s dashboard`;
+document.getElementById("course-count").textContent = userData.coursesInProgress;
+document.getElementById("user").textContent = `${userData.username},`;
+document.getElementById("CoursesInProgress").textContent = userData.coursesInProgress;
+document.getElementById("CoursesCompleted").textContent = userData.CoursesCompleted;
+document.getElementById("CourseCompletionPercentage").textContent = `${userData.CourseCompletionPercentage}%`;  
 
-  // Append the new course to the courses array
-  courses.push(courseObject);
 
-  // Display the new course object for verification
-  document.getElementById("result").textContent = JSON.stringify(courseObject, null, 2);
+
+
+const courseList = document.getElementById("course-list");
+
+userData.courses.forEach(course => {
+    const courseCard = document.createElement("div");
+    courseCard.className = "course-card";
+
+    // Check if progress is 100%
+    let buttonLabel = "Continue Learning";
+    let progressText = `${course.progress}% Complete`;
+
+    if (course.progress === 100) {
+        buttonLabel = "Enroll Again";  // Change the button label to "Enroll Again"
+        progressText = "Completed";   // Change the progress text to "Completed"
+    }
+
+    courseCard.innerHTML = `
+        <div class="left-section">
+            <div class="course-image">
+                <img src="${course.imageUrl}" alt="${course.name}">
+            </div>
+            <button class="unenroll-button">Unenroll</button>
+        </div>
+
+        <div class="right-section">
+            <h3>${course.name}</h3>
+            <div class="progress-bar">
+                <div style="width: ${course.progress}%"></div>
+                <span id="progress-percentage">${progressText}</span>
+            </div>
+            <button class="continue-button">${buttonLabel}</button>
+        </div>
+    `;
+
+    courseList.appendChild(courseCard);
+});
+
+
+// To-Do Section
+
+// Select form and list
+const todoForm = document.getElementById("todo-form");
+const todoList = document.getElementById("todo-list");
+
+// Load existing to-dos from localStorage
+const todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+// Function to add a todo item
+function addTodo(task, date) {
+    const todoItem = { task, date };
+    todos.push(todoItem);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    renderTodos();
 }
+
+// Function to delete a todo item
+function deleteTodo(index) {
+    todos.splice(index, 1);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    renderTodos();
+}
+
+// Function to render the to-do list
+function renderTodos() {
+    todoList.innerHTML = ""; // Clear current list
+    todos.forEach((todo, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = 
+            `${todo.task} - ${todo.date}
+            <button onclick="deleteTodo(${index})">Delete</button>
+        `;
+        todoList.appendChild(li);
+    });
+}
+
+// Form submission
+todoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const task = document.getElementById("todo-task").value;
+    const date = document.getElementById("todo-date").value;
+    if (task && date) {
+        addTodo(task, date);
+        todoForm.reset();
+    }
+});
+
+// Initial rendering of existing todos
+renderTodos();

@@ -1,0 +1,329 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 30px;
+    
+}
+
+main {
+    background-color: #fff;
+    padding: 0px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
+}
+
+.dashboard {
+    width: 100%;
+    margin-left: 12px ;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    padding: 0px;
+    display: inline-block;
+    margin: 0;
+}
+
+.learn-section {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+    display: inline-block;
+    border-bottom: 2px solid green;
+    padding-bottom: 5px;
+}
+
+.courses-progress {
+    margin: 0px;
+    width: 94%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.courses-progress1 {
+    margin: 0px;
+    width: 94%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.statistics{
+    margin-top: 20px; 
+    padding-bottom: 20px; 
+    padding-top: 20px; 
+    background-color: rgba(25, 158, 140, 0.336); 
+    width:94%;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+.courses-progress h2 {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.courses-progress1 h2 {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+#course-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+}
+
+#course-list1 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+}
+
+.course-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 2px solid green;
+}
+
+.unenroll-button {
+    background-color: #ccc;
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid green;
+    width: 100%;
+}
+
+.unenroll-button:hover {
+    background-color: darkred;
+    color: white;
+}
+
+.right-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.course-details h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border: 2px solid green;
+    padding: 5px;
+    display: inline-block;
+    margin: 0;
+}
+
+.progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    position: relative;
+    height: 20px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.progress-bar div {
+    background-color: gold;
+    height: 100%;
+    border-radius: 10px;
+}
+
+#progress-percentage {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #333;
+}
+
+.continue-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.continue-button:hover {
+    background-color: darkgreen;
+}
+
+.other-courses {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.other-courses a {
+    font-size: 14px;
+    color: green;
+    text-decoration: none;
+    border-bottom: 2px solid green;
+}
+
+.other-courses a:hover {
+    color: darkgreen;
+    border-bottom: 2px solid darkgreen;
+}
+
+.todo-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 94%;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.todo-section h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#todo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#todo-form input, #todo-form button, #todo-form select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#todo-form button {
+    background-color: green;
+    color: white;
+    cursor: pointer;
+}
+
+#todo-form button:hover {
+    background-color: darkgreen;
+}
+
+#todo-list {
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+#todo-list li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#todo-list li button {
+    background-color: darkred;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#todo-list li button:hover {
+    background-color: red;
+}
+
+
+.learning-stats-section span,
+.learning-stats-section h2 {
+    display: inline;
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.learning-stats-section h2 {
+    margin-left: 5px;
+    
+}
+.time-learning {
+    border-bottom: 1px solid #ccc;
+}
+
+.stats-list h4,
+.stats-list span {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.stats-list h4 {
+    margin-right: 10px;
+}
+
+.stats-list div {
+    border-bottom: 1px solid #ccc; /* Add a light gray border line */
+    padding-bottom: 10px; /* Add some padding below the content */
+    margin-bottom: 10px;  /* Add some space between divs */
+}

@@ -1,10 +1,12 @@
-// src/controllers/eserController.ts
+// src/controllers/userController.ts
 import { Request, Response } from 'express';
 import { signupDbPool } from '../db'; // Adjusted import
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import SibApiV3Sdk from 'sib-api-v3-sdk';
 import { sendResetEmail } from '../services/emailService';
+import { ResultSetHeader } from 'mysql2';
+import jwt from 'jsonwebtoken';
 
 // Ensure environment variables are set
 const sendinblueApiKey = process.env.SENDINBLUE_API_KEY;
@@ -22,6 +24,8 @@ export const handleSignUp = async (req: Request, res: Response) => {
   const { fullname, email, username, password, country } = req.body;
 
   try {
+
+    console.log('Starting sign-up process for user:', username);
     const [existingUsers] = await signupDbPool.query<any[]>(
       'SELECT * FROM users WHERE email = ? OR username = ?',
       [email, username]
@@ -29,6 +33,7 @@ export const handleSignUp = async (req: Request, res: Response) => {
 
     if (existingUsers.length > 0) {
       if (existingUsers[0].email === email) {
+        console.log('User already exists:', email, username);
         return res.status(400).json({ success: false, message: 'Email already exists.' });
       }
       if (existingUsers[0].username === username) {
@@ -37,14 +42,50 @@ export const handleSignUp = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('Password hashed successfully');
 
-    const [result] = await signupDbPool.query(
+    // Type the result of the INSERT query as ResultSetHeader
+    const [result] = await signupDbPool.query<ResultSetHeader>(
       'INSERT INTO users (fullname, email, username, password, country) VALUES (?, ?, ?, ?, ?)',
       [fullname, email, username, hashedPassword, country]
     );
 
-    console.log('Sign up successful:', result);
-    res.status(201).json({ success: true, message: 'Sign up successful' });
+    const userId = result.insertId;  // Now TypeScript understands insertId is available
+    console.log('User inserted with ID:', userId);
+    // Initialize user's dashboard-related entries
+    // Insert study reminder (Default to 2 days per week)
+    await signupDbPool.query(
+      'INSERT INTO study_reminders (user_id, days_per_week) VALUES (?, ?)',
+      [userId, 2]
+    );
+
+    // Optionally initialize medals (if needed at signup)
+    await signupDbPool.query(
+      'INSERT INTO medals (user_id, medal_type, earned_on) VALUES (?, ?, ?)',
+      [userId, 'Bronze', new Date()]
+    );
+
+    // Generate JWT
+    const token = jwt.sign(
+      { userId, email, username }, // Payload (can include user details)
+      process.env.JWT_SECRET as string, // Use your JWT_SECRET from the environment variables
+      { expiresIn: '1h' } // Token expiration time
+    );
+    console.log('JWT token generated:', token);
+
+    res.status(201).json({
+      success: true,
+      message: 'Sign up successful, dashboard created',
+      token // Send token back to the client
+    });
+
+    // Log the message for debugging
+    console.log('Sign-up Response:', {
+      success: true,
+      message: 'Sign-up successful, dashboard created',
+      token
+    });
+
   } catch (error) {
     console.error('Error during sign up:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
@@ -81,8 +122,21 @@ export const handleSignIn = async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, message: 'Incorrect password.' });
     }
 
-    console.log('Sign in successful');
-    res.status(200).json({ success: true, message: 'Sign in successful' });
+    // Generate JWT
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, username: user.username }, // Payload
+      process.env.JWT_SECRET as string, // Use your JWT_SECRET from the environment variables
+      { expiresIn: '1h' } // Token expiration time
+    );
+
+    console.log('JWT token generated:', token);
+
+    res.status(200).json({
+      success: true,
+      message: 'Sign in successful',
+      token // Send token back to the client
+    });
+    
   } catch (error) {
     console.error('Error during sign in:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });

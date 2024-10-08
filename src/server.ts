@@ -4,6 +4,10 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
 import reviewRoutes from './routes/reviewRoutes'; // Import the review routes
+import coursesRoutes from './routes/coursesRoute';
+import profileRoute from './routes/profileRoute';
+import todoRoutes from './routes/todoRoutes';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -17,6 +21,7 @@ app.use(bodyParser.json());
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cors());
 // Define a route for the root path
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -27,6 +32,10 @@ app.use('/api/users', userRoutes);
 
 // Mount review routes under /api/reviews
 app.use('/api/reviews', reviewRoutes); // This mounts your review routes
+
+app.use('/api/user', profileRoute);
+app.use('/api/courses', coursesRoutes);
+app.use('/api', todoRoutes); 
 
 // Define other routes as needed
 app.get('/example', (req, res) => {

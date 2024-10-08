@@ -111,7 +111,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 showFeedback('Signup successful!', 'success');
-                window.location.href = 'https://ignatus2767.github.io/krydmal/';
+                localStorage.setItem('token', data.token);
+                window.location.href = '/dashboard';
             } else {
                 showFeedback(data.message, 'error');
             }
@@ -139,7 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 showFeedback('Sign-in successful!', 'success');
-                window.location.href = 'https://ignatus2767.github.io/krydmal/';
+                localStorage.setItem('token', data.token);
+                window.location.href = '/dashboard';
             } else {
                 showFeedback(data.message, 'error');
             }
