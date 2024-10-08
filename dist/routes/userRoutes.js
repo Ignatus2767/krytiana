@@ -8,6 +8,7 @@ const router = (0, express_1.Router)();
 router.post('/signup', userController_1.handleSignUp);
 router.post('/signin', userController_1.handleSignIn);
 router.post('/forgot-password', userController_1.handleForgotPassword);
+router.post('/refresh-token', userController_1.refreshAccessToken);
 router.get('/profile', authMiddleware_1.authenticateToken, (req, res) => {
     // Since `authenticateToken` attaches `req.user`, we can access it here
     const user = req.user;

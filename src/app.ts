@@ -11,6 +11,7 @@ import reviewRoutes from './routes/reviewRoutes';
 import coursesRoutes from './routes/coursesRoute';
 import profileRoute from './routes/profileRoute'; 
 import todoRoutes from './routes/todoRoutes';
+import { refreshToken } from './middlewares/authMiddleware';
 import cors from 'cors';
 
 const app = express();
@@ -18,6 +19,7 @@ const app = express();
 // Middleware setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.post('/api/refresh-token', refreshToken);
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');

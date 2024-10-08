@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleForgotPassword = exports.handleSignIn = exports.handleSignUp = void 0;
+exports.refreshAccessToken = exports.handleForgotPassword = exports.handleSignIn = exports.handleSignUp = void 0;
 const db_1 = require("../db"); // Adjusted import
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = __importDefault(require("crypto"));
@@ -28,6 +28,10 @@ if (!sendinblueApiKey) {
 const defaultClient = sib_api_v3_sdk_1.default.ApiClient.instance;
 const apiKey = defaultClient.authentications['api-key'];
 apiKey.apiKey = sendinblueApiKey;
+const generateRefreshToken = (user) => {
+    return jsonwebtoken_1.default.sign({ userId: user.id }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' } // 7-day refresh token
+    );
+};
 // Handle Sign Up
 const handleSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { fullname, email, username, password, country } = req.body;
@@ -50,7 +54,6 @@ const handleSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const userId = result.insertId; // Now TypeScript understands insertId is available
         console.log('User inserted with ID:', userId);
         // Initialize user's dashboard-related entries
-        // Insert study reminder (Default to 2 days per week)
         yield db_1.signupDbPool.query('INSERT INTO study_reminders (user_id, days_per_week) VALUES (?, ?)', [userId, 2]);
         // Optionally initialize medals (if needed at signup)
         yield db_1.signupDbPool.query('INSERT INTO medals (user_id, medal_type, earned_on) VALUES (?, ?, ?)', [userId, 'Bronze', new Date()]);
@@ -60,10 +63,14 @@ const handleSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         { expiresIn: '1h' } // Token expiration time
         );
         console.log('JWT token generated:', token);
+        const refreshToken = generateRefreshToken({ id: userId });
+        // Store refresh token in the database
+        yield db_1.signupDbPool.query('UPDATE users SET refresh_token = ? WHERE id = ?', [refreshToken, userId]);
         res.status(201).json({
             success: true,
             message: 'Sign up successful, dashboard created',
-            token // Send token back to the client
+            token, // Send token back to the client
+            refreshToken
         });
         // Log the message for debugging
         console.log('Sign-up Response:', {
@@ -103,10 +110,14 @@ const handleSignIn = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         { expiresIn: '1h' } // Token expiration time
         );
         console.log('JWT token generated:', token);
+        const refreshToken = generateRefreshToken(user);
+        // Store refresh token in the database
+        yield db_1.signupDbPool.query('UPDATE users SET refresh_token = ? WHERE id = ?', [refreshToken, user.id]);
         res.status(200).json({
             success: true,
             message: 'Sign in successful',
-            token // Send token back to the client
+            token, // Send token back to the client
+            refreshToken
         });
     }
     catch (error) {
@@ -139,4 +150,32 @@ const handleForgotPassword = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.handleForgotPassword = handleForgotPassword;
+const refreshAccessToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+        return res.status(400).json({ success: false, message: 'Refresh token is required' });
+    }
+    try {
+        // Verify the refresh token
+        const decoded = jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+        // Check if the refresh token matches the one stored in the database
+        const [users] = yield db_1.signupDbPool.query('SELECT * FROM users WHERE id = ? AND refresh_token = ?', [decoded.userId, refreshToken]);
+        if (users.length === 0) {
+            return res.status(403).json({ success: false, message: 'Invalid refresh token' });
+        }
+        const user = users[0];
+        // Generate a new access token
+        const newAccessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email, username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' } // Access token expires in 1 hour
+        );
+        res.status(200).json({
+            success: true,
+            accessToken: newAccessToken,
+        });
+    }
+    catch (error) {
+        console.error('Error refreshing access token:', error);
+        res.status(403).json({ success: false, message: 'Invalid or expired refresh token' });
+    }
+});
+exports.refreshAccessToken = refreshAccessToken;
 //# sourceMappingURL=userController.js.map

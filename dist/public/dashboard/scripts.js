@@ -7,6 +7,61 @@ const coursList = [
     { id: 5, title: "Node.js and Express" }
 ];
 
+// Fetch with Refresh Token function
+async function fetchWithRefreshToken(url, options = {}) {
+    const accessToken = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    console.log('Access Token:', accessToken); // Log the access token
+    console.log('Refresh Token:', refreshToken); // Log the refresh token
+
+    options.headers = {
+        ...options.headers,
+        'Authorization': `Bearer ${accessToken}`,
+    };
+
+    console.log(`Fetching URL: ${url} with options:`, options); // Log the URL and options
+
+    let response = await fetch(url, options);
+    console.log('Initial response status:', response.status); // Log the response status
+
+    // Check if the access token has expired
+    if (response.status === 401) {
+        console.log('Access token expired. Attempting to refresh token...'); // Log token expiration
+
+        const refreshResponse = await fetch('/api/refresh-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ refreshToken }),
+        });
+
+        console.log('Refresh token response status:', refreshResponse.status); // Log the refresh response status
+
+        if (refreshResponse.ok) {
+            const data = await refreshResponse.json();
+            console.log('New access token received:', data.accessToken); // Log the new access token
+            localStorage.setItem('accessToken', data.accessToken);
+            options.headers['Authorization'] = `Bearer ${data.accessToken}`;
+            response = await fetch(url, options);
+            console.log('Retrying original request with new access token...'); // Log the retry attempt
+        } else {
+            console.error('Failed to refresh token'); // Log failure to refresh
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            // Optionally redirect to login page here
+        }
+    }
+
+    return response;
+}
+
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadCoursesToDropdown();
+    fetchUserData();
+});
 
 
 // Call the function when the page loads
@@ -94,22 +149,19 @@ userData.courses.forEach(course => {
 // Fetch user data and populate the dashboard with dynamic content
 async function fetchUserData() {
     try {
-        const response = await fetch('/api/user/profile', {
+        const response = await fetchWithRefreshToken('/api/user/profile', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`, // Use token from local storage
                 'Content-Type': 'application/json',
             },
         });
 
         const data = await response.json();
-        console.log('User data fetched:', data); // Log the user data fetched
+        console.log('User data fetched:', data);
 
         if (data.success) {
             // Update the dashboard with dynamic data
             document.getElementById("username").textContent = `${data.user.username}'s dashboard`;
-            
-            // Access and display user statistics
             document.getElementById("CoursesInProgress").textContent = data.statistics.coursesInProgress;
             document.getElementById("CoursesCompleted").textContent = data.statistics.coursesCompleted;
             document.getElementById("CourseCompletionPercentage").textContent = data.statistics.courseCompletionPercentage;
@@ -125,8 +177,8 @@ async function fetchUserData() {
                 const courseCard = document.createElement("div");
                 courseCard.className = "course-card";
 
-                let buttonLabel = course.progress === 100 ? "Enroll Again" : "Continue Learning";
-                let progressText = course.progress === 100 ? "Completed" : `${course.progress}% Complete`;
+                const buttonLabel = course.progress === 100 ? "Enroll Again" : "Continue Learning";
+                const progressText = course.progress === 100 ? "Completed" : `${course.progress}% Complete`;
 
                 courseCard.innerHTML = `
                     <div class="left-section">

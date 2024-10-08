@@ -19,6 +19,14 @@ const defaultClient = SibApiV3Sdk.ApiClient.instance;
 const apiKey = defaultClient.authentications['api-key'];
 apiKey.apiKey = sendinblueApiKey;
 
+const generateRefreshToken = (user: any) => {
+  return jwt.sign(
+    { userId: user.id },
+    process.env.REFRESH_TOKEN_SECRET as string,
+    { expiresIn: '7d' } // 7-day refresh token
+  );
+};
+
 // Handle Sign Up
 export const handleSignUp = async (req: Request, res: Response) => {
   const { fullname, email, username, password, country } = req.body;
@@ -53,7 +61,6 @@ export const handleSignUp = async (req: Request, res: Response) => {
     const userId = result.insertId;  // Now TypeScript understands insertId is available
     console.log('User inserted with ID:', userId);
     // Initialize user's dashboard-related entries
-    // Insert study reminder (Default to 2 days per week)
     await signupDbPool.query(
       'INSERT INTO study_reminders (user_id, days_per_week) VALUES (?, ?)',
       [userId, 2]
@@ -73,10 +80,20 @@ export const handleSignUp = async (req: Request, res: Response) => {
     );
     console.log('JWT token generated:', token);
 
+    const refreshToken = generateRefreshToken({ id: userId });
+
+
+    // Store refresh token in the database
+    await signupDbPool.query(
+      'UPDATE users SET refresh_token = ? WHERE id = ?',
+      [refreshToken, userId]
+    );
+
     res.status(201).json({
       success: true,
       message: 'Sign up successful, dashboard created',
-      token // Send token back to the client
+      token, // Send token back to the client
+      refreshToken
     });
 
     // Log the message for debugging
@@ -131,10 +148,19 @@ export const handleSignIn = async (req: Request, res: Response) => {
 
     console.log('JWT token generated:', token);
 
+    const refreshToken = generateRefreshToken(user);
+
+    // Store refresh token in the database
+    await signupDbPool.query(
+      'UPDATE users SET refresh_token = ? WHERE id = ?',
+      [refreshToken, user.id]
+    );
+
     res.status(200).json({
       success: true,
       message: 'Sign in successful',
-      token // Send token back to the client
+      token, // Send token back to the client
+      refreshToken
     });
     
   } catch (error) {
@@ -179,5 +205,45 @@ export const handleForgotPassword = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Error during forgot password process:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+export const refreshAccessToken = async (req: Request, res: Response) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(400).json({ success: false, message: 'Refresh token is required' });
+  }
+
+  try {
+    // Verify the refresh token
+    const decoded: any = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string);
+
+    // Check if the refresh token matches the one stored in the database
+    const [users] = await signupDbPool.query<any[]>(
+      'SELECT * FROM users WHERE id = ? AND refresh_token = ?',
+      [decoded.userId, refreshToken]
+    );
+
+    if (users.length === 0) {
+      return res.status(403).json({ success: false, message: 'Invalid refresh token' });
+    }
+
+    const user = users[0];
+
+    // Generate a new access token
+    const newAccessToken = jwt.sign(
+      { userId: user.id, email: user.email, username: user.username },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' } // Access token expires in 1 hour
+    );
+
+    res.status(200).json({
+      success: true,
+      accessToken: newAccessToken,
+    });
+  } catch (error) {
+    console.error('Error refreshing access token:', error);
+    res.status(403).json({ success: false, message: 'Invalid or expired refresh token' });
   }
 };

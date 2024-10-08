@@ -14,11 +14,13 @@ const reviewRoutes_1 = __importDefault(require("./routes/reviewRoutes"));
 const coursesRoute_1 = __importDefault(require("./routes/coursesRoute"));
 const profileRoute_1 = __importDefault(require("./routes/profileRoute"));
 const todoRoutes_1 = __importDefault(require("./routes/todoRoutes"));
+const authMiddleware_1 = require("./middlewares/authMiddleware");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 // Middleware setup
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.post('/api/refresh-token', authMiddleware_1.refreshToken);
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
 app.set('views', path_1.default.join(__dirname, 'views'));
