@@ -330,7 +330,7 @@ h1 {
 
 @media (max-width: 480px) {
     main {
-        background-color: #fff;
+        background-color: #6fbe6457;
         padding: 0px;
         border-radius: 5px;
         width: 100%;
