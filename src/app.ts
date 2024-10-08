@@ -8,6 +8,10 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
 import reviewRoutes from './routes/reviewRoutes';
+import coursesRoutes from './routes/coursesRoute';
+import profileRoute from './routes/profileRoute'; 
+import todoRoutes from './routes/todoRoutes';
+import cors from 'cors';
 
 const app = express();
 
@@ -22,9 +26,13 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+app.use(cors());
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/courses', coursesRoutes);
+app.use('/api/user', profileRoute);
+app.use('/api', todoRoutes); 
 
 app.get('/', (req, res) => {
   res.render('index');

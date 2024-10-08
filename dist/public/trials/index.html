@@ -3,37 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Data Input</title>
+    <title>Profile Test</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Insert Course Data</h1>
-    <form id="courseForm">
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title"><br><br>
-
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description"></textarea><br><br>
-
-        <label for="image">Image Path:</label><br>
-        <input type="text" id="image" name="image"><br><br>
-
-        <label for="outcomes">Outcomes (comma separated):</label><br>
-        <textarea id="outcomes" name="outcomes"></textarea><br><br>
-
-        <label for="who">Who (comma separated):</label><br>
-        <textarea id="who" name="who"></textarea><br><br>
-
-        <label for="requirements">Requirements (comma separated):</label><br>
-        <textarea id="requirements" name="requirements"></textarea><br><br>
-
-        <!-- Add more fields as needed -->
-
-        <button type="button" onclick="generateObject()">Generate Object</button>
-    </form>
-
-    <h2>Generated Object:</h2>
-    <pre id="result"></pre>
-
+    <div class="container">
+        <h1>User Profile</h1>
+        <p id="profile-message">Loading...</p>
+        <p id="username"></p>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -8,32 +8,61 @@ const signupDbPool = createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME_SIGNUP,
-  
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
 const reviewDbPool = createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME_SIGNUP, // Ensure this is correctly set
+  database: process.env.DB_NAME_REVIEW, // Ensure this is the correct DB name
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+});
 
+
+
+const dashboardDbPool = createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME_DASHBOARD,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+
+const coursesDbPool = createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME_COURSES,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
 // Test database connections
 const testConnection = async () => {
   try {
-    // Test signup database connection
     const connection = await signupDbPool.getConnection();
     console.log('Connected to the signup database.');
     connection.release();
 
-    // Test review database connection
     const reviewConnection = await reviewDbPool.getConnection();
     console.log('Connected to the review database.');
     reviewConnection.release();
+
+    const dashboardConnection = await dashboardDbPool.getConnection();
+    console.log('Connected to the dashboard database.');
+    dashboardConnection.release();
+
+    const coursesConnection = await coursesDbPool.getConnection();
+    console.log('Connected to the courses database.');
+    coursesConnection.release();
   } catch (err) {
     console.error('Error connecting to the database:', err);
   }
@@ -41,4 +70,4 @@ const testConnection = async () => {
 
 testConnection();
 
-export { signupDbPool, reviewDbPool };
+export { signupDbPool, reviewDbPool, dashboardDbPool, coursesDbPool };

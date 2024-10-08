@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my dash</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+    
+        <header>
+            <h1 id="username"></h1>
+            <p style="margin: 20px">welcome, we are happy to have you</p>
+        </header>
+        
+        
+        <div class="courses-progress">
+            <h2>Courses In Progress (<span id="course-count">3</span>)</h2>
+
+            <div  id="course-list">
+                <!-- Course cards will be inserted here dynamically -->
+            </div>
+
+        </div>
+            
+        <div class="statistics">  
+            
+            <div class="learning-stats-section">
+                <span id="user">krytiana</span><h2>track and grow your statistics</h2>
+            </div>
+            
+            <div class="time-learning">
+                <p>Your Total Time Learning</p>
+            </div>
+            
+            <div class="stats-list">
+                <div><h4>Course Completion Percentage:</h4><span id="CourseCompletionPercentage"></span></div>
+                <div><h4>Courses Completed:</h4><span id="CoursesCompleted"></span></div>
+                <div><h4>Courses In Progress:</h4><span id="CoursesInProgress"></span></div>
+            </div>
+            
+        </div>
+
+        <div class="courses-progress1"></div>
+            <h2> Suggested courses for you</h2>
+
+            <div  id="course-list1">
+                <!-- Course cards will be inserted here dynamically -->
+            </div>
+
+        </div>
+
+        <!-- To-Do Section -->
+        <div class="todo-section">
+            <h2>Set Study Reminders</h2>
+            <h3 style="font-size: 12px; color: gray">Learners who set study reminders are 75% more likely to finish their courses. Simply select your preferred course and start date, and we'll handle the rest.</h3>
+            <form id="todo-form">
+                <select id="todo-task">
+                    <option value="" disabled selected>Select Course</option>
+                </select>
+                <input type="date" id="todo-date" required />
+                <button type="submit" id="todoButton">Add Reminder</button>
+            </form>
+
+            
+            
+
+            <ul id="todo-list">
+                    <!-- Reminders will be displayed here -->
+            </ul>
+        </div>
+        
+    </main>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

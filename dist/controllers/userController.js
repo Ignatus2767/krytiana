@@ -18,6 +18,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = __importDefault(require("crypto"));
 const sib_api_v3_sdk_1 = __importDefault(require("sib-api-v3-sdk"));
 const emailService_1 = require("../services/emailService");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // Ensure environment variables are set
 const sendinblueApiKey = process.env.SENDINBLUE_API_KEY;
 if (!sendinblueApiKey) {
@@ -31,9 +32,11 @@ apiKey.apiKey = sendinblueApiKey;
 const handleSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { fullname, email, username, password, country } = req.body;
     try {
+        console.log('Starting sign-up process for user:', username);
         const [existingUsers] = yield db_1.signupDbPool.query('SELECT * FROM users WHERE email = ? OR username = ?', [email, username]);
         if (existingUsers.length > 0) {
             if (existingUsers[0].email === email) {
+                console.log('User already exists:', email, username);
                 return res.status(400).json({ success: false, message: 'Email already exists.' });
             }
             if (existingUsers[0].username === username) {
@@ -41,9 +44,33 @@ const handleSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             }
         }
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        console.log('Password hashed successfully');
+        // Type the result of the INSERT query as ResultSetHeader
         const [result] = yield db_1.signupDbPool.query('INSERT INTO users (fullname, email, username, password, country) VALUES (?, ?, ?, ?, ?)', [fullname, email, username, hashedPassword, country]);
-        console.log('Sign up successful:', result);
-        res.status(201).json({ success: true, message: 'Sign up successful' });
+        const userId = result.insertId; // Now TypeScript understands insertId is available
+        console.log('User inserted with ID:', userId);
+        // Initialize user's dashboard-related entries
+        // Insert study reminder (Default to 2 days per week)
+        yield db_1.signupDbPool.query('INSERT INTO study_reminders (user_id, days_per_week) VALUES (?, ?)', [userId, 2]);
+        // Optionally initialize medals (if needed at signup)
+        yield db_1.signupDbPool.query('INSERT INTO medals (user_id, medal_type, earned_on) VALUES (?, ?, ?)', [userId, 'Bronze', new Date()]);
+        // Generate JWT
+        const token = jsonwebtoken_1.default.sign({ userId, email, username }, // Payload (can include user details)
+        process.env.JWT_SECRET, // Use your JWT_SECRET from the environment variables
+        { expiresIn: '1h' } // Token expiration time
+        );
+        console.log('JWT token generated:', token);
+        res.status(201).json({
+            success: true,
+            message: 'Sign up successful, dashboard created',
+            token // Send token back to the client
+        });
+        // Log the message for debugging
+        console.log('Sign-up Response:', {
+            success: true,
+            message: 'Sign-up successful, dashboard created',
+            token
+        });
     }
     catch (error) {
         console.error('Error during sign up:', error);
@@ -70,8 +97,17 @@ const handleSignIn = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             console.log('Incorrect password');
             return res.status(400).json({ success: false, message: 'Incorrect password.' });
         }
-        console.log('Sign in successful');
-        res.status(200).json({ success: true, message: 'Sign in successful' });
+        // Generate JWT
+        const token = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email, username: user.username }, // Payload
+        process.env.JWT_SECRET, // Use your JWT_SECRET from the environment variables
+        { expiresIn: '1h' } // Token expiration time
+        );
+        console.log('JWT token generated:', token);
+        res.status(200).json({
+            success: true,
+            message: 'Sign in successful',
+            token // Send token back to the client
+        });
     }
     catch (error) {
         console.error('Error during sign in:', error);
