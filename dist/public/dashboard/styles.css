@@ -327,6 +327,79 @@ h1 {
     padding-bottom: 10px; /* Add some padding below the content */
     margin-bottom: 10px;  /* Add some space between divs */
 }
+.course-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    width: 400px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .course-content {
+    display: flex;
+    padding: 10px;
+  }
+
+  .course-content img {
+    width: 120px;
+    height: auto;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+
+  .course-details {
+    flex: 1;
+  }
+
+  .course-category {
+    color: #8a2be2;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .course-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .course-description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Limit to 4 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .divider {
+    border-top: 1px solid #ddd;
+  }
+
+  .course-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+  }
+
+  .course-footer .price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #28a745;
+  }
+
+  .course-footer .duration {
+    font-size: 14px;
+    color: #888;
+  }
 
 @media (max-width: 480px) {
     main {

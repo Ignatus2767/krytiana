@@ -63,87 +63,100 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchUserData();
 });
 
+// Sample course data
+const courses = [
+    {
+        id: 1,
+        title: "Complete mobile repaire course",
+        category: "Development",
+        description: "This course offers an in-depth exploration of Android and iOS smartphones, covering both software development and hardware design. It is designed for learners who want to master the intricacies of mobile technology from the ground up.",
+        image: "web.png",
+        price: "video course",
+        duration: "48 hrs"
+    },
 
-// Call the function when the page loads
-document.addEventListener('DOMContentLoaded', loadCoursesToDropdown);
+    // Add more courses as needed
+];
 
-const userData = {
-    username: "krytian",
-    coursesInProgress: 2,
-    CourseCompletionPercentage: 37,
-    CoursesCompleted: 1,
-    
-    courses: [
-        {
-            name: "Full Stack Development",
-            progress: 79,
-            lastActive: "Today",
-            imageUrl: "./web.png", // Replace with actual image URL
-        },
-        {
-            name: "Compelete android and ios repaire course",
-            progress: 100,
-            lastActive: "Today",
-            imageUrl: "./repaire.jpg", // Replace with actual image URL
-        },
-        {
-            name: "Web Development with HTML and CSS for Beginners",
-            progress: 27,
-            lastActive: "Yesterday",
-            imageUrl: "./android1.jpg", // Replace with actual image URL
-        }
-    ]
-};
+// Function to generate course cards
+function generateCourseCards(courses) {
+    const courseList = document.getElementById("course-list1");
 
-// Function to load courses into the dropdown
-function loadCoursesToDropdown() {
-    const dropdown = document.getElementById('todo-task');
+    courses.forEach(course => {
+        // Create card element
+        const card = document.createElement("div");
+        card.className = "course-card";
 
-    // Loop through the courses array and create <option> elements
-    coursList.forEach(course => {
-        const option = document.createElement('option');
-        option.value = course.id;
-        option.textContent = course.title;
-        dropdown.appendChild(option);
+        // Create content section
+        const content = document.createElement("div");
+        content.className = "course-content";
+
+        // Create image element
+        const img = document.createElement("img");
+        img.src = course.image;
+        img.alt = course.title;
+
+        // Create details section
+        const details = document.createElement("div");
+        details.className = "course-details";
+
+        // Create category, title, and description
+        const category = document.createElement("div");
+        category.className = "course-category";
+        category.textContent = course.category;
+
+        const title = document.createElement("div");
+        title.className = "course-title";
+        title.textContent = course.title;
+
+        const description = document.createElement("div");
+        description.className = "course-description";
+        description.textContent = course.description;
+
+        // Append category, title, and description to details
+        details.appendChild(category);
+        details.appendChild(title);
+        details.appendChild(description);
+
+        // Append image and details to content
+        content.appendChild(img);
+        content.appendChild(details);
+
+        // Append content to card
+        card.appendChild(content);
+
+        // Create divider
+        const divider = document.createElement("div");
+        divider.className = "divider";
+        card.appendChild(divider);
+
+        // Create footer
+        const footer = document.createElement("div");
+        footer.className = "course-footer";
+
+        // Create price and duration elements
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = course.price;
+
+        const duration = document.createElement("div");
+        duration.className = "duration";
+        duration.textContent = course.duration;
+
+        // Append price and duration to footer
+        footer.appendChild(price);
+        footer.appendChild(duration);
+
+        // Append footer to card
+        card.appendChild(footer);
+
+        courseList.appendChild(card);
     });
 }
 
+// Call the function to generate the cards
+generateCourseCards(courses);
 
-const courseList = document.getElementById("course-list");
-
-userData.courses.forEach(course => {
-    const courseCard = document.createElement("div");
-    courseCard.className = "course-card";
-
-    // Check if progress is 100%
-    let buttonLabel = "Continue Learning";
-    let progressText = `${course.progress}% Complete`;
-
-    if (course.progress === 100) {
-        buttonLabel = "Enroll Again";  // Change the button label to "Enroll Again"
-        progressText = "Completed";   // Change the progress text to "Completed"
-    }
-
-    courseCard.innerHTML = `
-        <div class="left-section">
-            <div class="course-image">
-                <img src="${course.imageUrl}" alt="${course.name}">
-            </div>
-            <button class="unenroll-button">Unenroll</button>
-        </div>
-
-        <div class="right-section">
-            <h3>${course.name}</h3>
-            <div class="progress-bar">
-                <div style="width: ${course.progress}%"></div>
-                <span id="progress-percentage">${progressText}</span>
-            </div>
-            <button class="continue-button">${buttonLabel}</button>
-        </div>
-    `;
-
-    courseList.appendChild(courseCard);
-});
 
 
 // Fetch user data and populate the dashboard with dynamic content
@@ -183,7 +196,7 @@ async function fetchUserData() {
                 courseCard.innerHTML = `
                     <div class="left-section">
                         <div class="course-image">
-                            <img src="./web.png" alt="${course.title}">
+                            <img src="${course.imageUrl}" alt="${course.title}">
                         </div>
                         <button class="unenroll-button">Unenroll</button>
                     </div>
