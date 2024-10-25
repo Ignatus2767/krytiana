@@ -109,7 +109,7 @@ function loadCoursesToDropdown() {
 }
 
 
-const courseList = document.getElementById("course-list");
+const courseList = document.getElementById("course-list1");
 
 userData.courses.forEach(course => {
     const courseCard = document.createElement("div");
