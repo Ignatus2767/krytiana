@@ -76,7 +76,7 @@ export const handleSignUp = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { userId, email, username }, // Payload (can include user details)
       process.env.JWT_SECRET as string, // Use your JWT_SECRET from the environment variables
-      { expiresIn: '1h' } // Token expiration time
+      { expiresIn: '3d' } // Token expiration time
     );
     console.log('JWT token generated:', token);
 
@@ -143,7 +143,7 @@ export const handleSignIn = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { userId: user.id, email: user.email, username: user.username }, // Payload
       process.env.JWT_SECRET as string, // Use your JWT_SECRET from the environment variables
-      { expiresIn: '1h' } // Token expiration time
+      { expiresIn: '3d' } // Token expiration time
     );
 
     console.log('JWT token generated:', token);
