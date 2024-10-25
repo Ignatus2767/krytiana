@@ -60,7 +60,7 @@ const handleSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         // Generate JWT
         const token = jsonwebtoken_1.default.sign({ userId, email, username }, // Payload (can include user details)
         process.env.JWT_SECRET, // Use your JWT_SECRET from the environment variables
-        { expiresIn: '1h' } // Token expiration time
+        { expiresIn: '3d' } // Token expiration time
         );
         console.log('JWT token generated:', token);
         const refreshToken = generateRefreshToken({ id: userId });
@@ -107,7 +107,7 @@ const handleSignIn = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         // Generate JWT
         const token = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email, username: user.username }, // Payload
         process.env.JWT_SECRET, // Use your JWT_SECRET from the environment variables
-        { expiresIn: '1h' } // Token expiration time
+        { expiresIn: '3d' } // Token expiration time
         );
         console.log('JWT token generated:', token);
         const refreshToken = generateRefreshToken(user);
