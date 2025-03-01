@@ -16,51 +16,55 @@
 
     <div class="container">
         <div class="grid-1">
-
           <div class="sessions1">
-            <button class="scroll-button left" onclick="scrollSessionsLeft()">&#9664;</button>
-            <div class="sessions-wrapper">
-              <div class="session" id="session-1" onclick="displayContent(1)">Sess1</div>
-              <div class="session" id="session-2" onclick="displayContent(2)">Sess2</div>
-              <div class="session" id="session-3" onclick="displayContent(3)">Sess3</div>
-              <div class="session" id="session-4" onclick="displayContent(4)">Sess4</div>
+            <div class="sessions">
+              <button class="scroll-button left" onclick="scrollSessionsLeft()">&#9664;</button>
+              <div class="sessions-wrapper">
+                <div class="session" id="session-1" onclick="displayContent(1)">Sess1</div>
+                <div class="session" id="session-2" onclick="displayContent(2)">Sess2</div>
+                <div class="session" id="session-3" onclick="displayContent(3)">Sess3</div>
+                <div class="session" id="session-4" onclick="displayContent(4)">Sess4</div>
+              </div>
+              <button class="scroll-button right" onclick="scrollSessionsRight()">&#9654;</button>
             </div>
-            <button class="scroll-button right" onclick="scrollSessionsRight()">&#9654;</button>
+            
           </div>
+          
 
             <div id="subtopic-display" style="display: none; background-color: #f8f8f8; padding: 15px; border-radius: 5px; margin-bottom: 10px;">
-                <h3 id="subtopic-title"></h3>
-                <p id="subtopic-content"></p>
-                
-                <div class="navigation-buttons">
-                  <button id="prev-topic" onclick="navigateSubtopic(-1)" disabled>Back</button>
-                  <button id="next-topic" onclick="navigateSubtopic(1)">Next</button>
-                </div>
+              <h3 id="subtopic-title"></h3>
+              <p id="subtopic-content"></p>
+              
+              <div class="navigation-buttons">
+                <button id="prev-topic" onclick="displaySubtopic(currentIndex - 1)">Previous</button>
+                <button id="next-topic" onclick="displaySubtopic(currentIndex + 1)">Next</button>
               </div>
+            </div>
               
               
         </div>
 
         <div class="grid-2">
             <div class="course-content">
-                <div class="sessions">
-                  <button class="scroll-button left" onclick="scrollSessionsLeft()">&#9664;</button>
-                  <div class="sessions-wrapper">
-                    <div class="session" id="session-1" onclick="displayContent(1)">Sess1</div>
-                    <div class="session" id="session-2" onclick="displayContent(2)">Sess2</div>
-                    <div class="session" id="session-3" onclick="displayContent(3)">Sess3</div>
-                    <div class="session" id="session-4" onclick="displayContent(4)">Sess4</div>
-                  </div>
-                  <button class="scroll-button right" onclick="scrollSessionsRight()">&#9654;</button>
+              <div class="sessions">
+                <button class="scroll-button left" onclick="scrollSessionsLeft()">&#9664;</button>
+                <div class="sessions-wrapper">
+                  <div class="session" id="session-1" onclick="displayContent(1)">Sess1</div>
+                  <div class="session" id="session-2" onclick="displayContent(2)">Sess2</div>
+                  <div class="session" id="session-3" onclick="displayContent(3)">Sess3</div>
+                  <div class="session" id="session-4" onclick="displayContent(4)">Sess4</div>
                 </div>
+                <button class="scroll-button right" onclick="scrollSessionsRight()">&#9654;</button>
+              </div>
               
-                <div class="content" id="content-1" style="display: none;"></div>
+            
+              <div class="content" id="content-1" style="display: none;"></div>
+              
+              <div class="content" id="content-2" style="display: none;"></div>
                 
-                <div class="content" id="content-2" style="display: none;"></div>
-                  
-                <div class="content" id="content-3" style="display: none;"></div>
+              <div class="content" id="content-3" style="display: none;"></div>
 
-                <div class="content" id="content-4" style="display: none;"></div>
+              <div class="content" id="content-4" style="display: none;"></div>
                   
               
               </div>
