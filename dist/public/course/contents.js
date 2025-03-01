@@ -162,3 +162,5 @@ function loadSubtopics(sessionId) {
     displaySubtopic(sessionSections[0].subtopics[0].title, sessionSections[0].subtopics[0].content);
   }
 }
+
+

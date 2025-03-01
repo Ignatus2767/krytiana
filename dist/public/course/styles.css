@@ -42,16 +42,28 @@ body {
 
 
 .sessions-wrapper {
-  display: flex;
-  overflow-x: scroll;
-  scroll-behavior: smooth;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  width: 260px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(87, 127, 0, 0.5) transparent;
 }
 
 .sessions-wrapper::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari, Opera */
+  height: 5px;
+}
+
+.sessions-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sessions-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(87, 127, 0, 0.5);
+  border-radius: 5px;
+}
+
+.scroll-button:focus,
+.back-to-course:focus {
+  outline: 2px solid white;
+  box-shadow: 0 0 5px white;
 }
 
 .session {
@@ -275,15 +287,24 @@ body {
 
 
 .grid-2-overlay {
-  display: none; /* Initially hidden */
-  position: absolute;
+  display: none;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
   z-index: 1000;
   padding: 20px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.grid-2-overlay.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .menu-icon {
@@ -332,6 +353,10 @@ body {
 
   .sessions1 {
     display: flex;
+  }
+
+  .sessions-wrapper {
+    width: 100%;
   }
 
 }

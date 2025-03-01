@@ -1,7 +1,7 @@
 let subtopics = []; // Store subtopics of the current session
 let currentIndex = 0; // Tracks current subtopic
 
-function displaySubtopic(title, content) {
+function displaySubtopicFormatted(title, content) {
   document.getElementById("subtopic-title").innerText = title;
 
   let subtopicContent = document.getElementById("subtopic-content");
@@ -27,29 +27,63 @@ function displaySubtopic(title, content) {
 
 
 
-function navigateSubtopic(direction) {
-  currentIndex += direction; // Move forward or backward
-  if (subtopics[currentIndex]) {
-    displaySubtopic(subtopics[currentIndex].title, subtopics[currentIndex].content);
-  }
+function displaySubtopic(title, content) {
+  document.getElementById("subtopic-title").innerText = title;
+  document.getElementById("subtopic-content").innerHTML = content; // Use innerHTML to render formatting
+
+  document.getElementById("subtopic-display").style.display = "block";
+
+  // Update navigation index
+  currentIndex = subtopics.findIndex(subtopic => subtopic.title === title);
+  updateNavigationButtons();
 }
 
-function updateNavigationButtons() {
-  document.getElementById("prev-topic").disabled = currentIndex === 0;
-  document.getElementById("next-topic").disabled = currentIndex === subtopics.length - 1;
-}
 
 
 
 function displayContent(sessionId) {
-  document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
-  document.querySelectorAll('.session').forEach(session => session.classList.remove('active'));
+  // Get both grids
+  let grids = document.querySelectorAll('.grid-1, .grid-2');
 
-  document.getElementById(`content-${sessionId}`).style.display = 'block';
-  document.getElementById(`session-${sessionId}`).classList.add('active');
+  grids.forEach(grid => {
+    if (!grid) return;
 
-  loadSubtopics(sessionId);
+    // Hide all content sections inside each grid
+    grid.querySelectorAll('.content').forEach(content => content.style.display = 'none');
+
+    // Remove 'active' class from all session buttons in each grid
+    grid.querySelectorAll('.session').forEach(session => session.classList.remove('active'));
+
+    // Show the selected content if it exists
+    let contentElement = grid.querySelector(`#content-${sessionId}`);
+    if (contentElement) {
+      contentElement.style.display = 'block';
+    }
+
+    // Add 'active' class to the clicked session in each grid
+    let sessionElement = grid.querySelector(`#session-${sessionId}`);
+    if (sessionElement) {
+      sessionElement.classList.add('active');
+    }
+  });
+  
+  // Load subtopics if available
+  if (typeof loadSubtopics === 'function') {
+    loadSubtopics(sessionId);
+  }
 }
+
+function updateNavigationButtons() {
+  let prevButton = document.getElementById("prev-topic");
+  let nextButton = document.getElementById("next-topic");
+
+  if (!prevButton || !nextButton) return; // Prevents errors if buttons are missing
+
+  prevButton.disabled = (currentIndex === 0);
+  nextButton.disabled = (currentIndex === subtopics.length - 1);
+}
+
+
 
 // Scroll controls for sessions
 function scrollSessionsLeft() {
@@ -93,8 +127,7 @@ function selectSession(sessionId) {
 }
 
 
-
 // Auto-load session 2 on page load
 document.addEventListener('DOMContentLoaded', function() {
-  displayContent(2);
+  displayContent(1);
 });
