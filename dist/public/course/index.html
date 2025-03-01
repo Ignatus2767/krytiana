@@ -32,12 +32,13 @@
           
 
             <div id="subtopic-display" style="display: none; background-color: #f8f8f8; padding: 15px; border-radius: 5px; margin-bottom: 10px;">
+              <h1 id="subtopic-head">subtopic-head</h1>
               <h3 id="subtopic-title"></h3>
               <p id="subtopic-content"></p>
               
               <div class="navigation-buttons">
-                <button id="prev-topic" onclick="displaySubtopic(currentIndex - 1)">Previous</button>
-                <button id="next-topic" onclick="displaySubtopic(currentIndex + 1)">Next</button>
+                <button id="prev-topic" onclick="navigateSubtopic(-1)" disabled>Back</button>
+                <button id="next-topic" onclick="navigateSubtopic(1)">Next</button>
               </div>
             </div>
               
