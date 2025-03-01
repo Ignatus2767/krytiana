@@ -117,6 +117,24 @@ function loadSubtopics(sessionId) {
 
   };
   
+  if (!sessionData[sessionId]) {
+    console.error("No subtopics found for this session.");
+    return;
+  }
+
+  // Extract subtopics from session data
+  subtopics = sessionData[sessionId].flatMap(topic => topic.subtopics);
+
+  // Reset index to the first subtopic
+  currentIndex = 0;
+
+  // Display the first subtopic (if available)
+  if (subtopics.length > 0) {
+    displaySubtopic(subtopics[currentIndex].title, subtopics[currentIndex].content);
+  }
+
+  // Update navigation buttons after loading subtopics
+  updateNavigationButtons();
 
   const sessionSections = sessionData[sessionId]; // Get sections for the session
   if (!sessionSections) return;
@@ -162,5 +180,3 @@ function loadSubtopics(sessionId) {
     displaySubtopic(sessionSections[0].subtopics[0].title, sessionSections[0].subtopics[0].content);
   }
 }
-
-

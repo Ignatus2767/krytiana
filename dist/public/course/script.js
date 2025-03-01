@@ -1,5 +1,21 @@
+let title = {}
 let subtopics = []; // Store subtopics of the current session
 let currentIndex = 0; // Tracks current subtopic
+function navigateSubtopic(direction) {
+  const newIndex = currentIndex + direction;
+
+  if (newIndex >= 0 && newIndex < subtopics.length) {
+    currentIndex = newIndex;
+    displaySubtopic(subtopics[currentIndex].title, subtopics[currentIndex].content);
+    updateNavigationButtons();
+  }
+}
+
+function updateNavigationButtons() {
+  document.getElementById("prev-topic").disabled = currentIndex === 0;
+  document.getElementById("next-topic").disabled = currentIndex === subtopics.length - 1;
+}
+
 
 function displaySubtopicFormatted(title, content) {
   document.getElementById("subtopic-title").innerText = title;
@@ -73,17 +89,6 @@ function displayContent(sessionId) {
   }
 }
 
-function updateNavigationButtons() {
-  let prevButton = document.getElementById("prev-topic");
-  let nextButton = document.getElementById("next-topic");
-
-  if (!prevButton || !nextButton) return; // Prevents errors if buttons are missing
-
-  prevButton.disabled = (currentIndex === 0);
-  nextButton.disabled = (currentIndex === subtopics.length - 1);
-}
-
-
 
 // Scroll controls for sessions
 function scrollSessionsLeft() {
@@ -125,6 +130,8 @@ function selectSession(sessionId) {
   toggleMenu(); // Hide Grid 2 and show Grid 1
   displayContent(sessionId); // Load the selected session
 }
+
+
 
 
 // Auto-load session 2 on page load
