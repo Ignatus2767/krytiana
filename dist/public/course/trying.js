@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function calculateReadingTime(text) {
-    const wordsPerMinute = 20; // Average reading speed
+    const wordsPerMinute = 80; // Average reading speed
     const wordCount = text.split(/\s+/).length;
     const readingTime = Math.ceil(wordCount / wordsPerMinute);
     return readingTime;
