@@ -201,4 +201,13 @@ button:disabled {
   aside.open {
       display: block;
   }
+
+  header {
+    padding: 0px;
+  }
+
+  #header-title{
+    font-size: 24px;
+  }
+
 }
