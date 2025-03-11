@@ -3,82 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Sessions</title>
+    <title>Online Courses</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <header class="top-menu">
-        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-        <h1>Poultry Farming</h1>
-        
+    <header>
+        <button id="menu-toggle">☰</button>
+        <h1 id="header-title">Online Courses</h1>
+        <button id="dark-mode-toggle">🌙</button>
     </header>
 
     <div class="container">
-        <div class="grid-1">
-          <div class="sessions1">
-            <div class="sessions">
-              <button class="scroll-button left" onclick="scrollSessionsLeft()">&#9664;</button>
-              <div class="sessions-wrapper">
-                <div class="session" id="session-1" onclick="displayContent(1)">Sess1</div>
-                <div class="session" id="session-2" onclick="displayContent(2)">Sess2</div>
-                <div class="session" id="session-3" onclick="displayContent(3)">Sess3</div>
-                <div class="session" id="session-4" onclick="displayContent(4)">Sess4</div>
-              </div>
-              <button class="scroll-button right" onclick="scrollSessionsRight()">&#9654;</button>
+        <aside id="sidebar">
+          <input type="text" id="search-box" placeholder="Search topics...">
+          <ul id="search-results"></ul>
+          <h2>Course Contents</h2>
+          <ul id="course-list"></ul>
+        </aside>
+
+        <main id="reading-area">
+            <div id="progress-bar"></div>
+            <article id="course-content">
+                <h2>Welcome</h2>
+                <p>Select a course to start learning.</p>
+                <button id="done-btn" style="display: none;">Done</button>
+            </article>
+            <div class="navigation">
+                <button id="prev-btn" disabled>Previous</button>
+                <button id="next-btn">Next</button>
             </div>
-            
-          </div>
-          
+            <p id="progress-text">0% completed</p> <!-- New progress text -->
 
-            <div id="subtopic-display" style="display: none; background-color: #f8f8f8; padding: 15px; border-radius: 5px; margin-bottom: 10px;">
-              <h1 id="subtopic-head">subtopic-head</h1>
-              <h3 id="subtopic-title"></h3>
-              <p id="subtopic-content"></p>
-              
-              <div class="navigation-buttons">
-                <button id="prev-topic" onclick="navigateSubtopic(-1)" disabled>Back</button>
-                <button id="next-topic" onclick="navigateSubtopic(1)">Next</button>
-              </div>
-            </div>
-              
-              
-        </div>
-
-        <div class="grid-2">
-            <div class="course-content">
-              <div class="sessions">
-                <button class="scroll-button left" onclick="scrollSessionsLeft()">&#9664;</button>
-                <div class="sessions-wrapper">
-                  <div class="session" id="session-1" onclick="displayContent(1)">Sess1</div>
-                  <div class="session" id="session-2" onclick="displayContent(2)">Sess2</div>
-                  <div class="session" id="session-3" onclick="displayContent(3)">Sess3</div>
-                  <div class="session" id="session-4" onclick="displayContent(4)">Sess4</div>
-                </div>
-                <button class="scroll-button right" onclick="scrollSessionsRight()">&#9654;</button>
-              </div>
-              
-            
-              <div class="content" id="content-1" style="display: none;"></div>
-              
-              <div class="content" id="content-2" style="display: none;"></div>
-                
-              <div class="content" id="content-3" style="display: none;"></div>
-
-              <div class="content" id="content-4" style="display: none;"></div>
-                  
-              
-              </div>
-              
-        </div>
-
-        
+        </main>
     </div>
 
-    
-
-    <script src="script.js"></script>
     <script src="contents.js"></script>
-
+    <script src="trying.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

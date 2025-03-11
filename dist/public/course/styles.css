@@ -1,362 +1,204 @@
 /* General Styles */
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+body.dark-mode {
+  background-color: #222;
+  color: #fff;
 }
 
-
-/* Ensure content doesn't get covered */
-.container {
-  margin-top: 60px;
-  display: flex;
+/* Dark mode for header */
+.dark-mode header {
+  background-color: #333;
 }
 
-/* Grid 1 */
-.grid-1 {
-  flex: 2;
+/* Dark mode for sidebar */
+.dark-mode #sidebar {
+  background-color: #444;
+}
+
+/* Dark mode for main reading area */
+.dark-mode #course-content {
+  background-color: #333;
+  color: #fff;
   padding: 20px;
-  
+  border-radius: 5px;
 }
 
-/* Grid 2 */
-.grid-2 {
-  flex: 1;
+.dark-mode #reading-area {
+  background-color: #333;
+  color: #fff;
   padding: 20px;
-  background-color: lightgray;
+  border-radius: 5px;
 }
 
-.course-content {
-  width: 100%;
-  padding: 0px;
+/* Dark mode for buttons */
+.dark-mode button {
+  background-color: #555;
+  color: #fff;
 }
 
-.sessions {
+/* Dark mode for progress bar */
+.dark-mode #progress-bar {
+  background-color: #c78484;
+}
+
+
+/* Header */
+header {
+  background-color: rgb(87, 127, 0);
+  color: white;
+  padding: 15px;
   display: flex;
   align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-bottom: 20px;
-  max-width: 390px;
 }
 
 
 
-.sessions-wrapper {
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(87, 127, 0, 0.5) transparent;
-}
-
-.sessions-wrapper::-webkit-scrollbar {
-  height: 5px;
-}
-
-.sessions-wrapper::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sessions-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(87, 127, 0, 0.5);
-  border-radius: 5px;
-}
-
-.scroll-button:focus,
-.back-to-course:focus {
-  outline: 2px solid white;
-  box-shadow: 0 0 5px white;
-}
-
-.session {
-  display: inline-block;
-  padding: 15px 16.5px;
-  margin: 0 6px;
-  background-color: rgba(87, 127, 0, 0.315);
-  border-radius: 5px;
+#menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
   cursor: pointer;
-  font-size: 0.9em;
-  transition: background-color 0.3s, color 0.3s;
+  margin-right: 15px;
 }
 
-.session.active {
-  background-color: rgb(87, 127, 0);
+/* Container */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+aside {
+  width: 250px;
+  background-color: white;
+  padding: 15px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+#course-list {
+  list-style: none;
+  padding: 0;
+}
+
+#course-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+#course-list li:hover {
+  background-color: rgba(87, 127, 0, 0.521);
   color: white;
 }
 
-.scroll-button {
-  background-color: rgba(0, 0, 0, 0.87);
-  border-color: rgb(87, 127, 0);
-  border-width: 2px;
-  font-size: 24px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: rgb(87, 127, 0);
+/* Highlight active course in the sidebar */
+#course-list li.active {
+  background-color: rgb(87, 127, 0);
+  color: white;
+  font-weight: bold;
 }
 
-.content {
+/* Highlight active section heading */
+.active-section {
+  color: rgb(87, 127, 0);
+  border-left: 5px solid rgb(87, 127, 0);
+  padding-left: 10px;
+}
+
+
+/* Main Content */
+main {
+  flex-grow: 1;
+  padding: 20px;
+  background: white;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Progress Bar */
+#progress-bar {
+  height: 5px;
+  background: rgb(87, 127, 0);
+  width: 0%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Navigation Buttons */
+.navigation {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
-.content h2 {
-  color: rgb(87, 127, 0);
-}
-
-.section {
-  margin-bottom: 20px;
-}
-
-.section-title {
-  background-color: #f2f2f2;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.section-title.active {
-  background-color: rgb(87, 127, 0); /* Red background for active state */
-  color: white; /* White text for active state */
-}
-
-.section-title.active .arrow {
-  transform: rotate(180deg); /* Arrow faces up when active */
-}
-
-.section-title .arrow {
-  font-size: 1em;
-  transition: transform 0.3s; /* Smooth transition for rotation */
-  transform: rotate(0deg); /* Arrow faces down when inactive */
-}
-
-.section-content {
-  display: none;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-left: 3px solid rgb(87, 127, 0);
-  border-radius: 0 0 5px 5px;
-}
-
-
-
-.back-to-course {
-  background-color: rgb(87, 127, 0);
-  color: white;
+button {
   padding: 10px 15px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  font-size: 1em;
-  margin-bottom: 15px;
-  transition: background-color 0.3s;
-}
-
-.back-to-course:hover {
-  background-color: rgba(87, 127, 0, 0.8);
-}
-
-.menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.menu ul li {
-  margin: 0 15px;
-}
-
-.menu ul li a {
-  text-decoration: none;
-  color: white;
-  font-size: 1em;
-  transition: color 0.3s;
-}
-
-.menu ul li a:hover {
-  color: lightgray;
-}
-
-/* Menu Icon for Mobile */
-.menu-icon {
-  display: none;
-  font-size: 2em;
-  cursor: pointer;
-}
-
-/* Mobile Menu (Hidden by Default) */
-.mobile-menu {
-  display: none;
   background-color: rgb(87, 127, 0);
-  position: absolute;
-  top: 50px;
-  width: 100%;
+  color: white;
+  font-size: 16px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+#progress-bar {
+  height: 5px;
+  background-color: rgb(127, 0, 0); /* Your preferred green */
+  transition: width 0.3s ease-in-out;
+}
+
+#progress-text {
   text-align: center;
+  font-weight: bold;
+  margin-top: 5px;
+  color: rgb(87, 127, 0); /* Your preferred green */
 }
 
-.mobile-menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-.mobile-menu ul li {
-  padding: 10px;
-}
-
-.mobile-menu ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2em;
-}
-
-/* Top Menu Bar */
-.top-menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(87, 127, 0);
-  padding: 15px;
-  color: white;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-
-.top-menu h1 {
-  margin: 0;
-  font-size: 1.5em;
-  margin-right: 28px;
-}
-
-.menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.menu ul li {
-  margin: 0 15px;
-}
-
-.menu ul li a {
-  text-decoration: none;
-  color: white;
-  font-size: 1em;
-  transition: color 0.3s;
-}
-
-.menu ul li a:hover {
-  color: lightgray;
-}
-
-/* Menu Icon for Mobile */
-.menu-icon {
-  display: none;
-  font-size: 2em;
-  cursor: pointer;
-}
-
-/* Mobile Menu (Hidden by Default) */
-.mobile-menu {
-  display: none;
-  background-color: rgb(87, 127, 0);
-  position: absolute;
-  top: 50px;
-  width: 100%;
-  text-align: center;
-}
-
-.mobile-menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-.mobile-menu ul li {
-  padding: 10px;
-}
-
-.mobile-menu ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2em;
-}
-
-
-.grid-2-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  z-index: 1000;
-  padding: 20px;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.grid-2-overlay.active {
+#done-btn {
   display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.menu-icon {
-  font-size: 24px;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: rgb(87, 127, 0);
+  color: white;
+  border: none;
   cursor: pointer;
+  font-size: 16px;
 }
 
-.grid-2-static {
-  display: block; /* Always visible on large screens */
+#done-btn:hover {
+  background-color: rgb(67, 107, 0);
 }
-
-.sessions1 {
-  display: none;
-}
-
-
-
-
 
 /* Responsive Design */
-@media (max-width: 850px) {
+@media (max-width: 768px) {
   .container {
       flex-direction: column;
   }
-  .grid-2 {
+
+  aside {
+      width: 100%;
+      height: auto;
       display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      background: white;
+      z-index: 10;
   }
 
-  .menu {
-    display: none; /* Hide regular menu */
+  aside.open {
+      display: block;
   }
-  .menu-icon {
-    display: block; /* Show menu icon */
-  }
-
- .grid-1, .grid-2 {
-    width: 100%;
-  }
-
-  .grid-2 {
-    display: none; /* Initially hidden */
-  }
-  .grid-2-static {
-    display: none; /* Hide static Grid 2 on small screens */
-  }
-
-  .sessions1 {
-    display: flex;
-  }
-
-  .sessions-wrapper {
-    width: 100%;
-  }
-
 }
