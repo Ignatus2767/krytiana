@@ -4,12 +4,14 @@ const courses = [
       sections: [
         {
             heading: "What is Nutrition?",
+            video: "https://www.youtube.com/embed/K8YELRmUb5o", 
             content: `
             Nutrition is the science of how food affects the body, including the processes of digestion, absorption, metabolism, and excretion of nutrients. It also examines how nutrients influence health, disease prevention, and overall well-being.  
             `
         },
         {
             heading: "What is Dietetics?",
+            
             content: `
                 Dietetics is the application of nutrition science to help individuals and communities make informed food choices to improve health. It involves assessing dietary needs, creating meal plans, and managing nutrition-related health conditions.
             `

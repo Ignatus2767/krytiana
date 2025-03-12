@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const progressText = document.getElementById("progress-text");
   const searchBox = document.getElementById("search-box");
   const searchResults = document.getElementById("search-results");
-
+  const videoContainer = document.getElementById("videoContainer");
 
   let currentCourseIndex = 0;
   let currentSectionIndex = 0;
@@ -123,6 +123,15 @@ function displaySection() {
         <h2 class="active-section">${section.heading}</h2>
         <p>${section.content.replace(/\n/g, "<br>")}</p>
     `;
+
+     // Check if video exists
+     if (section.video) {
+        videoContainer.innerHTML = `<iframe  src="${section.video}" frameborder="0" allowfullscreen></iframe>`;
+        videoContainer.style.display = "block"; // Show video section
+    } else {
+        videoContainer.innerHTML = ""; // Remove existing video if no video for this topic
+        videoContainer.style.display = "none"; // Hide video section
+    }
 
     updateProgress();
     updateOverallProgress();
