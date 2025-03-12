@@ -4,7 +4,7 @@ const courses = [
       sections: [
         {
             heading: "What is Nutrition?",
-            video: "https://www.youtube.com/embed/K8YELRmUb5o", 
+            video: "https://www.youtube.com/embed/PtFnk0btJOQ?si=3p50S4ZiIed_KbHI", 
             content: `
             Nutrition is the science of how food affects the body, including the processes of digestion, absorption, metabolism, and excretion of nutrients. It also examines how nutrients influence health, disease prevention, and overall well-being.  
             `
@@ -96,14 +96,19 @@ const courses = [
           heading: "Carbohydrates",
           content: `
              function:
-             1. Primary source of energy
-             2. Supports brain function and muscle activity
-             3. Aids digestion through dietary fiber
-             Types of Carbohydrates:
-             Simple Carbohydrates (Sugars): 
+             1. Primary source of energy, code1
+             2. Supports brain function and muscle activity, code2
+             3. Aids digestion through dietary fiber; <br>
+             <strong>Types of Carbohydrates:</strong> <br>
+
+             Simple Carbohydrates (Sugars): <br>
              1. Quickly absorbed, providing immediate energy. Found in fruits, honey, and dairy.
              2 Complex Carbohydrates (Starches & Fiber): Provide sustained energy and improve digestion. Found in whole grains, legumes, and vegetables.Sources:Whole grains (brown rice, oats, quinoa)Fruits (bananas, apples, oranges)Vegetables (potatoes, carrots, corn)Legumes (beans, lentils, chickpeas)Excess & Deficiency:Excess: Can lead to weight gain, insulin resistance, and diabetes.Deficiency: Causes fatigue, weakness, and brain fog.
-          `
+          `,
+          codes: [
+            { lang: "python", code: `print("Hello, World!")` },
+            { lang: "python", code: `numbers = [1, 2, 3, 4] \nprint(sum(numbers))` }
+        ]
       },
       {
           heading: "",

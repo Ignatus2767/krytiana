@@ -112,15 +112,20 @@ document.addEventListener("DOMContentLoaded", function () {
     return readingTime;
 }
 
-// Function to dynamically load images within content
-function insertImages(content, images) {
-    let contentParts = content.split(/image\d+/g); // Split by placeholders like image1, image2, etc.
+// Function to dynamically load images and code within content
+function insertMedia(content, images, codeSnippets) {
+    let contentParts = content.split(/image\d+|code\d+/g); // Split content by image and code placeholders
     let newContent = "";
 
     contentParts.forEach((text, index) => {
         newContent += `<p>${text.trim()}</p>`; // Add text part
+        
         if (images && images[index]) {
             newContent += `<img src="${images[index]}" alt="Course Image" style="max-width:100%; display:block; margin:10px 0;">`;
+        }
+
+        if (codeSnippets && codeSnippets[index]) {
+            newContent += `<pre><code class="language-${codeSnippets[index].lang}">${codeSnippets[index].code}</code></pre>`;
         }
     });
 
@@ -136,22 +141,28 @@ function displaySection() {
     courseContent.innerHTML = `
         <p><em>Estimated Reading Time: ${readingTime} min</em></p>
         <h2 class="active-section">${section.heading}</h2>
-        ${insertImages(section.content, section.images || [])}  
+        ${insertMedia(section.content, section.images || [], section.codes || [])}  
     `;
 
     // Check if video exists
     if (section.video) {
         videoContainer.innerHTML = `<iframe src="${section.video}" frameborder="0" allowfullscreen></iframe>`;
-        videoContainer.style.display = "block"; // Show video section
+        videoContainer.style.display = "block";
     } else {
         videoContainer.innerHTML = "";
-        videoContainer.style.display = "none"; // Hide video section
+        videoContainer.style.display = "none";
+    }
+
+    // Apply syntax highlighting (if using Prism.js or another library)
+    if (window.Prism) {
+        Prism.highlightAll();
     }
 
     updateProgress();
     updateOverallProgress();
     updateNavigation();
 }
+
 
 
 

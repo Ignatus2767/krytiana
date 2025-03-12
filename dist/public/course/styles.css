@@ -35,6 +35,10 @@ body.dark-mode {
   border-radius: 5px;
 }
 
+.dark-mode p{
+  color: #fff;
+}
+
 /* Dark mode for buttons */
 .dark-mode button {
   background-color: #555;
@@ -216,6 +220,29 @@ img {
   max-height: 400px;
   object-fit: cover;
 }
+
+/* General text styling */
+p {
+  font-family: "Roboto", sans-serif; 
+  font-size: 16px; 
+  line-height: 1.6; 
+  color: #333; 
+}
+
+/* Improve readability for code snippets */
+pre code {
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Increase spacing between sections */
+h2 {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
 
 @media (max-width: 1070px) {
  aside{
