@@ -112,6 +112,21 @@ document.addEventListener("DOMContentLoaded", function () {
     return readingTime;
 }
 
+// Function to dynamically load images within content
+function insertImages(content, images) {
+    let contentParts = content.split(/image\d+/g); // Split by placeholders like image1, image2, etc.
+    let newContent = "";
+
+    contentParts.forEach((text, index) => {
+        newContent += `<p>${text.trim()}</p>`; // Add text part
+        if (images && images[index]) {
+            newContent += `<img src="${images[index]}" alt="Course Image" style="max-width:100%; display:block; margin:10px 0;">`;
+        }
+    });
+
+    return newContent;
+}
+
 function displaySection() {
     let course = courses[currentCourseIndex];
     let section = course.sections[currentSectionIndex];
@@ -121,15 +136,15 @@ function displaySection() {
     courseContent.innerHTML = `
         <p><em>Estimated Reading Time: ${readingTime} min</em></p>
         <h2 class="active-section">${section.heading}</h2>
-        <p>${section.content.replace(/\n/g, "<br>")}</p>
+        ${insertImages(section.content, section.images || [])}  
     `;
 
-     // Check if video exists
-     if (section.video) {
-        videoContainer.innerHTML = `<iframe  src="${section.video}" frameborder="0" allowfullscreen></iframe>`;
+    // Check if video exists
+    if (section.video) {
+        videoContainer.innerHTML = `<iframe src="${section.video}" frameborder="0" allowfullscreen></iframe>`;
         videoContainer.style.display = "block"; // Show video section
     } else {
-        videoContainer.innerHTML = ""; // Remove existing video if no video for this topic
+        videoContainer.innerHTML = "";
         videoContainer.style.display = "none"; // Hide video section
     }
 
@@ -139,7 +154,8 @@ function displaySection() {
 }
 
 
-  function updateProgress() {
+
+function updateProgress() {
       let totalSections = courses[currentCourseIndex].sections.length;
       let progress = ((currentSectionIndex + 1) / totalSections) * 100;
       progressBar.style.width = progress + "%";

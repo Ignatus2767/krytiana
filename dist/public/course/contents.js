@@ -20,13 +20,16 @@ const courses = [
             heading: " Importance of Nutrition in Health",
             content: `
                 Proper nutrition is essential for:
-                
-                1. Growth and development
-                2. Maintaining a healthy immune system
-                3. Energy production
+                1. Growth and development, image1
+                2. Maintaining a healthy immune system, image2
+                3. Energy production, image3
                 4. Preventing chronic diseases like diabetes, heart disease, and obesity
                 5. Enhancing mental and physical performance
-            `
+            `,
+            images: [
+                "images/facebook.png",
+                "images/twitter.png",
+                "images/whatsapp.png"]
         },
         {
             heading: " Essential Nutrients",
