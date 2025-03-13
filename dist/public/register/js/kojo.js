@@ -17,16 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const forgotPasswordForm = document.getElementById('forgot-password-form');
     const forgotPasswordFormElement = document.getElementById('forgotPasswordForm');
 
-    //Debugging: Check if elements are properly selected
-    //console.log('Signup button:', signupBtn);
-    //console.log('Signin button:', signinBtn);
-    //console.log('Signup form element:', signupFormElement);
-    //console.log('Signin form element:', signinFormElement);
-    //console.log('Forgot password link:', forgotPasswordLink);
-    //console.log('Forgot password form:', forgotPasswordForm);
-    //console.log('Forgot password form element:', forgotPasswordFormElement);
-
-    // Ensure elements exist
+    
     if (!signupBtn || !signinBtn || !signupFormElement || !signinFormElement || !forgotPasswordLink || !forgotPasswordForm || !forgotPasswordFormElement) {
         //console.error('One or more elements are missing');
         return;
@@ -78,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const minLength = 8;
         const hasLetter = /[a-zA-Z]/.test(password);
         const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
         return password.length >= minLength && hasLetter && hasNumber;
     }
 
@@ -87,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = createFormData(this);
         if (!formData) return; // Exit if formData creation failed
 
-        const password = formData.get('password');
-        const confirmPassword = formData.get('confirm-password');
+        const password = formData.get('password').trim();
+        const confirmPassword = formData.get('confirm-password').trim();
 
         if (!validatePassword(password)) {
             showFeedback('Password must be at least 8 characters long and include at least one letter and one number.', 'error');
@@ -107,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(Object.fromEntries(formData.entries()))
         })
-        .then(response => response.json())
+        .then(response => response.json().catch(() => ({ success: false, message: "Invalid server response" })))
         .then(data => {
             if (data.success) {
                 showFeedback('Signup successful!', 'success');

@@ -1,4 +1,60 @@
 // scripts.js
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if user is logged in
+  const isLoggedIn = localStorage.getItem("token");
+
+
+  if (isLoggedIn === "true") {
+      // Change "Create Account / Sign in" to "Open Dashboard"
+      const loginText = document.querySelector(".login p");
+      if (loginText) {
+          loginText.textContent = "Open Dashboard";
+      }
+
+      // Change "Get Started" button text to "My Dashboard"
+      const getStartedBtn = document.querySelector(".btn");
+      if (getStartedBtn) {
+          getStartedBtn.textContent = "My Dashboard";
+          getStartedBtn.href = "./dashboard/"; // Redirect to dashboard
+      }
+
+      // Hide signup section
+      const signupSection = document.querySelector(".signup-gmore");
+      if (signupSection) {
+          signupSection.style.display = "none";
+      }
+  }
+});
+
+// Function to handle login
+function loginSuccess() {
+  localStorage.setItem("isLoggedIn", "true");
+  window.location.reload(); // Refresh to apply changes
+}
+
+// Example of handling login form submission
+document.getElementById("authForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  // Simulate a successful login
+  loginSuccess();
+});
+
+// Function to handle logout (Optional)
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  window.location.href = "/"; // Redirect to homepage or login
+}
+
+
+// Example: Add logout button functionality (if you have a logout button)
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", logout);
+}
+
+
 document.getElementById('menuIcon').addEventListener('click', function() {
   const navMenu = document.getElementById('navMenu');
   navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
