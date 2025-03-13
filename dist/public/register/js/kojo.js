@@ -11,21 +11,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const signupBtn = document.getElementById('signup-btn');
     const signinBtn = document.getElementById('signin-btn');
-    const signupFormElement = document.getElementById('signupForm'); // Fixed ID
-    const signinFormElement = document.getElementById('signinForm'); // Fixed ID
+    const signupFormElement = document.getElementById('signup-form');
+    const signinFormElement = document.getElementById('signin-form');
     const forgotPasswordLink = document.getElementById('forgot-password-link');
-    const forgotPasswordForm = document.getElementById('forgotPasswordForm'); // Fixed ID
+    const forgotPasswordForm = document.getElementById('forgot-password-form');
+    const forgotPasswordFormElement = document.getElementById('forgotPasswordForm');
 
-    if (!signupBtn || !signinBtn || !signupFormElement || !signinFormElement || !forgotPasswordLink || !forgotPasswordForm) {
-        console.warn('One or more elements are missing.');
+    
+    if (!signupBtn || !signinBtn || !signupFormElement || !signinFormElement || !forgotPasswordLink || !forgotPasswordForm || !forgotPasswordFormElement) {
+        //console.error('One or more elements are missing');
         return;
     }
 
     // Switch between forms
-    signupBtn.addEventListener('click', () => toggleActiveForm('signup'));
-    signinBtn.addEventListener('click', () => toggleActiveForm('signin'));
+    signupBtn.addEventListener('click', function() {
+        //console.log('Signup button clicked');
+        toggleActiveForm('signup');
+    });
+
+    signinBtn.addEventListener('click', function() {
+       // console.log('Sign In button clicked');
+        toggleActiveForm('signin');
+    });
 
     function toggleActiveForm(activeForm) {
+        //console.log('Toggling form to:', activeForm);
+
         signupBtn.classList.remove('active');
         signinBtn.classList.remove('active');
 
@@ -33,14 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
             signupBtn.classList.add('active');
             signupFormElement.classList.remove('hidden');
             signinFormElement.classList.add('hidden');
-        } else {
+        } else if (activeForm === 'signin') {
             signinBtn.classList.add('active');
             signinFormElement.classList.remove('hidden');
             signupFormElement.classList.add('hidden');
         }
     }
 
-    forgotPasswordLink.addEventListener('click', (event) => {
+    forgotPasswordLink.addEventListener('click', function(event) {
         event.preventDefault();
         forgotPasswordForm.classList.toggle('hidden');
     });
@@ -66,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const formData = createFormData(this);
-        if (!formData) return;
+        if (!formData) return; // Exit if formData creation failed
 
         const password = formData.get('password').trim();
         const confirmPassword = formData.get('confirm-password').trim();
@@ -83,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         fetch('/api/users/signup', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(Object.fromEntries(formData.entries()))
         })
         .then(response => response.json().catch(() => ({ success: false, message: "Invalid server response" })))
@@ -107,11 +120,13 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const formData = createFormData(this);
-        if (!formData) return;
+        if (!formData) return; // Exit if formData creation failed
 
         fetch('/api/users/signin', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(Object.fromEntries(formData.entries()))
         })
         .then(response => response.json())
@@ -120,9 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showFeedback('Sign-in successful!', 'success');
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('refreshToken', data.refreshToken);
-                if (typeof loginSuccess === 'function') {
-                    loginSuccess(data.token, data.refreshToken);
-                }
+                loginSuccess(data.token, data.refreshToken);
                 window.location.href = '/dashboard';
             } else {
                 showFeedback(data.message, 'error');
@@ -138,18 +151,20 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const formData = createFormData(this);
-        if (!formData) return;
+        if (!formData) return; // Exit if formData creation failed
 
         fetch('/api/users/forgot-password', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(Object.fromEntries(formData.entries()))
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 showFeedback('Password reset link sent to your email.', 'success');
-                this.reset(); // Reset the form after submission
+                forgotPasswordFormElement.reset();
             } else {
                 showFeedback(data.message, 'error');
             }
