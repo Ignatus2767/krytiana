@@ -186,7 +186,7 @@ const courses = [
              Python is dynamically typed, meaning a variable can hold values of different types during execution. 
           `,
           codes: [
-            { lang: "", code: `
+            { lang: "python", code: `
               x = 5\n
               print(x)  # 5\n
               x = "hello"\n
