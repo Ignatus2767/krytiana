@@ -8,13 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
       // Change "Create Account / Sign in" to "Open Dashboard"
       const loginText = document.querySelector(".login p");
       if (loginText) {
-          loginText.textContent = "Open Dashboard";
+          loginText.textContent = "Go To Dashboard";
+          loginText.href = "./dashboard/";
       }
 
       // Change "Get Started" button text to "My Dashboard"
       const getStartedBtn = document.querySelector(".btn");
       if (getStartedBtn) {
-          getStartedBtn.textContent = "My Dashboard";
+          getStartedBtn.textContent = "Dashboard";
           getStartedBtn.href = "./dashboard/"; // Redirect to dashboard
       }
 
@@ -22,6 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const signupSection = document.querySelector(".signup-gmore");
       if (signupSection) {
           signupSection.style.display = "none";
+      }
+      // change h2
+      const h2Section = document.querySelector(".h2");
+      if (h2Section) {
+        h2Section.textContent = "Start From Where You Left";
       }
   }
 });
