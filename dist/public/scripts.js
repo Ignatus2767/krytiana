@@ -12,14 +12,14 @@ document.addEventListener("DOMContentLoaded", function () {
           loginText.href = "./dashboard/";
       }
 
-      // Change "Get Started" button text to "My Dashboard"
+    
       const getStartedBtn = document.querySelector(".btn");
       if (getStartedBtn) {
           getStartedBtn.textContent = "Dashboard";
           getStartedBtn.href = "./dashboard/"; // Redirect to dashboard
       }
 
-      // Hide signup section
+  
       const signupSection = document.querySelector(".signup-gmore");
       if (signupSection) {
           signupSection.style.display = "none";
