@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const isLoggedIn = localStorage.getItem("token");
 
 
-  if (isLoggedIn === "true") {
+  if (isLoggedIn) {
       // Change "Create Account / Sign in" to "Open Dashboard"
       const loginText = document.querySelector(".login p");
       if (loginText) {
@@ -27,10 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Function to handle login
-function loginSuccess() {
-  localStorage.setItem("isLoggedIn", "true");
-  window.location.reload(); // Refresh to apply changes
+function loginSuccess(token, refreshToken) {
+  localStorage.setItem("token", token);
+  localStorage.setItem("refreshToken", refreshToken);
+  window.location.reload();
 }
+
 
 // Example of handling login form submission
 document.getElementById("authForm").addEventListener("submit", function (event) {
@@ -44,7 +46,7 @@ document.getElementById("authForm").addEventListener("submit", function (event) 
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
-  window.location.href = "/"; // Redirect to homepage or login
+  window.location.reload();  
 }
 
 
