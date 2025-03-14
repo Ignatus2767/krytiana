@@ -909,6 +909,361 @@ const courses = [
             
         ]
     },
+    {
+        title: "LOOPS IN PYTHON",
+        sections: [
+            
+        {
+            heading: " types of loops:",
+          
+            content: `
+              Loops allow us to execute a block of code multiple times. Python provides two main types of loops:
+              <br><br>
+              1. for loop (Iterates over sequences like lists, tuples, dictionaries, or ranges)
+              <br><br>
+              2. while loop (Repeats as long as a condition remains True)  
+            `,
+            
+        },
+        {
+            heading: "1. for Loop",
+            video: "", 
+            content: `
+             Used for iterating over sequences (lists, tuples, dictionaries, strings, sets).<br><br>
+             Basic Syntax
+             code1
+             Example 1: Looping through a List
+             code2   
+             Example 2: Looping through a String
+             code3
+             Example 3: Using range()<br><br>
+             range(start, stop, step) generates numbers.
+             code4
+
+             Example 4: Looping in Reverse
+             code5
+            `,
+            codes: [
+                { lang: "python", code: `
+                for item in sequence:
+                    # Execute code
+                ` },
+                { lang: "python", code: `
+                fruits = ["apple", "banana", "cherry"]
+                for fruit in fruits:
+                    print(fruit)
+                ` },
+                { lang: "python", code: `
+                word = "Python"
+                for letter in word:
+                    print(letter)
+                ` },
+                { lang: "python", code: `
+                for i in range(5):  # Default start = 0, step = 1
+                    print(i)  # 0, 1, 2, 3, 4
+                
+                for i in range(2, 10, 2):  # start=2, stop=10, step=2
+                    print(i)  # 2, 4, 6, 8
+                ` },
+                { lang: "python", code: `
+                for i in range(10, 0, -2):
+                    print(i)  # 10, 8, 6, 4, 2
+                ` },
+                
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "2. while Loop",
+          
+            content: `
+             Executes a block as long as a condition is True.
+             Basic Syntax
+             code1
+             Example 1: Counting
+             code2
+             Example 2: Loop Until User Input
+             code3
+             Example 3: Infinite Loop (Use with Caution)
+             code4
+             Press Ctrl+C to stop an infinite loop.
+
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                while condition:
+                    # Execute code
+                ` },
+                { lang: "python", code: `
+                i = 1
+                while i <= 5:
+                    print(i)
+                    i += 1
+                ` },
+                { lang: "python", code: `
+                password = ""
+                while password != "1234":
+                    password = input("Enter password: ")
+                print("Access granted!")
+                ` },
+                { lang: "python", code: `
+                while True:
+                    print("This will run forever.")
+                ` },
+                
+            ],
+
+
+        },
+        {
+            heading: "3. Loop Control Statements",
+             
+            content: `
+             <strong>1. <strong>break</strong> (Exit the loop)</strong>
+             <br><br>
+             Stops the loop immediately.
+             code1
+             code2
+             2. <strong>continue</strong> (Skip the current iteration)
+             <br><br>
+             Skips the rest of the code for that iteration.
+             code3
+             3. <strong>pass</strong> (Placeholder)
+             <br><br>
+             Does nothing but avoids syntax errors.
+             code4
+
+
+             
+            `,
+            codes: [
+                { lang: "python", code: `
+                for num in range(10):
+                    if num == 5:
+                        break  # Exits loop when num == 5
+                    print(num)  # Prints 0, 1, 2, 3, 4
+                ` },
+                { lang: "python", code: `
+                i = 1
+                while i <= 10:
+                    if i == 5:
+                        break  # Exits loop
+                    print(i)
+                    i += 1
+                ` },
+                { lang: "python", code: `
+                for num in range(5):
+                    if num == 2:
+                        continue  # Skips printing 2
+                    print(num)  # Prints 0, 1, 3, 4
+                ` },
+                { lang: "python", code: `
+                for num in range(5):
+                    if num == 3:
+                        pass  # Placeholder for future code
+                    print(num)
+                ` },
+                
+            ],
+
+           
+
+        },
+        {
+            heading: "4. Nested Loops",
+            
+            content: `
+             A loop inside another loop. 
+             <br><br>
+             Example 1: Multiplication Table
+             code1
+             Example 2: Looping through a List of Lists
+             code2
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                for i in range(1, 4):
+                    for j in range(1, 4):
+                        print(f"{i} × {j} = {i * j}")
+                ` },
+                { lang: "python", code: `
+                matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+                
+                for row in matrix:
+                    for num in row:
+                        print(num, end=" ")
+                    print()
+                ` },
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "5. Looping Through Dictionaries",
+            
+            content: `
+             Looping Through Keys
+             code1
+             Looping Through Values
+             code2
+             Looping Through Key-Value Pairs
+             code3
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                student = {"name": "John", "age": 21, "grade": "A"}
+                
+                for key in student:
+                    print(key, ":", student[key])
+                ` },
+                { lang: "python", code: `
+                for value in student.values():
+                    print(value)
+                ` },
+                { lang: "python", code: `
+                for key, value in student.items():
+                    print(f"{key} → {value}")
+                ` },
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "6. List Comprehension (Advanced <strong>for</strong> Loop)",
+           
+            content: `
+             List comprehension provides a shorter way to create lists.
+             <br><br>
+             Example 1: Squaring Numbers
+             code1
+             Example 2: Filtering Even Numbers
+             code2
+             Example 3: Converting Strings to Uppercase
+             code3
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                squares = [x ** 2 for x in range(1, 6)]
+                print(squares)  # [1, 4, 9, 16, 25]
+                ` },
+                { lang: "python", code: `
+                evens = [x for x in range(10) if x % 2 == 0]
+                print(evens)  # [0, 2, 4, 6, 8]
+                ` },
+                { lang: "python", code: `
+                words = ["hello", "world"]
+                uppercase_words = [word.upper() for word in words]
+                print(uppercase_words)  # ['HELLO', 'WORLD']
+                ` },
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "7. <strong>else</strong> in Loops",
+            
+            content: `
+             Loops can have an <strong>else</strong> block that runs only if the loop
+             <br><br> 
+             completes without <strong>break.</strong>
+             code1
+             code2
+               
+            `,
+            codes: [
+                { lang: "python", code: `
+                for num in range(5):
+                    print(num)
+                else:
+                    print("Loop finished.")
+                ` },
+                { lang: "python", code: `
+                i = 0
+                while i < 3:
+                    print(i)
+                    i += 1
+                else:
+                    print("Loop completed.")
+                ` },
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "8. Performance Optimization in Loops",
+            
+            content: `
+             1. Using <strong>enumerate()</strong> Instead of <strong>range(len())</strong>
+             code1
+             2. Using <strong>zip()</strong> for Parallel Iteration
+             code2
+             3. Avoiding Unnecessary Loops
+             code3
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                names = ["Alice", "Bob", "Charlie"]
+                for index, name in enumerate(names):
+                    print(f"{index}: {name}")
+                ` },
+                { lang: "python", code: `
+                names = ["Alice", "Bob", "Charlie"]
+                ages = [25, 30, 35]
+                
+                for name, age in zip(names, ages):
+                    print(f"{name} is {age} years old.")
+                ` },
+                { lang: "python", code: `
+                # Bad: Using loop for sum
+                numbers = [1, 2, 3, 4, 5]
+                total = 0
+                for num in numbers:
+                    total += num
+                print(total)  # 15
+                
+                # Good: Using built-in sum()
+                print(sum(numbers))  # 15
+                ` },
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "Summary",
+             
+            content: `
+             <strong>for loops</strong> iterate over sequences.<br><br>
+             <strong>while loops</strong> run until a condition becomes <strong>False</strong>.<br><br>
+             Loop control statements <strong>(break, continue, pass)</strong> manage flow.<br><br>
+             List comprehensions create lists efficiently.<br><br>
+             <strong>else</strong> in loops runs if no break occurs.<br><br>
+             Optimization techniques make loops faster. <br><br>  
+            `,
+            
+
+        },
+        
+            
+        ]
+    },
 
 
 
