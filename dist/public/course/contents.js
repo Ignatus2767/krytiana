@@ -1,7 +1,7 @@
 const courses = [
-  {
-      title: "INTRODUCTION TO DATA SCIENCE",
-      sections: [
+    {
+        title: "INTRODUCTION TO DATA SCIENCE",
+        sections: [
         {
             heading: "DATA SCIENCE",
             content: `
@@ -78,13 +78,13 @@ const courses = [
                 "images/twitter.png",
                 "images/whatsapp.png"]
         },
-       
         
         
         
-      ]
-  },
-  {
+        
+        ]
+    },
+    {
     title: "PYTHON",
     sections: [
         {
@@ -133,139 +133,821 @@ const courses = [
         
         
     ]
-},
-{
-    title: "VARIABLE IN PYTHON",
-    sections: [
-        {
-            heading: "1. What is a Variable?",
-            content: `
-                A variable is a named reference to a value stored in memory. In Python, you don't need to declare the type of a variable explicitly—Python infers it dynamically. <br>
-          `,
-          codes: [
-            { lang: "python", code: `
-                x = 10  # x is an integer
-                name = "Alice"  # name is a string
-                pi = 3.14  # pi is a float
-                is_valid = True  # is_valid is a boolean
-
-                ` },
-            
-            ],
-        },
-        {
-            heading: "2. Variable Naming Rules",
-            content: `
-                Must start with a letter (A-Z or a-z) or an underscore _<br>
-                Can contain letters, digits (0-9), and underscores<br>
-                Cannot be a Python keyword (if, for, while, etc.) <br>
-                Case-sensitive (myVar and myvar are different) <br>
-                <strong> Valid names: </strong> code1
-                <strong> Invalid names: </strong><br> code2
-
-          `,
-          codes: [
-            { lang: "python", code: `
-                my_variable = 10
-                _var123 = "hello"
-                CamelCase = "works"
-                ` },
-            { lang: "python", code: `
-                2var = 5    # Starts with a number (❌)
-                my-variable = 10  # Hyphens are not allowed (❌)
-                class = "Python"  # Reserved keyword (❌)
-                
-                ` },
-            
-            ],
-        },
-        {
-            heading: "Variable Assignment and Reassignment ",
-            content: `
-             You can assign and reassign values to variables dynamically. code1
-             Python is dynamically typed, meaning a variable can hold values of different types during execution. 
-          `,
-          codes: [
-            { lang: "python", code: `
-              x = 5\n
-              print(x)  # 5\n
-              x = "hello"\n
-              print(x)  # hello
-                
-                ` },
-            
-            ],
-        },
-
-
-
-
-
-
-
-
-        
-      {
-          heading: "",
-          video: "", 
-          content: `
-             
-          `,
+    },
+    {
+        title: "VARIABLE IN PYTHON",
+        sections: [
+            {
+                heading: "1. What is a Variable?",
+                content: `
+                    A variable is a named reference to a value stored in memory. In Python, you don't need to declare the type of a variable explicitly—Python infers it dynamically. <br>
+            `,
             codes: [
-            { lang: "", code: `` },
+                { lang: "python", code: `
+                    x = 10  # x is an integer
+                    name = "Alice"  # name is a string
+                    pi = 3.14  # pi is a float
+                    is_valid = True  # is_valid is a boolean
+
+                    ` },
+                
+                ],
+            },
+            {
+                heading: "2. Variable Naming Rules",
+                content: `
+                    Must start with a letter (A-Z or a-z) or an underscore _<br>
+                    Can contain letters, digits (0-9), and underscores<br>
+                    Cannot be a Python keyword (if, for, while, etc.) <br>
+                    Case-sensitive (myVar and myvar are different) <br>
+                    <strong> Valid names: </strong> code1
+                    <strong> Invalid names: </strong><br> code2
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                    my_variable = 10
+                    _var123 = "hello"
+                    CamelCase = "works"
+                    ` },
+                { lang: "python", code: `
+                    2var = 5    # Starts with a number (❌)
+                    my-variable = 10  # Hyphens are not allowed (❌)
+                    class = "Python"  # Reserved keyword (❌)
+                    
+                    ` },
+                
+                ],
+            },
+            {
+                heading: "Variable Assignment and Reassignment ",
+                content: `
+                You can assign and reassign values to variables dynamically. code1
+                Python is dynamically typed, meaning a variable can hold values of different types during execution. 
+            `,
+            codes: [
+                { lang: "python", code: `
+                x = 5
+                print(x)  # 5
+                x = "hello"
+                print(x)  # hello
+                    
+                    ` },
+                
+                ],
+            },
             
+            
+        ]
+    },
+    {
+        title: "LISTS IN PYTHON (Aray)",
+        sections: [
+            
+        {
+            heading: "1. What is a List?",
+             
+            content: `
+                A list is an ordered, mutable (changeable) collection that can store elements of different data types. It is similar to an array but more flexible.
+                <br><br>Creating a List code1
+                You can also create a list using the list() constructor: code2
+            `,
+            codes: [
+                { lang: "python", code: `
+                  numbers = [1, 2, 3, 4, 5]  # List of integers
+                  mixed = [1, "Hello", 3.14, True]  # List with mixed data types
+                  empty_list = []  # An empty list  
+                    ` },
+                { lang: "python", code: `
+                  my_list = list((10, 20, 30))  # Creating a list from a tuple
+                  print(my_list)  # [10, 20, 30]  
+                    ` },
+                
             ],
-            images: [
-                "images/facebook.png",
-            ]
-
-      },
-        
-    ]
-},
 
 
-
-
-
-
-
-
-
-
-
-
-
-  {
-      title: "",
-      sections: [
-          {
-              heading: "",
-              content: `
-                 
-              `
-          },
-          {
-            heading: "",
-            content: `
-               
-            `
         },
         {
-            heading: "",
+            heading: "2. Accessing Elements", 
             content: `
-               
-            `
-        },
-        {
-            heading: "",
-            content: `
-               
-            `
-        },
+               Lists support zero-based indexing, meaning the first element is at index 0.
+               code1 
+            `,
+            codes: [
+                { lang: "python", code: `
+                 fruits = ["apple", "banana", "cherry"]
+                 print(fruits[0])  # apple
+                 print(fruits[1])  # banana
+                 print(fruits[-1])  # Last element (cherry)
+                 print(fruits[-2])  # Second last element (banana)   
+                    ` },
+                
+            ],
+
           
-      ]
-  },
+
+        },
+        {
+            heading: "3. Slicing a List",
+        
+            content: `
+              Slicing allows you to extract parts of a list.
+              code1  
+            `,
+            codes: [
+                { lang: "python", code: `
+                numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                
+                print(numbers[2:6])   # [2, 3, 4, 5] (from index 2 to 5)
+                print(numbers[:4])    # [0, 1, 2, 3] (first 4 elements)
+                print(numbers[5:])    # [5, 6, 7, 8, 9] (from index 5 to end)
+                print(numbers[::2])   # [0, 2, 4, 6, 8] (every 2nd element)
+                print(numbers[::-1])  # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0] (reverse list)    
+                    ` },
+                
+            ],
+
+           
+
+        },
+        {
+            heading: "4. Modifying Lists",
+           
+            content: `
+              Lists are mutable, meaning you can change their values.
+              code1  
+              You can also replace multiple values using slicing:
+              code2
+            `,
+            codes: [
+                { lang: "python", code: `
+                nums = [10, 20, 30, 40]
+                nums[1] = 25  # Changing the second element
+                print(nums)  # [10, 25, 30, 40]    
+                    ` },
+                { lang: "python", code: `
+                nums[1:3] = [50, 60]
+                print(nums)  # [10, 50, 60, 40]    
+                    ` },
+                
+            ],
+
+           
+
+        },
+        {
+            heading: "5. Adding Elements",
+             
+            content: `
+              Using append() (Adds to the end)
+              code1  
+              Using insert() (Adds at a specific index)
+              code2
+              Using extend() (Merges two lists)
+              code3
+            `,
+            codes: [
+                { lang: "python", code: `
+                fruits = ["apple", "banana"]
+                fruits.append("cherry")
+                print(fruits)  # ['apple', 'banana', 'cherry']    
+                    ` },
+                { lang: "python", code: `
+                fruits.insert(1, "orange")  # Insert at index 1
+                print(fruits)  # ['apple', 'orange', 'banana', 'cherry']    
+                    ` },
+                { lang: "python", code: `
+                a = [1, 2, 3]
+                b = [4, 5, 6]
+                a.extend(b)
+                print(a)  # [1, 2, 3, 4, 5, 6] 
+                    ` },
+                
+            ],
+
+           
+
+        },
+        {
+            heading: "6. Removing Elements",
+             
+            content: `
+            Using pop() (Removes by index, default is last)
+            code1
+            Using remove() (Removes by value)
+            code2
+            Using del (Removes by index or deletes the whole list)
+            code3
+            Using clear() (Empties the list) 
+            code4
+            `,
+            codes: [
+                { lang: "python", code: `
+                fruits = ["apple", "banana", "cherry"]
+                fruits.pop()  # Removes last element
+                print(fruits)  # ['apple', 'banana']
+                
+                fruits.pop(0)  # Removes first element
+                print(fruits)  # ['banana']    
+                    ` },
+                { lang: "python", code: `
+                numbers = [10, 20, 30, 40]
+                numbers.remove(20)  # Removes the first occurrence of 20
+                print(numbers)  # [10, 30, 40]
+                    ` },
+                { lang: "python", code: `
+                nums = [1, 2, 3, 4, 5]
+                del nums[2]  # Removes element at index 2
+                print(nums)  # [1, 2, 4, 5]
+                
+                del nums  # Deletes the entire list
+                    ` },
+                { lang: "python", code: `
+                nums = [1, 2, 3]
+                nums.clear()
+                print(nums)  # []
+                    ` },
+        ],
+
+            
+
+        },
+        {
+            heading: "7. Looping Through Lists",
+            
+            content: `
+            Using for Loop
+            code1
+            Using while Loop
+            code2
+            Using list comprehension
+            code3
+            `,
+            codes: [
+             { lang: "python", code: `
+            fruits = ["apple", "banana", "cherry"]
+            for fruit in fruits:
+                print(fruit)        
+            ` },
+            { lang: "python", code: `
+             nums = [10, 20, 30]
+             i = 0
+             while i < len(nums):
+                 print(nums[i])
+                 i += 1       
+            ` },
+            { lang: "python", code: `
+            squares = [x ** 2 for x in range(5)]
+            print(squares)  # [0, 1, 4, 9, 16]        
+             ` },
+
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "8. Sorting and Reversing Lists",
+            
+            content: `
+            Using sort() (Ascending)
+            code1
+            Sorting in Descending Order
+            code2
+            Using sorted() (Returns a new sorted list)
+            code3
+            Reversing a List
+            code4
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                nums = [4, 2, 9, 1]
+                nums.sort()
+                print(nums)  # [1, 2, 4, 9]    
+                ` },
+                { lang: "python", code: `
+                 nums.sort(reverse=True)
+                 print(nums)  # [9, 4, 2, 1]   
+                ` },
+                { lang: "python", code: `
+                 nums = [4, 2, 9, 1]
+                 new_nums = sorted(nums)
+                 print(new_nums)  # [1, 2, 4, 9]   
+                ` },
+                { lang: "python", code: `
+                 nums = [1, 2, 3]
+                 nums.reverse()
+                 print(nums)  # [3, 2, 1]   
+                ` },
+
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "9. Copying a List",
+            
+            content: `
+             Using copy()
+             code1
+             Using list()
+             code2
+             Using Slicing ([:])
+             code3
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                original = [1, 2, 3]
+                copied = original.copy()
+                print(copied)  # [1, 2, 3]
+                ` },
+                { lang: "python", code: `
+                copied = list(original)    
+                ` },
+                { lang: "python", code: `
+                copied = original[:]    
+                 ` },
+                 
+                
+            ],
+
+            
+
+        
+            heading: "9. Copying a List",
+           
+            content: `
+             Using copy()  
+             code1
+             Using list()
+             code2
+             Using Slicing ([:])
+             code3
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                original = [1, 2, 3]
+                copied = original.copy()
+                print(copied)  # [1, 2, 3]    
+                ` },
+                { lang: "python", code: `
+                copied = list(original)    
+                ` },
+                { lang: "python", code: `
+                 copied = original[:]   
+                ` },
+                
+            ],
+
+           
+
+        },
+        {
+            heading: "10. Checking Membership",
+             
+            content: `
+             Use in or not in to check if an item exists in a list.
+             code1
+
+            `,
+            codes: [
+                { lang: "python", code: `
+                 fruits = ["apple", "banana", "cherry"]
+                 print("banana" in fruits)  # True
+                 print("grape" not in fruits)  # True   
+                ` },
+                
+            ],
+
+            
+
+        },
+        {
+            heading: "11. List Comprehensions (Advanced)",
+             
+            content: `
+             List comprehensions are a concise way to create lists.<br><br>
+             Example 1: Squaring Numbers
+             code1
+             Example 2: Filtering Even Numbers
+             code2
+             Example 3: Convert Strings to Uppercase
+             code3
+
+            
+            `,
+            codes: [
+                { lang: "python", code: `
+                 squares = [x**2 for x in range(1, 6)]
+                 print(squares)  # [1, 4, 9, 16, 25]   
+                ` },
+                { lang: "python", code: `
+                 evens = [x for x in range(10) if x % 2 == 0]
+                 print(evens)  # [0, 2, 4, 6, 8]   
+                ` },
+                { lang: "python", code: `
+                 words = ["hello", "world"]
+                 uppercase_words = [word.upper() for word in words]
+                 print(uppercase_words)  # ['HELLO', 'WORLD']   
+                ` },
+                
+            ],
+
+
+        },
+        {
+            heading: "Summary",
+             
+            content: `
+             Lists are dynamic, ordered, and mutable.<br>
+             Indexing and slicing let you access parts of a list.<br>
+             You can modify, add, remove, and sort elements easily.<br>
+             List comprehensions make list creation more efficient.<br>   
+            `,
+           
+
+        },
+        
+            
+        ]
+    },
+    {
+        title: "CONDITIONAL STATEMENTS IN PYTHON!",
+        sections: [
+            
+        {
+            heading: "1. What is a Conditional Statement?",
+             
+            content: `
+             A conditional statement is used to execute different blocks of code based on whether a condition is True or False.
+             <br><br>
+             Basic Syntax:
+             code1
+                
+            `,
+            codes: [
+                { lang: "python", code: `
+                if condition:
+                    # Code runs if condition is True
+                elif another_condition:
+                    # Runs if first condition is False but this one is True
+                else:
+                    # Runs if all conditions are False
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "2. if Statement",
+             
+            content: `
+             Executes a block of code only if the condition is True.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                age = 18
+                if age >= 18:
+                    print("You are an adult.")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "3. if-else Statement",
+             
+            content: `
+             Executes one block if the condition is True and another block if it's False.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                age = 16
+                if age >= 18:
+                    print("You can vote.")
+                else:
+                    print("You are too young to vote.")
+                
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "4. if-elif-else Statement",
+             
+            content: `
+             Checks multiple conditions in sequence.
+             code1
+             If the first condition is True, others are ignored.<br>
+             If all conditions are False, the else block runs.<br>   
+            `,
+            codes: [
+                { lang: "python", code: `
+                marks = 85
+                
+                if marks >= 90:
+                    print("Grade: A")
+                elif marks >= 75:
+                    print("Grade: B")
+                elif marks >= 50:
+                    print("Grade: C")
+                else:
+                    print("Grade: F")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "5. Nested if Statements",
+             
+            content: `
+             An if statement inside another if.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                age = 20
+                has_id = True
+                
+                if age >= 18:
+                    if has_id:
+                        print("You can enter the club.")
+                    else:
+                        print("You need an ID.")
+                else:
+                    print("You are too young.")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "6. Short-Hand if Statement (Ternary Operator)",
+             
+            content: `
+             A one-line if-else.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                age = 18
+                status = "Adult" if age >= 18 else "Minor"
+                print(status)  # Adult
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "7. Logical Operators in Conditions",
+             
+            content: `
+             Using and, or, and not   
+            `,
+            codes: [
+                { lang: "python", code: `
+                age = 25
+                has_ticket = True
+                
+                if age >= 18 and has_ticket:
+                    print("You can enter the movie.")  # ✅ Both conditions must be True
+                
+                if age < 18 or has_ticket:
+                    print("You may enter.")  # ✅ At least one condition must be True
+                
+                if not has_ticket:
+                    print("You need a ticket.")  # ✅ Executes if has_ticket is False
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "8. Comparing Values (==, !=, >, <, >=, <=)",
+             
+            content: `
+                code1
+            `,
+            codes: [
+                { lang: "python", code: `
+                x = 10
+                y = 20
+                
+                if x == y:
+                    print("Equal")
+                elif x != y:
+                    print("Not equal")
+                elif x > y:
+                    print("x is greater")
+                elif x < y:
+                    print("x is smaller")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "9. Checking Membership (in, not in)",
+             
+            content: `
+             Used for checking if a value exists in a list, tuple, or string.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                fruits = ["apple", "banana", "cherry"]
+                
+                if "banana" in fruits:
+                    print("Banana is in the list.")
+                
+                if "grape" not in fruits:
+                    print("Grape is not in the list.")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "10. Checking Identity (is, is not)",
+             
+            content: `
+             Used to compare if two variables point to the same object in memory.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                x = [1, 2, 3]
+                y = x
+                z = [1, 2, 3]
+                
+                print(x is y)  # True (same memory location)
+                print(x is z)  # False (different memory locations)
+                print(x == z)  # True (same values)
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "11. Combining Conditions with Parentheses",
+             
+            content: `
+             Parentheses help in complex conditions.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                age = 20
+                income = 5000
+                
+                if (age >= 18 and age <= 65) and (income > 3000):
+                    print("Eligible for loan.")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "12. pass Statement in if",
+             
+            content: `
+             pass is a placeholder for future code.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                x = 10
+                
+                if x > 5:
+                    pass  # No error, but nothing happens
+                
+                print("Code continues...")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "13. match-case (Python 3.10+)",
+             
+            content: `
+             Like a switch-case in other languages.   
+            `,
+            codes: [
+                { lang: "python", code: `
+                status_code = 404
+                
+                match status_code:
+                    case 200:
+                        print("OK")
+                    case 404:
+                        print("Not Found")
+                    case 500:
+                        print("Server Error")
+                    case _:
+                        print("Unknown Error")  # Default case
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "14. Best Practices",
+             
+            content: `
+            Use meaningful conditions
+            code1
+            ❌ Avoid unnecessary else blocks
+            code2
+            Use elif for multiple conditions <br>
+            ❌ Avoid multiple if statements  
+            code3 
+            `,
+            codes: [
+                { lang: "python", code: `
+                if is_logged_in:  # ✅ Readable
+                if status == "active":  # ✅ Clear
+                ` },
+                { lang: "python", code: `
+                if age >= 18:
+                    print("Adult")  # ✅ No need for else
+                else:
+                    pass  # ❌ Unnecessary else
+                ` },
+                { lang: "python", code: `
+                # ❌ Inefficient
+                if marks >= 90:
+                    print("A")
+                if marks >= 75:
+                    print("B")
+                
+                # ✅ Correct
+                if marks >= 90:
+                    print("A")
+                elif marks >= 75:
+                    print("B")
+                ` },
+                
+            ],
+
+        },
+        {
+            heading: "Summary",
+             
+            content: `
+             if, if-else, and if-elif-else help control program flow.<br>
+             Logical (and, or, not), membership (in, not in), and identity (is, is not) operators enhance conditions.<br>
+             Short-hand if (?: in other languages) makes code concise.<br>
+             match-case is useful for pattern matching (Python 3.10+).<br>
+             Best practices help write cleaner and more efficient code.<br> 
+            `,
+            
+
+        },
+            
+        ]
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+        title: "",
+        sections: [
+            
+        {
+            heading: "",
+            video: "", 
+            content: `
+                
+            `,
+            codes: [
+                { lang: "python", code: `
+                
+                ` },
+                
+            ],
+
+            images: [
+                    "images/facebook.png",
+                ]
+
+        },
+            
+        ]
+    },
 
 ];
 
