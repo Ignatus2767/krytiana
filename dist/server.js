@@ -37,6 +37,13 @@ app.use("/api/user", profileRoute_1.default);
 app.use("/api/courses", coursesRoute_1.default);
 app.use("/api", todoRoutes_1.default);
 app.use("/api/auth", authRoutes_1.default); // Add authentication routes
+app.get("/reset-password/:token", (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, "public", "reset-password", "index.html"));
+});
+// Handle 404 errors (keep this last)
+app.use((req, res) => {
+    res.status(404).send("Page not found");
+});
 // Handle 404 errors
 app.use((req, res) => {
     res.status(404).send("Page not found");
