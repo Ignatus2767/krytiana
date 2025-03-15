@@ -40,7 +40,7 @@ app.use("/api", todoRoutes);
 app.use("/api/auth", authRoutes); // Add authentication routes
 
 app.get("/reset-password/:token", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "reset-password", "index.html"));
+    res.sendFile(path.join(__dirname, "public", "reset-password.html"));
 });
 
 // Handle 404 errors (keep this last)
