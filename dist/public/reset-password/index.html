@@ -7,34 +7,31 @@
 </head>
 <body>
     <h2>Reset Your Password</h2>
-    <form id="resetPasswordForm">
-        <input type="password" id="password" placeholder="New Password" required>
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    <form id="resetForm">
+        <input type="hidden" id="token" value="">
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" required>
         <button type="submit">Reset Password</button>
     </form>
-    <p id="message"></p>
 
     <script>
-        document.getElementById("resetPasswordForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const params = new URLSearchParams(window.location.search);
-            const token = window.location.pathname.split("/").pop(); // Extract token from URL
-            const password = document.getElementById("password").value;
-            const confirmPassword = document.getElementById("confirmPassword").value;
+        document.addEventListener("DOMContentLoaded", function() {
+            const token = window.location.pathname.split('/').pop();
+            document.getElementById("token").value = token;
 
-            if (password !== confirmPassword) {
-                document.getElementById("message").innerText = "Passwords do not match!";
-                return;
-            }
+            document.getElementById("resetForm").addEventListener("submit", async function(event) {
+                event.preventDefault();
+                
+                const newPassword = document.getElementById("newPassword").value;
+                const response = await fetch("/api/reset-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ resetToken: token, newPassword })
+                });
 
-            const response = await fetch(`/reset-password/${token}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ password }),
+                const data = await response.json();
+                alert(data.message);
             });
-
-            const result = await response.json();
-            document.getElementById("message").innerText = result.message;
         });
     </script>
 </body>

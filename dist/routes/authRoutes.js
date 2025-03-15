@@ -9,7 +9,8 @@ const authController_1 = require("../controllers/authController");
 const router = express_1.default.Router();
 // Route: POST /api/request-password-reset
 router.post('/api/request-password-reset', authController_1.requestPasswordReset);
-// Route: POST /api/reset-password/:token
-router.post('/api/reset-password/:token', authController_1.resetPassword);
+// ❌ Wrong: router.post('/api/reset-password/:token', resetPassword);
+// ✅ Correct:
+router.post('/api/reset-password', authController_1.resetPassword);
 exports.default = router;
 //# sourceMappingURL=authRoutes.js.map
