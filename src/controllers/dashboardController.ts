@@ -1,62 +1,74 @@
-import { Request, Response } from 'express';
-import { dashboardDbPool } from '../db';
-
-
-const db = require('../db'); // assuming you have a db.js that handles connection
+import { Request, Response } from "express";
+import { db } from "../config/mongo"; // Import MongoDB connection
+import { ObjectId } from "mongodb"; // Import ObjectId for MongoDB queries
 
 // Fetch user-specific dashboard data
 export const getUserDashboard = async (req: Request, res: Response) => {
     const userId = req.params.userId; // Extract userId from the request
+
     try {
+        // Convert userId to ObjectId (if stored as ObjectId in MongoDB)
+        const userObjectId = new ObjectId(userId);
+
         // Fetch user information
-        const [user] = await db.query(
-            `SELECT username FROM users WHERE id = ?`,
-            [userId]
-        );
+        const user = await db.collection("users").findOne({ _id: userObjectId });
 
-        // Fetch courses in progress and their completion status
-        const coursesInProgress = await db.query(
-            `SELECT c.title, uc.progress, uc.last_active, c.image 
-             FROM user_courses uc 
-             JOIN courses c ON uc.course_id = c.id 
-             WHERE uc.user_id = ? AND uc.progress < 100`,
-            [userId]
-        );
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
 
-        // Fetch courses completed
-        const coursesCompleted = await db.query(
-            `SELECT COUNT(*) AS CoursesCompleted 
-             FROM user_courses 
-             WHERE user_id = ? AND progress = 100`,
-            [userId]
-        );
+        // Fetch courses in progress (progress < 100)
+        const coursesInProgress = await db.collection("user_courses").aggregate([
+            { $match: { user_id: userObjectId, progress: { $lt: 100 } } },
+            {
+                $lookup: {
+                    from: "courses",
+                    localField: "course_id",
+                    foreignField: "_id",
+                    as: "courseDetails",
+                },
+            },
+            { $unwind: "$courseDetails" },
+            {
+                $project: {
+                    title: "$courseDetails.title",
+                    progress: 1,
+                    last_active: 1,
+                    image: "$courseDetails.image",
+                },
+            },
+        ]).toArray();
+
+        // Count completed courses (progress = 100)
+        const coursesCompletedCount = await db.collection("user_courses").countDocuments({
+            user_id: userObjectId,
+            progress: 100,
+        });
 
         // Fetch study reminders
-        const [studyReminders] = await db.query(
-            `SELECT days_per_week FROM study_reminders WHERE user_id = ?`,
-            [userId]
-        );
+        const studyReminder = await db.collection("study_reminders").findOne({ user_id: userObjectId });
 
         // Fetch user medals
-        const medals = await db.query(
-            `SELECT medal_type, earned_on 
-             FROM medals WHERE user_id = ?`,
-            [userId]
-        );
+        const medals = await db.collection("medals").find({ user_id: userObjectId }).toArray();
+
+        // Calculate overall course completion percentage
+        const totalProgress = coursesInProgress.reduce((acc, course) => acc + course.progress, 0);
+        const CourseCompletionPercentage = coursesInProgress.length > 0 ? totalProgress / coursesInProgress.length : 0;
 
         // Structure the response data
         const dashboardData = {
             username: user.username,
             coursesInProgress: coursesInProgress.length,
-            CourseCompletionPercentage: (coursesInProgress.reduce((acc: any, course: { progress: any; }) => acc + course.progress, 0) / coursesInProgress.length) || 0,
-            CoursesCompleted: coursesCompleted[0].CoursesCompleted,
+            CourseCompletionPercentage,
+            CoursesCompleted: coursesCompletedCount,
             courses: coursesInProgress,
-            studyReminders: studyReminders?.days_per_week || 2,
-            medals: medals
+            studyReminders: studyReminder?.days_per_week || 2,
+            medals,
         };
 
         res.json(dashboardData);
     } catch (error) {
+        console.error("Error fetching dashboard data:", error);
         res.status(500).json({ error: "Error fetching dashboard data" });
     }
 };

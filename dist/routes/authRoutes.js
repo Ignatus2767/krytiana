@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const express_1 = __importDefault(require("express"));
-const db_1 = require("../db"); // Assuming db is located here
+const mongo_1 = require("../config/mongo"); // Import MongoDB connection
+const mongodb_1 = require("mongodb"); // Import ObjectId for MongoDB queries
 const router = express_1.default.Router();
 // Route: POST /api/refresh-token
 router.post('/api/refresh-token', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -25,21 +26,20 @@ router.post('/api/refresh-token', (req, res) => __awaiter(void 0, void 0, void 0
     try {
         // Verify refresh token
         const decoded = jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-        // Fetch user from the database
-        const [results] = yield db_1.signupDbPool.query('SELECT * FROM users WHERE id = ?', [decoded.userId]);
-        // Type assertion: ensure results is treated as an array of rows
-        const users = results;
+        // Convert userId to ObjectId for MongoDB
+        const userObjectId = new mongodb_1.ObjectId(decoded.userId);
+        // Fetch user from MongoDB
+        const user = yield mongo_1.db.collection("users").findOne({ _id: userObjectId });
         // Check if user exists
-        if (!users || users.length === 0) {
+        if (!user) {
             return res.status(403).json({ message: 'User not found' });
         }
-        const user = users[0]; // Access the first user in the result set
         // Check if refresh token in database matches the one sent
         if (user.refresh_token !== refreshToken) {
             return res.status(403).json({ message: 'Invalid refresh token' });
         }
         // Generate new access token
-        const newAccessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email, username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' } // New access token expires in 15 minutes
+        const newAccessToken = jsonwebtoken_1.default.sign({ userId: user._id.toString(), email: user.email, username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' } // New access token expires in 15 minutes
         );
         // Send new access token to the frontend
         res.json({ accessToken: newAccessToken });

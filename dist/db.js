@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.coursesDbPool = exports.dashboardDbPool = exports.reviewDbPool = exports.signupDbPool = void 0;
+//src/db.ts
 const promise_1 = require("mysql2/promise");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();

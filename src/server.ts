@@ -1,55 +1,49 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import path from 'path';
-import bodyParser from 'body-parser';
-import userRoutes from './routes/userRoutes';
-import reviewRoutes from './routes/reviewRoutes'; // Import the review routes
-import coursesRoutes from './routes/coursesRoute';
-import profileRoute from './routes/profileRoute';
-import todoRoutes from './routes/todoRoutes';
-import cors from 'cors';
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+import bodyParser from "body-parser";
+import cors from "cors";
+import { connectDB } from "./config/mongo"; // Import MongoDB connection
+import userRoutes from "./routes/userRoutes";
+import reviewRoutes from "./routes/reviewRoutes";
+import coursesRoutes from "./routes/coursesRoute";
+import profileRoute from "./routes/profileRoute";
+import todoRoutes from "./routes/todoRoutes";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse incoming request bodies
+// Connect to MongoDB
+connectDB();
+
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(cors());
-// Define a route for the root path
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+
+// Serve static files
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+app.use("/api/users", userRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/user", profileRoute);
+app.use("/api/courses", coursesRoutes);
+app.use("/api", todoRoutes);
 
-// Mount user routes under /api/users
-app.use('/api/users', userRoutes);
-
-// Mount review routes under /api/reviews
-app.use('/api/reviews', reviewRoutes); // This mounts your review routes
-
-app.use('/api/user', profileRoute);
-app.use('/api/courses', coursesRoutes);
-app.use('/api', todoRoutes); 
-
-// Define other routes as needed
-app.get('/example', (req, res) => {
-  res.send('This is an example route.');
-});
-
-// Handle 404 - Page Not Found
-app.use((req, res, next) => {
-  res.status(404).send('Page not found');
+// Handle 404 errors
+app.use((req, res) => {
+    res.status(404).send("Page not found");
 });
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
 
 export default app;

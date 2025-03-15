@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import express from 'express';
-import { signupDbPool } from '../db'; // Assuming db is located here
+import { db } from '../config/mongo'; // Import MongoDB connection
+import { ObjectId } from 'mongodb'; // Import ObjectId for MongoDB queries
 
 const router = express.Router();
 
@@ -16,18 +17,16 @@ router.post('/api/refresh-token', async (req, res) => {
     // Verify refresh token
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!) as JwtPayload;
 
-    // Fetch user from the database
-    const [results] = await signupDbPool.query('SELECT * FROM users WHERE id = ?', [decoded.userId]);
+    // Convert userId to ObjectId for MongoDB
+    const userObjectId = new ObjectId(decoded.userId);
 
-    // Type assertion: ensure results is treated as an array of rows
-    const users = results as { id: number; email: string; username: string; refresh_token: string }[];
+    // Fetch user from MongoDB
+    const user = await db.collection("users").findOne({ _id: userObjectId });
 
     // Check if user exists
-    if (!users || users.length === 0) {
+    if (!user) {
       return res.status(403).json({ message: 'User not found' });
     }
-
-    const user = users[0]; // Access the first user in the result set
 
     // Check if refresh token in database matches the one sent
     if (user.refresh_token !== refreshToken) {
@@ -36,7 +35,7 @@ router.post('/api/refresh-token', async (req, res) => {
 
     // Generate new access token
     const newAccessToken = jwt.sign(
-      { userId: user.id, email: user.email, username: user.username },
+      { userId: user._id.toString(), email: user.email, username: user.username },
       process.env.JWT_SECRET!,
       { expiresIn: '15m' } // New access token expires in 15 minutes
     );

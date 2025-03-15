@@ -8,21 +8,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTodoReminders = exports.addTodoReminder = void 0;
-const db_1 = require("../db"); // Adjust the import as per your db setup
+const mongoose_1 = __importDefault(require("mongoose"));
+// Define the Todo schema
+const todoSchema = new mongoose_1.default.Schema({
+    userId: { type: mongoose_1.default.Schema.Types.ObjectId, required: true },
+    task: { type: String, required: true },
+    date: { type: Date, required: true }
+});
+// Create the Todo model
+const Todo = mongoose_1.default.model('Todo', todoSchema);
 // Add a new to-do reminder
 const addTodoReminder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { task, date } = req.body; // Extract data from request body
     if (!req.user) {
-        console.log('Unauthorized access attempt');
         return res.status(401).json({ message: 'Unauthorized access' });
     }
-    const userId = req.user.userId; // Get user ID from token (make sure this matches the key in your token)
-    console.log('Adding reminder:', { userId, task, date });
+    const { task, date } = req.body;
+    const userId = req.user.userId;
     try {
-        const result = yield db_1.signupDbPool.query('INSERT INTO study_reminders (user_id, task, date) VALUES (?, ?, ?)', [userId, task, date]);
-        console.log('Reminder added successfully:', result);
+        const newTodo = new Todo({ userId, task, date });
+        yield newTodo.save();
         res.status(201).json({ success: true, message: 'Reminder added successfully' });
     }
     catch (error) {
@@ -34,14 +43,11 @@ exports.addTodoReminder = addTodoReminder;
 // Get user's to-do reminders
 const getTodoReminders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.user) {
-        console.log('Unauthorized access attempt');
         return res.status(401).json({ message: 'Unauthorized access' });
     }
-    const userId = req.user.userId; // Get user ID from token (make sure this matches the key in your token)
-    console.log('Fetching reminders for user ID:', userId);
+    const userId = req.user.userId;
     try {
-        const [reminders] = yield db_1.signupDbPool.query('SELECT * FROM study_reminders WHERE user_id = ?', [userId]);
-        console.log('Fetched reminders:', reminders);
+        const reminders = yield Todo.find({ userId });
         res.json({ success: true, reminders });
     }
     catch (error) {

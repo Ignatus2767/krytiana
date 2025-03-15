@@ -135,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 showFeedback('Sign-in successful!', 'success');
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('refreshToken', data.refreshToken);
-                loginSuccess(data.token, data.refreshToken);
                 window.location.href = '/dashboard';
             } else {
                 showFeedback(data.message, 'error');

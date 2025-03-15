@@ -1,16 +1,18 @@
 import { Request, Response } from 'express';
-import { coursesDbPool } from '../db';
+import { Course } from '../models/Course'; // Ensure the correct path to your Course model
 
-const getCourses = async (req: Request, res: Response) => {
+// Fetch all courses
+export const getCourses = async (req: Request, res: Response) => {
   try {
-    const [rows] = await coursesDbPool.query('SELECT * FROM courses');
-    res.json({ success: true, data: rows });
+    const courses = await Course.find();
+    res.json({ success: true, data: courses });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error fetching courses' });
   }
 };
 
-const addCourse = async (req: Request, res: Response) => {
+// Add a new course
+export const addCourse = async (req: Request, res: Response) => {
   const { title, description, details, image, discount, duration, link } = req.body;
 
   if (!title || !description || !details || !image) {
@@ -18,18 +20,36 @@ const addCourse = async (req: Request, res: Response) => {
   }
 
   try {
-    const query = `
-      INSERT INTO courses (title, description, details, image, discount, duration, link)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-    const values = [title, description, details, image, discount, duration, link];
-
-    await coursesDbPool.query(query, values);
-    res.json({ success: true, message: 'Course added successfully' });
+    const newCourse = new Course({ title, description, details, image, discount, duration, link });
+    await newCourse.save();
+    res.json({ success: true, message: 'Course added successfully', course: newCourse });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error adding course' });
   }
 };
 
+// Delete a course
+export const deleteCourse = async (req: Request, res: Response) => {
+  try {
+    const deletedCourse = await Course.findByIdAndDelete(req.params.id);
+    if (!deletedCourse) {
+      return res.status(404).json({ success: false, message: 'Course not found' });
+    }
+    res.json({ success: true, message: 'Course deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error deleting course' });
+  }
+};
 
-export { getCourses, addCourse };
+// Update a course
+export const updateCourse = async (req: Request, res: Response) => {
+  try {
+    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedCourse) {
+      return res.status(404).json({ success: false, message: 'Course not found' });
+    }
+    res.json({ success: true, message: 'Course updated successfully', course: updatedCourse });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error updating course' });
+  }
+};

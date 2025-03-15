@@ -94,15 +94,5 @@ const courses = [
     ]
   },
 
-  {
-    id: 3,
-    title: "Compelete android and ios repaire course",
-    description: "Learn data analysis and visualization techniques",
-    image: "./pics/android1.jpg",
-    outcomes: [
-      "Understand the principles of data analysis and visualization",
-      "Use statistical techniques to interpret data",
-      "Create effective data visualizations"
-    ]
-  }
+  
 ];

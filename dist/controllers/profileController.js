@@ -10,30 +10,54 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getProfile = void 0;
-const db_1 = require("../db"); // Import the signup database pool
+const mongo_1 = require("../config/mongo"); // Import MongoDB connection
+const mongodb_1 = require("mongodb"); // Import ObjectId for MongoDB queries
+// Fetch user profile
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId; // Get the userId from the token
-    console.log('User ID from token:', userId);
+    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.userId; // Get userId from the token
+    console.log("User ID from token:", userId);
     if (!userId) {
-        return res.status(404).json({ success: false, message: 'User not found.' });
+        return res.status(404).json({ success: false, message: "User not found." });
     }
     try {
-        // Query the database to get the user by ID
-        const [userRows] = yield db_1.signupDbPool.query('SELECT fullname, username, email FROM users WHERE id = ?', [userId]); // Cast the result as [User[], any]
-        const user = userRows[0]; // Now TypeScript knows this is of type User
+        // Convert userId to ObjectId (if stored as ObjectId in MongoDB)
+        const userObjectId = new mongodb_1.ObjectId(userId);
+        // Fetch user details
+        const user = yield mongo_1.db.collection("users").findOne({ _id: userObjectId });
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found.' });
+            return res.status(404).json({ success: false, message: "User not found." });
         }
-        // Fetch course progress
-        const [courseRows] = yield db_1.signupDbPool.query('SELECT c.title, uc.progress, uc.last_active FROM user_courses uc JOIN courses c ON uc.course_id = c.id WHERE uc.user_id = ?', [userId]); // Cast the result as [Course[], any]
-        const inProgressCount = courseRows.length; // Number of courses in progress
-        const completedCount = courseRows.filter(course => course.progress === 100).length; // Number of completed courses
-        const completionPercentage = (courseRows.reduce((acc, course) => acc + course.progress, 0) / (inProgressCount || 1)).toFixed(2); // Average progress percentage
+        // Fetch user's course progress
+        const courses = yield mongo_1.db.collection("user_courses").aggregate([
+            { $match: { user_id: userObjectId } },
+            {
+                $lookup: {
+                    from: "courses",
+                    localField: "course_id",
+                    foreignField: "_id",
+                    as: "courseDetails",
+                },
+            },
+            { $unwind: "$courseDetails" },
+            {
+                $project: {
+                    title: "$courseDetails.title",
+                    progress: 1,
+                    last_active: 1,
+                },
+            },
+        ]).toArray();
+        // Calculate course statistics
+        const inProgressCount = courses.length;
+        const completedCount = courses.filter((course) => course.progress === 100).length;
+        const completionPercentage = inProgressCount > 0
+            ? ((courses.reduce((acc, course) => acc + course.progress, 0) / inProgressCount) * 100).toFixed(2)
+            : "0.00";
         // Respond with user details and course statistics
         res.json({
             success: true,
-            message: 'Welcome to your profile',
+            message: "Welcome to your profile",
             user: {
                 fullname: user.fullname,
                 username: user.username,
@@ -44,12 +68,12 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 coursesCompleted: completedCount,
                 courseCompletionPercentage: `${completionPercentage}%`,
             },
-            courses: courseRows, // Include course data if needed
+            courses, // Include course data
         });
     }
     catch (error) {
-        console.error('Error fetching user or courses:', error);
-        res.status(500).json({ success: false, message: 'Internal server error' });
+        console.error("Error fetching user or courses:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
 });
 exports.getProfile = getProfile;

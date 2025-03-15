@@ -10,6 +10,7 @@ const router = (0, express_1.Router)();
 router.post('/todo', authMiddleware_1.authenticateToken, todoController_1.addTodoReminder);
 // Route to get user's to-do reminders
 router.get('/todo', authMiddleware_1.authenticateToken, todoController_1.getTodoReminders);
+// Route to get courses
 router.get('/courses', coursesController_1.getCourses);
 exports.default = router;
 //# sourceMappingURL=todoRoutes.js.map

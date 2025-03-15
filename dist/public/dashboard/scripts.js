@@ -9,58 +9,56 @@ const coursList = [
 
 // Fetch with Refresh Token function
 async function fetchWithRefreshToken(url, options = {}) {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('token');
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (!accessToken || !refreshToken) {
         console.warn("No tokens found. Redirecting to login...");
-        window.location.href = "../register/"; // Redirect to login page
+        setTimeout(() => window.location.href = "../register/", 500); // Slight delay before redirect
         return;
     }
-
-    console.log("Access Token:", accessToken);
-    console.log("Refresh Token:", refreshToken);
 
     options.headers = {
         ...options.headers,
         'Authorization': `Bearer ${accessToken}`,
     };
 
-    console.log(`Fetching URL: ${url} with options:`, options);
+    console.log(`Fetching URL: ${url} with options:`, options); // Log the URL and options
 
     let response = await fetch(url, options);
-    console.log("Initial response status:", response.status);
+    console.log('Initial response status:', response.status); // Log the response status
 
+    // Check if the access token has expired
     if (response.status === 401) {
-        console.log("Access token expired. Attempting to refresh token...");
+        console.log('Access token expired. Attempting to refresh token...'); // Log token expiration
 
         const refreshResponse = await fetch('/api/refresh-token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({ refreshToken }),
         });
 
-        console.log("Refresh token response status:", refreshResponse.status);
+        console.log('Refresh token response status:', refreshResponse.status); // Log the refresh response status
 
         if (refreshResponse.ok) {
             const data = await refreshResponse.json();
-            console.log("New access token received:", data.accessToken);
+            console.log('New access token received:', data.accessToken); // Log the new access token
             localStorage.setItem('accessToken', data.accessToken);
             options.headers['Authorization'] = `Bearer ${data.accessToken}`;
             response = await fetch(url, options);
-            console.log("Retrying original request with new access token...");
+            console.log('Retrying original request with new access token...'); // Log the retry attempt
         } else {
-            console.error("Failed to refresh token. Redirecting to login...");
+            console.error('Failed to refresh token'); // Log failure to refresh
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
-            window.location.href = "/login.html"; // Redirect to login page
-            return;
+            // Optionally redirect to login page here
         }
     }
 
     return response;
 }
-
 
 // Call the function when the page loads
 document.addEventListener('DOMContentLoaded', () => {

@@ -12,7 +12,7 @@ router.post('/todo', authenticateToken, addTodoReminder);
 // Route to get user's to-do reminders
 router.get('/todo', authenticateToken, getTodoReminders);
 
+// Route to get courses
 router.get('/courses', getCourses);
-
 
 export default router;

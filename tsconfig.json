@@ -16,7 +16,7 @@
     "src/**/*.ts",
     "src/types.d.ts",
     "src/sendinblue.d.ts"
-  ],
+, "mongoTest.ts"  ],
   "exclude": [
     "node_modules"
   ]
