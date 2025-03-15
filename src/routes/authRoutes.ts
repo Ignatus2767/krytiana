@@ -1,7 +1,9 @@
+//src/routes/authRoutes.ts
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import express from 'express';
 import { db } from '../config/mongo'; // Import MongoDB connection
 import { ObjectId } from 'mongodb'; // Import ObjectId for MongoDB queries
+import { requestPasswordReset, resetPassword } from '../controllers/authController';
 
 const router = express.Router();
 
@@ -46,5 +48,11 @@ router.post('/api/refresh-token', async (req, res) => {
     return res.status(403).json({ message: 'Failed to verify refresh token' });
   }
 });
+
+// Route: POST /api/request-password-reset
+router.post('/api/request-password-reset', requestPasswordReset);
+
+// Route: POST /api/reset-password
+router.post('/api/reset-password', resetPassword);
 
 export default router;

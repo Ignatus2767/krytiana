@@ -13,27 +13,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendResetEmail = void 0;
-// emailService.ts
+// src/services/emailService.ts
 const sib_api_v3_sdk_1 = __importDefault(require("sib-api-v3-sdk"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+// ✅ Initialize API client
+const apiClient = sib_api_v3_sdk_1.default.ApiClient.instance;
+apiClient.authentications["api-key"].apiKey = process.env.SENDINBLUE_API_KEY;
+const apiInstance = new sib_api_v3_sdk_1.default.TransactionalEmailsApi();
 const sendResetEmail = (email, resetToken) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        console.log(`Preparing to send email to: ${email}`);
-        let apiInstance = new sib_api_v3_sdk_1.default.TransactionalEmailsApi();
-        let sendSmtpEmail = new sib_api_v3_sdk_1.default.SendSmtpEmail();
-        sendSmtpEmail.subject = "Password Reset";
-        sendSmtpEmail.htmlContent = `<html><body><p>Click <a href="http://localhost:3000/reset-password/${resetToken}">here</a> to reset your password.</p></body></html>`;
-        sendSmtpEmail.sender = { "name": "krydmal", "email": "kry.d.2767@gmail.com" };
-        sendSmtpEmail.to = [{ "email": email }];
-        sendSmtpEmail.headers = { "X-Mailin-custom": "custom_header_1:custom_value_1|custom_header_2:custom_value_2" };
+        console.log(`Sending password reset email to: ${email}`);
+        const sendSmtpEmail = new sib_api_v3_sdk_1.default.SendSmtpEmail();
+        sendSmtpEmail.subject = "Password Reset Request";
+        sendSmtpEmail.htmlContent = `
+      <html>
+        <body>
+          <p>Click the link below to reset your password:</p>
+          <a href="${process.env.CLIENT_URL || "https://krytiana.onrender.com/"}/reset-password/${resetToken}">
+            Reset Password
+          </a>
+          <p>This link is valid for only 1 hour.</p>
+        </body>
+      </html>`;
+        sendSmtpEmail.sender = { name: "YourApp", email: "ignatusdonkoh9@gmail.com" };
+        sendSmtpEmail.to = [{ email }];
+        // ✅ Send email
         const response = yield apiInstance.sendTransacEmail(sendSmtpEmail);
-        console.log('Reset email sent successfully.', response);
+        console.log("✅ Password reset email sent successfully!", response);
     }
-    catch (error) { // Assert error type as any
-        console.error('Error during email sending process:', error);
-        console.error('Error response data:', (_a = error.response) === null || _a === void 0 ? void 0 : _a.data);
+    catch (error) {
+        console.error("❌ Error sending password reset email:", ((_a = error.response) === null || _a === void 0 ? void 0 : _a.body) || error.message);
     }
 });
 exports.sendResetEmail = sendResetEmail;

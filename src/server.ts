@@ -1,3 +1,4 @@
+//src/server.ts
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
@@ -9,6 +10,7 @@ import reviewRoutes from "./routes/reviewRoutes";
 import coursesRoutes from "./routes/coursesRoute";
 import profileRoute from "./routes/profileRoute";
 import todoRoutes from "./routes/todoRoutes";
+import authRoutes from "./routes/authRoutes"; // Import authentication routes
 
 dotenv.config();
 
@@ -35,6 +37,7 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/user", profileRoute);
 app.use("/api/courses", coursesRoutes);
 app.use("/api", todoRoutes);
+app.use("/api/auth", authRoutes); // Add authentication routes
 
 // Handle 404 errors
 app.use((req, res) => {

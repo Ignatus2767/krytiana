@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+//src/server.ts
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
@@ -14,6 +15,7 @@ const reviewRoutes_1 = __importDefault(require("./routes/reviewRoutes"));
 const coursesRoute_1 = __importDefault(require("./routes/coursesRoute"));
 const profileRoute_1 = __importDefault(require("./routes/profileRoute"));
 const todoRoutes_1 = __importDefault(require("./routes/todoRoutes"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes")); // Import authentication routes
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -34,6 +36,7 @@ app.use("/api/reviews", reviewRoutes_1.default);
 app.use("/api/user", profileRoute_1.default);
 app.use("/api/courses", coursesRoute_1.default);
 app.use("/api", todoRoutes_1.default);
+app.use("/api/auth", authRoutes_1.default); // Add authentication routes
 // Handle 404 errors
 app.use((req, res) => {
     res.status(404).send("Page not found");
