@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+</head>
+<body>
+    <h2>Reset Your Password</h2>
+    <form id="resetPasswordForm">
+        <input type="password" id="password" placeholder="New Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <button type="submit">Reset Password</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+        document.getElementById("resetPasswordForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const params = new URLSearchParams(window.location.search);
+            const token = window.location.pathname.split("/").pop(); // Extract token from URL
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password !== confirmPassword) {
+                document.getElementById("message").innerText = "Passwords do not match!";
+                return;
+            }
+
+            const response = await fetch(`/reset-password/${token}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password }),
+            });
+
+            const result = await response.json();
+            document.getElementById("message").innerText = result.message;
+        });
+    </script>
+</body>
+</html>

@@ -1,17 +1,18 @@
 //controllers/authController.ts
 import { Request, Response } from "express";
-import bcrypt from "bcrypt"; // ✅ Import bcrypt
+import bcrypt from "bcrypt";
 import crypto from "crypto";
-import User from "../models/User"; // ✅ Ensure correct case
+import User from "../models/User";
 import { sendResetEmail } from "../services/emailService";
 
 export const resetPassword = async (req: Request, res: Response) => {
-  const { resetToken, newPassword } = req.body;
+  const { resetToken } = req.params;
+  const { newPassword } = req.body;
 
   try {
     const user = await User.findOne({
-      resetToken,
-      resetTokenExpiry: { $gt: new Date() }, // Ensure token is still valid
+      resetToken: resetToken, // ✅ Corrected token usage
+      resetTokenExpiry: { $gt: new Date() },
     });
 
     if (!user) {
@@ -26,7 +27,6 @@ export const resetPassword = async (req: Request, res: Response) => {
     await user.save();
 
     res.json({ message: "Password has been reset successfully" });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -42,14 +42,13 @@ export const requestPasswordReset = async (req: Request, res: Response) => {
 
     // Generate reset token
     const resetToken = crypto.randomBytes(32).toString("hex");
-    user.resetToken = resetToken; // ✅ Matches model
-    user.resetTokenExpiry = new Date(Date.now() + 3600000); // ✅ Matches model (1-hour expiry)
+    user.resetToken = resetToken;
+    user.resetTokenExpiry = new Date(Date.now() + 3600000);
     await user.save();
 
     // Send reset email
     await sendResetEmail(email, resetToken);
     res.json({ message: "Password reset email sent" });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

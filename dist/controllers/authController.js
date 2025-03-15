@@ -13,16 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.requestPasswordReset = exports.resetPassword = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt")); // ✅ Import bcrypt
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = __importDefault(require("crypto"));
-const User_1 = __importDefault(require("../models/User")); // ✅ Ensure correct case
+const User_1 = __importDefault(require("../models/User"));
 const emailService_1 = require("../services/emailService");
 const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { resetToken, newPassword } = req.body;
+    const { resetToken } = req.params;
+    const { newPassword } = req.body;
     try {
         const user = yield User_1.default.findOne({
-            resetToken,
-            resetTokenExpiry: { $gt: new Date() }, // Ensure token is still valid
+            resetToken: resetToken, // ✅ Corrected token usage
+            resetTokenExpiry: { $gt: new Date() },
         });
         if (!user) {
             return res.status(400).json({ message: "Invalid or expired token" });
@@ -49,8 +50,8 @@ const requestPasswordReset = (req, res) => __awaiter(void 0, void 0, void 0, fun
             return res.status(404).json({ message: "User not found" });
         // Generate reset token
         const resetToken = crypto_1.default.randomBytes(32).toString("hex");
-        user.resetToken = resetToken; // ✅ Matches model
-        user.resetTokenExpiry = new Date(Date.now() + 3600000); // ✅ Matches model (1-hour expiry)
+        user.resetToken = resetToken;
+        user.resetTokenExpiry = new Date(Date.now() + 3600000);
         yield user.save();
         // Send reset email
         yield (0, emailService_1.sendResetEmail)(email, resetToken);
