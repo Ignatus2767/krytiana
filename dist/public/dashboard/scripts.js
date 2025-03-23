@@ -14,6 +14,7 @@ async function fetchWithRefreshToken(url, options = {}) {
 
     if (!accessToken || !refreshToken) {
         console.warn("No tokens found. Redirecting to login...");
+        alert("Please log in.");
         setTimeout(() => window.location.href = "../register/", 500); // Slight delay before redirect
         return;
     }
