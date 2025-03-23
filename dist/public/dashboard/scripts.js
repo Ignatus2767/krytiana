@@ -175,7 +175,11 @@ async function fetchUserData() {
         const data = await response.json();
         console.log('User data fetched:', data);
 
+        const mainContent = document.querySelector("main"); // Selects the <main> element
+
         if (data.success) {
+            mainContent.style.display = "block"; // Show the content
+
             // Update the dashboard with dynamic data
             document.getElementById("username").textContent = `${data.user.username}'s dashboard`;
             document.getElementById("CoursesInProgress").textContent = data.statistics.coursesInProgress;
@@ -217,12 +221,18 @@ async function fetchUserData() {
                 courseList.appendChild(courseCard);
             });
         } else {
+            if (data.message === "Invalid Token") {
+                alert("Your session has expired. Please log in again.");
+            }
             console.error(data.message);
+            setTimeout(() => window.location.href = "../register/", 500); // Redirect after delay
         }
     } catch (error) {
         console.error('Error fetching user data:', error);
     }
 }
+
+
 
 // Add a new To-Do reminder
 async function addTodoReminder(event) {
