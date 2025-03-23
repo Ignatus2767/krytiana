@@ -1,158 +1,137 @@
 // Handle the content display and countdown timer
-document.addEventListener('DOMContentLoaded', (event) => {
-  // Show the content for Button 1 by default and set it as active
+document.addEventListener('DOMContentLoaded', () => {
   showDiv('content1', 'button1');
-  
-  // Set the duration for countdown (3 hours in milliseconds)
-  const countdownDuration = 3 * 60 * 60 * 1000; 
-  
-  // Set up timers for each offer-container
-  const offerContainers = document.querySelectorAll(".offer-container");
-
-  offerContainers.forEach(function(container) {
-    const endTime = new Date().getTime() + countdownDuration; // 3 hours from now
-    createCountdown(container, endTime);
+  const countdownDuration = 3 * 60 * 60 * 1000;
+  document.querySelectorAll(".offer-container").forEach(container => {
+      createCountdown(container, new Date().getTime() + countdownDuration);
   });
+  if (courseId) fetchCourseData(courseId);
+  else document.body.innerHTML = "<h1>Invalid course ID</h1>";
 });
 
-// Function to create a countdown timer
 function createCountdown(container, endTime) {
-    const timerElement = container.querySelector(".timer");
-    
-    // Check if timerElement exists
-    if (!timerElement) {
-        console.error('Timer element not found in container');
-        return;
-    }
-
-    // Update the count down every 1 second
-    const intervalId = setInterval(function() {
-        // Get current date and time
-        const now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        const distance = endTime - now;
-
-        // Time calculations for hours, minutes, and seconds
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result in the timer element
-        timerElement.textContent = `${hours}h : ${minutes}m : ${seconds}s`;
-
-        // If the count down is over, write some text 
-        if (distance < 0) {
-            clearInterval(intervalId);
-            timerElement.textContent = "EXPIRED";
-        }
-    }, 1000);
+  const timerElement = container.querySelector(".timer");
+  if (!timerElement) return console.error('Timer element not found');
+  const intervalId = setInterval(() => {
+      const distance = endTime - new Date().getTime();
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      timerElement.textContent = distance < 0 ? "EXPIRED" : `${hours}h : ${minutes}m : ${seconds}s`;
+      if (distance < 0) clearInterval(intervalId);
+  }, 1000);
 }
 
-// Function to show and hide content sections
 function showDiv(divId, buttonId) {
-  // Hide all hidden content divs
-  const hiddenDivs = document.querySelectorAll('.hidden-content');
-  hiddenDivs.forEach(div => div.style.display = 'none');
-
-  // Show the selected div
+  document.querySelectorAll('.hidden-content').forEach(div => div.style.display = 'none');
   const selectedDiv = document.getElementById(divId);
-  if (selectedDiv) {
-    selectedDiv.style.display = 'block';
-  } else {
-    console.error(`Div with ID "${divId}" not found`);
-  }
-
-  // Remove active class from all buttons
-  const buttons = document.querySelectorAll('.discription');
-  buttons.forEach(button => button.classList.remove('active'));
-
-  // Add active class to the selected button
+  if (selectedDiv) selectedDiv.style.display = 'block';
+  else console.error(`Div with ID "${divId}" not found`);
+  document.querySelectorAll('.discription').forEach(button => button.classList.remove('active'));
   const selectedButton = document.getElementById(buttonId);
-  if (selectedButton) {
-    selectedButton.classList.add('active');
-  } else {
-    console.error(`Button with ID "${buttonId}" not found`);
-  }
+  if (selectedButton) selectedButton.classList.add('active');
+  else console.error(`Button with ID "${buttonId}" not found`);
 }
 
-// Extract course ID from URL
 const params = new URLSearchParams(window.location.search);
 const courseId = params.get('id');
 
+if (!courseId) console.error("Course ID is missing from URL!");
+else fetchCourseData(courseId);
 
-// Load course data based on ID
-window.addEventListener('DOMContentLoaded', () => {
-  const course = courses.find(c => c.id == courseId);
-
-  if (course) {
-    document.getElementById('course-title').textContent = course.title;
-    document.getElementById('course-description').textContent = course.description;
-    document.getElementById('course-image').src = course.image;
-
-    // Populate learning outcomes
-    const outcomeList = document.getElementById('outcome-list');
-    course.outcomes.forEach(outcome => {
-      const listItem = document.createElement('li');
-      listItem.textContent = outcome;
-      listItem.classList.add('li');
-      outcomeList.appendChild(listItem);
-    });
-
-    // Populate who is this course for
-    const whoList = document.getElementById('who-list');
-    course.who?.forEach(who => {
-      const listItem = document.createElement('li');
-      listItem.textContent = who;
-      listItem.classList.add('li');
-      whoList.appendChild(listItem);
-    });
-
-    // Populate requirements
-    const requirementsList = document.getElementById('requirements-list');
-    course.requirements?.forEach(requirement => {
-      const listItem = document.createElement('li');
-      listItem.textContent = requirement;
-      listItem.classList.add('li');
-      requirementsList.appendChild(listItem);
-    });
-
-    // Populate course details
-    document.getElementById('lessons').textContent = `${course.lessons}`;
-    document.getElementById('duration').textContent = `${course.duration}`;
-    document.getElementById('exercises').textContent = `${course.exercises}`;
-    document.getElementById('downloads').textContent = `${course.downloads}`;
-    document.getElementById('files').textContent = `${course.files}`;
-    document.getElementById('project').textContent = `${course.project}`;
-    document.getElementById('badge').textContent = `${course.badge}`;
-    document.getElementById('Price').textContent = `${course.price}`;
-    document.getElementById('discount').textContent = `${course.discount}`;
-    document.getElementById('offer-title').textContent = `${course.OfferTitle}`;
-    document.getElementById('saleSadge').textContent = `${course.saleBadge}`;
-
-    // Populate course units
-    const u1Element = document.getElementById('u1');
-    u1Element.textContent = course.u1;
-    
-    const u1List = document.getElementById('u1-list');
-    course.u1_list?.forEach(item => {
-      const listItem = document.createElement('li');
-      listItem.textContent = item;
-      listItem.classList.add('li');
-      u1List.appendChild(listItem);
-    });
-
-    const u2Element = document.getElementById('u2');
-    u2Element.textContent = course.u2;
-    
-    const u2List = document.getElementById('u2-list');
-    course.u2_list?.forEach(item => {
-      const listItem = document.createElement('li');
-      listItem.textContent = item;
-      listItem.classList.add('li');
-      u2List.appendChild(listItem);
-    });
-  } else {
-    document.body.innerHTML = "<h1>Course not found</h1>";
+async function fetchCourseData(courseId) {
+  try {
+      
+      const response = await fetch(`/api/courses/${courseId}`);
+      if (!response.ok) throw new Error('Course not found');
+      const { success, data } = await response.json();
+      if (!success) throw new Error('Invalid response from server');
+      
+      updateCourseDetails(data);
+  } catch (error) {
+      console.error('Error fetching course:', error);
+      document.body.innerHTML = "<h1>Course not found</h1>";
   }
-});
+}
+
+function updateCourseDetails(course) {
+  const elements = {
+      'course-title': course.title,
+      'course-description': course.description,
+      'lessons': `${course.lessons} lessons`,
+      'duration': `(${course.duration})`,
+      'exercises': `${course.exercises} exercises`,
+      'downloads': `${course.downloads} downloads`,
+      'files': `(${course.files} files)`,
+      'project': `${course.project} Course final project`,
+      'badge': course.badge,
+      'Price': `$${course.price}`,
+      'discount': `-${course.discount}% Disc`,
+      'offer-title': course.OfferTitle,
+      'saleBadge': course.saleBadge
+  };
+  Object.entries(elements).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value || "N/A";
+      else console.error(`Element with ID "${id}" not found`);
+  });
+  const imgEl = document.getElementById('course-image');
+  if (imgEl) imgEl.src = course.image || '';
+  else console.error('Image element not found');
+  
+  updateList('outcome-list', course.outcomes);
+  updateList('who-list', course.who);
+  updateList('requirements-list', course.requirements);
+  
+  const unitContainer = document.getElementById('unit-container');
+if (!unitContainer) return console.error('Unit container not found');
+unitContainer.innerHTML = '';
+
+if (course.units && course.units.length > 0) {
+  console.log("Units received in frontend:", JSON.stringify(course.units, null, 2));
+
+  course.units.forEach((unit, index) => {
+      const clearfix = document.createElement('div');
+      clearfix.classList.add('clearfix');
+
+      const outcomeDiv = document.createElement('div');
+      outcomeDiv.classList.add('outcome_div');
+      const titleElement = document.createElement('h2');
+      titleElement.classList.add('h2');
+      titleElement.textContent = unit.title || `Unit ${index + 1}`;
+      titleElement.id = `u${index + 1}`;
+      outcomeDiv.appendChild(titleElement);
+
+      const titleNote = document.createElement('div');
+      titleNote.classList.add('title_note');
+      const listElement = document.createElement('ul');
+      listElement.id = `u${index + 1}-list`;
+
+      // 🔥 FIX: Use 'topics' instead of 'items'
+      (unit.topics || []).forEach(topic => {
+          const listItem = document.createElement('li');
+          listItem.textContent = topic;
+          listItem.classList.add('li');
+          listElement.appendChild(listItem);
+      });
+
+      titleNote.appendChild(listElement);
+      clearfix.appendChild(outcomeDiv);
+      clearfix.appendChild(titleNote);
+      unitContainer.appendChild(clearfix);
+  });
+}
+
+}
+
+function updateList(elementId, items) {
+  const listElement = document.getElementById(elementId);
+  if (!listElement) return console.error(`List element "${elementId}" not found`);
+  listElement.innerHTML = '';
+  (items || []).forEach(item => {
+      const listItem = document.createElement('li');
+      listItem.textContent = item;
+      listItem.classList.add('li');
+      listElement.appendChild(listItem);
+  });
+}

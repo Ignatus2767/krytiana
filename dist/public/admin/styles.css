@@ -54,3 +54,21 @@ button {
 button:hover {
     background-color: #218838;
 }
+
+form { 
+    max-width: 400px; 
+    margin: 20px auto; 
+}
+
+.unit { 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+}
+.remove-unit { 
+    background: red; 
+    color: white; 
+    padding: 5px; 
+    margin-top: 5px; 
+    cursor: pointer; 
+}

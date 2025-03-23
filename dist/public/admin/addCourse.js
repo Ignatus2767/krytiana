@@ -1,28 +1,57 @@
 document.addEventListener("DOMContentLoaded", fetchCourses);
 
-document.getElementById("addCourseForm").addEventListener("submit", async function(event) {
+// Handle adding a new course
+document.getElementById("courseForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    const formData = new FormData(this);
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
+    const units = [];
+    document.querySelectorAll('.unit').forEach((unitDiv) => {
+        units.push({
+            title: unitDiv.querySelector('.unit-title').value,
+            topics: unitDiv.querySelector('.unit-list').value.split('|').map(topic => topic.trim().replace(/^"(.*)"$/, '$1')).filter(topic => topic.length > 0)
+
+        });
     });
 
+    const courseData = {
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        details: document.getElementById('detailsDesc').value,
+        image: document.getElementById('image').value,
+        outcomes: document.getElementById('outcomes').value.split('|').map(item => item.trim()),
+        who: document.getElementById('who').value.split('|').map(item => item.trim()),
+        requirements: document.getElementById('requirements').value.split('|').map(item => item.trim()),
+        lessons: document.getElementById('lessons').value,
+        duration: document.getElementById('duration').value,
+        exercises: document.getElementById('exercises').value,
+        downloads: document.getElementById('downloads').value,
+        files: document.getElementById('files').value,
+        project: document.getElementById('project').value,
+        OfferTitle: document.getElementById('OfferTitle').value,
+        badge: document.getElementById('badge').value,
+        price: document.getElementById('price').value,
+        discount: document.getElementById('discount').value,
+        saleBadge: document.getElementById('saleBadge').value,
+        units: units
+    };
+
     try {
+        
+
         const response = await fetch('/api/courses/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            body: JSON.stringify(courseData)
         });
 
         const result = await response.json();
         if (result.success) {
             alert('Course added successfully!');
             this.reset();
-            fetchCourses(); // Refresh the course list
+            document.getElementById('units').innerHTML = ""; // Clear units
+            fetchCourses();
         } else {
-            alert('Failed to add course: ' + result.message);
+            alert('Error adding course: ' + result.message);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -31,31 +60,30 @@ document.getElementById("addCourseForm").addEventListener("submit", async functi
 });
 
 async function fetchCourses() {
-  try {
-      const response = await fetch('/api/courses');
-      const result = await response.json();
-      const container = document.getElementById("coursesContainer");
-      container.innerHTML = ""; // Clear existing content
+    try {
+        const response = await fetch('/api/courses');
+        const result = await response.json();
+        const container = document.getElementById("coursesContainer");
+        container.innerHTML = ""; // Clear existing content
 
-      if (result.success) {
-          result.data.forEach(course => {
-              const courseElement = document.createElement("div");
-              courseElement.classList.add("course");
-              courseElement.innerHTML = `
-                  <p>${course.title}</p>
-                  <button onclick="editCourse('${course._id}', '${course.title}')">Edit</button>
-                  <button onclick="deleteCourse('${course._id}')">Delete</button>
-              `;
-              container.appendChild(courseElement);
-          });
-      } else {
-          container.innerHTML = "<p>No courses available.</p>";
-      }
-  } catch (error) {
-      console.error('Error fetching courses:', error);
-  }
+        if (result.success && result.data.length > 0) {
+            result.data.forEach(course => {
+                const courseElement = document.createElement("div");
+                courseElement.classList.add("course");
+                courseElement.innerHTML = `
+                    <p>${course.title}</p>
+                    <button onclick="editCourse('${course._id}')">Edit</button>
+                    <button onclick="deleteCourse('${course._id}')">Delete</button>
+                `;
+                container.appendChild(courseElement);
+            });
+        } else {
+            container.innerHTML = "<p>No courses available.</p>";
+        }
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+    }
 }
-
 
 async function deleteCourse(courseId) {
     if (confirm("Are you sure you want to delete this course?")) {
@@ -64,7 +92,7 @@ async function deleteCourse(courseId) {
             const result = await response.json();
             if (result.success) {
                 alert('Course deleted successfully!');
-                fetchCourses(); // Refresh course list
+                fetchCourses();
             } else {
                 alert('Failed to delete course.');
             }
@@ -74,44 +102,73 @@ async function deleteCourse(courseId) {
     }
 }
 
-function editCourse(id, title, description, details, image, discount, duration, link) {
-    document.getElementById("title").value = title;
-    document.getElementById("description").value = description;
-    document.getElementById("details").value = details;
-    document.getElementById("image").value = image;
-    document.getElementById("discount").value = discount;
-    document.getElementById("duration").value = duration;
-    document.getElementById("link").value = link;
+async function editCourse(id) {
+    try {
+        const response = await fetch(`/api/courses/${id}`);
+        const course = await response.json();
 
-    const form = document.getElementById("addCourseForm");
-    form.onsubmit = async function(event) {
-        event.preventDefault();
-        const formData = new FormData(form);
-        const updatedData = {};
-        formData.forEach((value, key) => {
-            updatedData[key] = value;
-        });
-
-        try {
-            const response = await fetch(`/api/courses/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedData),
-            });
-
-            const result = await response.json();
-            if (result.success) {
-                alert("Course updated successfully!");
-                form.reset();
-                fetchCourses();
-                form.onsubmit = originalSubmitHandler; // Restore original submit behavior
-            } else {
-                alert("Failed to update course.");
-            }
-        } catch (error) {
-            console.error("Error updating course:", error);
+        if (course.success) {
+            document.getElementById("title").value = course.data.title;
+            document.getElementById("description").value = course.data.description;
+            document.getElementById("detailsDesc").value = course.data.details;
+            document.getElementById("image").value = course.data.image;
+            document.getElementById("discount").value = course.data.discount;
+            document.getElementById("duration").value = course.data.duration;
+            
+            const form = document.getElementById("courseForm");
+            form.onsubmit = async function(event) {
+                event.preventDefault();
+                await updateCourse(id);
+            };
         }
-    };
+    } catch (error) {
+        console.error('Error fetching course for edit:', error);
+    }
 }
 
-const originalSubmitHandler = document.getElementById("addCourseForm").onsubmit;
+async function updateCourse(id) {
+    const updatedData = {
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        details: document.getElementById('detailsDesc').value,
+        image: document.getElementById('image').value,
+        discount: document.getElementById('discount').value,
+        duration: document.getElementById('duration').value
+    };
+
+    try {
+        const response = await fetch(`/api/courses/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedData)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            alert("Course updated successfully!");
+            document.getElementById("courseForm").reset();
+            fetchCourses();
+        } else {
+            alert("Failed to update course.");
+        }
+    } catch (error) {
+        console.error("Error updating course:", error);
+    }
+}
+
+// Add and remove course units
+document.getElementById('addUnit').addEventListener('click', function() {
+    const unitIndex = document.querySelectorAll('.unit').length + 1;
+    const unitDiv = document.createElement('div');
+    unitDiv.classList.add('unit');
+    unitDiv.innerHTML = `
+        <input type="text" class="unit-title" placeholder="Unit ${unitIndex} Title" required>
+        <textarea class="unit-list" placeholder="Unit ${unitIndex} Topics (comma separated)" required></textarea>
+        <button type="button" class="remove-unit">Remove Unit</button>
+    `;
+    document.getElementById('units').appendChild(unitDiv);
+
+    unitDiv.querySelector('.remove-unit').addEventListener('click', function() {
+        unitDiv.remove();
+    });
+});

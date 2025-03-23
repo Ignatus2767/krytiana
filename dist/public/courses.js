@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                   <div class="type_div9" style="display: flex;">
                     <div class="type" style="margin-bottom: 0px;">
                       <div class="type-inner">
-                        <span class="time_disc1">${course.discount}</span>
+                        <span class="time_disc1">-${course.discount}% OFF</span>
                       </div>
                     </div>
                     <div class="hours">

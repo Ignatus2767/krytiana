@@ -2,12 +2,9 @@ const courses = [
   {
     id: 1,
     title: "Full Stack Development",
-    description: "Do fractions and decimals make you apprehensive about maths? Do you lack confidence in dealing with numbers? If so, then this free course, Numbers, units and arithmetic, is for you. The course will explain the basics of working with positive and negative numbers and how to multiply and divide with fractions and decimals.",
+    description: "Do fractions and decimals make you apprehensive about maths? ",
     image: "./pics/web.png",
     outcomes: [
-      "Write whole numbers and decimals in place-value columns and compare their sizes",
-      "Multiply and divide whole numbers and decimals by 10, 100, 1000 and so on",
-      "Indicate given fractions on a diagram and find equivalent fractions for a given fraction",
       "Mark numbers on a number line",
       "Choose appropriate units for a given purpose"
     ],
@@ -29,6 +26,7 @@ const courses = [
     price: "$0.99",
     discount: "95% Disc. <s>$19.99 USD</s>",
     saleBadge: "Promotion!",
+    u1: "U1: Introduction",
     u1_list: [
       "Write whole numbers and decimals in place-value columns and compare their sizes",
       "Multiply and divide whole numbers and decimals by 10, 100, 1000 and so on",
@@ -42,7 +40,18 @@ const courses = [
       "Multiply and divide whole numbers and decimals by 10, 100, 1000 and so on",
       "Indicate given fractions on a diagram and find equivalent fractions for a given fraction",
       "Mark numbers on a number line",
-      "Choose appropriate units for a given purpose."
+      
+      
+    ],
+
+    u3: "U3: HTML structure",
+    u3_list: [
+      "Write whole numbers and decimals in place-value columns and compare their sizes",
+      "Multiply and divide whole numbers and decimals by 10, 100, 1000 and so on",
+      "Indicate given fractions on a diagram and find equivalent fractions for a given fraction",
+      "Mark numbers on a number line",
+      
+      
     ]
   },
 

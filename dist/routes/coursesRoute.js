@@ -8,6 +8,8 @@ const coursesController_js_1 = require("../controllers/coursesController.js");
 const router = express_1.default.Router();
 // Fetch all courses
 router.get("/", coursesController_js_1.getCourses);
+// Fetch a single course by ID
+router.get("/:id", coursesController_js_1.getCourseById);
 // Add a new course
 router.post("/add", coursesController_js_1.addCourse);
 // Delete a course

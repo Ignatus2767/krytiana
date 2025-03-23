@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Course</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        form { max-width: 400px; margin: 20px auto; }
+        input, textarea { width: 100%; margin-bottom: 10px; padding: 8px; }
+        button { background: green; color: white; padding: 10px; border: none; cursor: pointer; }
+        .unit { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        .remove-unit { background: red; color: white; padding: 5px; margin-top: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <form id="courseForm">
+        <input type="text" id="title" placeholder="Title" required>
+        <textarea id="description" placeholder="Description" required></textarea>
+        <input type="text" id="image" placeholder="Image URL" required>
+        <textarea id="outcomes" placeholder="Outcomes (comma separated)" required></textarea>
+        <textarea id="who" placeholder="Who can take this course?" required></textarea>
+        <textarea id="requirements" placeholder="Requirements" required></textarea>
+        
+        <h3>Course Details</h3>
+        <input type="text" id="lessons" placeholder="Number of lessons" required>
+        <input type="text" id="duration" placeholder="Course Duration" required>
+        <input type="text" id="exercises" placeholder="Number of Exercises" required>
+        <input type="text" id="downloads" placeholder="Downloads" required>
+        <input type="text" id="files" placeholder="Number of Files" required>
+        <input type="text" id="project" placeholder="Final Project" required>
+        
+        <h3>Pricing & Offers</h3>
+        <input type="text" id="OfferTitle" placeholder="Offer Title" required>
+        <input type="text" id="badge" placeholder="Badge" required>
+        <input type="text" id="price" placeholder="Price" required>
+        <input type="text" id="discount" placeholder="Discount" required>
+        <input type="text" id="saleBadge" placeholder="Sale Badge" required>
+        
+        <h3>Course Units</h3>
+        <div id="units"></div>
+        <button type="button" id="addUnit">Add Unit</button>
+        
+        <button type="submit">Add Course</button>
+    </form>
+
+    <script>
+        document.getElementById('addUnit').addEventListener('click', function() {
+            const unitIndex = document.querySelectorAll('.unit').length + 1;
+            const unitDiv = document.createElement('div');
+            unitDiv.classList.add('unit');
+            unitDiv.innerHTML = `
+                <input type="text" class="unit-title" placeholder="Unit ${unitIndex} Title" required>
+                <textarea class="unit-list" placeholder="Unit ${unitIndex} Topics (comma separated)" required></textarea>
+                <button type="button" class="remove-unit">Remove Unit</button>
+            `;
+            document.getElementById('units').appendChild(unitDiv);
+
+            unitDiv.querySelector('.remove-unit').addEventListener('click', function() {
+                unitDiv.remove();
+            });
+        });
+
+        document.getElementById('courseForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const units = [];
+            document.querySelectorAll('.unit').forEach((unitDiv, index) => {
+                units.push({
+                    title: unitDiv.querySelector('.unit-title').value,
+                    topics: unitDiv.querySelector('.unit-list').value.split(',')
+                });
+            });
+
+            const courseData = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                image: document.getElementById('image').value,
+                outcomes: document.getElementById('outcomes').value.split(','),
+                who: document.getElementById('who').value.split(','),
+                requirements: document.getElementById('requirements').value.split(','),
+                lessons: document.getElementById('lessons').value,
+                duration: document.getElementById('duration').value,
+                exercises: document.getElementById('exercises').value,
+                downloads: document.getElementById('downloads').value,
+                files: document.getElementById('files').value,
+                project: document.getElementById('project').value,
+                OfferTitle: document.getElementById('OfferTitle').value,
+                badge: document.getElementById('badge').value,
+                price: document.getElementById('price').value,
+                discount: document.getElementById('discount').value,
+                saleBadge: document.getElementById('saleBadge').value,
+                units: units
+            };
+
+            const response = await fetch('/api/courses', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(courseData)
+            });
+
+            if (response.ok) {
+                alert('Course added successfully!');
+            } else {
+                alert('Error adding course');
+            }
+        });
+    </script>
+</body>
+</html>

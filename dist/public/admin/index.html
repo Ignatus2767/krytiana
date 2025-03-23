@@ -5,33 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Course</title>
     <link rel="stylesheet" href="styles.css">
-    
 </head>
 <body>
     <div class="container">
         <h1>Add New Course</h1>
-        <form id="addCourseForm">
+        <form id="courseForm">
             <label for="title">Course Title:</label>
             <input type="text" id="title" name="title" required>
 
             <label for="description">Description:</label>
             <textarea id="description" name="description" required></textarea>
 
-            <label for="details">Details:</label>
-            <textarea id="details" name="details" required></textarea>
+            <label for="detailsDesc">Details Description:</label>
+            <textarea id="detailsDesc" name="detailsDesc" required></textarea>
 
             <label for="image">Image URL:</label>
             <input type="text" id="image" name="image" required>
 
+            <label for="outcomes">Outcomes (comma separated):</label>
+            <textarea id="outcomes" name="outcomes" required></textarea>
+
+            <label for="who">Who is this course for?</label>
+            <textarea id="who" name="who" required></textarea>
+
+            <label for="requirements">Requirements:</label>
+            <textarea id="requirements" name="requirements" required></textarea>
+            
+            <h3>Course Details</h3>
+            <label for="lessons">Number of Lessons:</label>
+            <input type="text" id="lessons" name="lessons" required>
+
+            <label for="duration">Course Duration:</label>
+            <input type="text" id="duration" name="duration" required>
+
+            <label for="exercises">Number of Exercises:</label>
+            <input type="text" id="exercises" name="exercises" required>
+
+            <label for="downloads">Downloads:</label>
+            <input type="text" id="downloads" name="downloads" required>
+
+            <label for="files">Number of Files:</label>
+            <input type="text" id="files" name="files" required>
+
+            <label for="project">Number of Final Projects:</label>
+            <input type="text" id="project" name="project" required>
+
+            <h3>Pricing & Offers</h3>
+            <label for="OfferTitle">Offer Title:</label>
+            <input type="text" id="OfferTitle" name="OfferTitle" required>
+
+            <label for="badge">Badge:</label>
+            <input type="text" id="badge" name="badge" required>
+
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" required>
+
             <label for="discount">Discount:</label>
-            <input type="text" id="discount" name="discount">
+            <input type="text" id="discount" name="discount" required>
 
-            <label for="duration">Duration:</label>
-            <input type="text" id="duration" name="duration">
-
-            <label for="link">Link:</label>
-            <input type="text" id="link" name="link">
-
+            <label for="saleBadge">Sale Badge:</label>
+            <input type="text" id="saleBadge" name="saleBadge" required>
+            
+            <h3>Course Units</h3>
+            <div id="units"></div>
+            <button type="button" id="addUnit">Add Unit</button>
+            
             <button type="submit">Add Course</button>
         </form>
         
@@ -41,5 +79,4 @@
 
     <script src="addCourse.js"></script>
 </body>
-
 </html>

@@ -82,6 +82,80 @@ const courses = [
     // Add more courses as needed
 ];
 
+
+
+
+
+// Fetch user data and populate the dashboard with dynamic content
+async function fetchUserData() {
+    try {
+        const response = await fetchWithRefreshToken('/api/user/profile', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await response.json();
+        console.log('User data fetched:', data);
+
+        const mainContent = document.querySelector("main"); // Selects the <main> element
+
+        if (data.success) {
+            mainContent.style.display = "block"; // Show the content
+
+            // Update the dashboard with dynamic data
+            document.getElementById("username").textContent = `${data.user.username}'s dashboard`;
+            document.getElementById("CoursesInProgress").textContent = data.statistics.coursesInProgress;
+            document.getElementById("CoursesCompleted").textContent = data.statistics.coursesCompleted;
+            document.getElementById("CourseCompletionPercentage").textContent = data.statistics.courseCompletionPercentage;
+            document.getElementById("course-count").textContent = data.statistics.coursesInProgress;
+            document.getElementById("user").textContent = `${data.user.username},`;
+
+            // Clear the course list before displaying new courses
+            const courseList = document.getElementById("course-list");
+            courseList.innerHTML = '';  // Clears any previous content
+
+            // Loop through courses and display them
+            data.courses.forEach(course => {
+                const courseCard = document.createElement("div");
+                courseCard.className = "course-card";
+
+                const buttonLabel = course.progress === 100 ? "Enroll Again" : "Continue Learning";
+                const progressText = course.progress === 100 ? "Completed" : `${course.progress}% Complete`;
+
+                courseCard.innerHTML = `
+                    <div class="left-section">
+                        <div class="course-image">
+                            <img src="${course.imageUrl}" alt="${course.title}">
+                        </div>
+                        <button class="unenroll-button">Unenroll</button>
+                    </div>
+
+                    <div class="right-section">
+                        <h3>${course.title}</h3>
+                        <div class="progress-bar">
+                            <div style="width: ${course.progress}%"></div>
+                            <span id="progress-percentage">${progressText}</span>
+                        </div>
+                        <button class="continue-button">${buttonLabel}</button>
+                    </div>
+                `;
+
+                courseList.appendChild(courseCard);
+            });
+        } else {
+            if (data.message === "Invalid Token") {
+                alert("Your session has expired. Please log in again.");
+            }
+            console.error(data.message);
+            setTimeout(() => window.location.href = "../register/", 500); // Redirect after delay
+        }
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+    }
+}
+
 // Function to generate course cards
 function generateCourseCards(courses) {
     const courseList = document.getElementById("course-list1");
@@ -160,80 +234,6 @@ function generateCourseCards(courses) {
 
 // Call the function to generate the cards
 generateCourseCards(courses);
-
-
-
-// Fetch user data and populate the dashboard with dynamic content
-async function fetchUserData() {
-    try {
-        const response = await fetchWithRefreshToken('/api/user/profile', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const data = await response.json();
-        console.log('User data fetched:', data);
-
-        const mainContent = document.querySelector("main"); // Selects the <main> element
-
-        if (data.success) {
-            mainContent.style.display = "block"; // Show the content
-
-            // Update the dashboard with dynamic data
-            document.getElementById("username").textContent = `${data.user.username}'s dashboard`;
-            document.getElementById("CoursesInProgress").textContent = data.statistics.coursesInProgress;
-            document.getElementById("CoursesCompleted").textContent = data.statistics.coursesCompleted;
-            document.getElementById("CourseCompletionPercentage").textContent = data.statistics.courseCompletionPercentage;
-            document.getElementById("course-count").textContent = data.statistics.coursesInProgress;
-            document.getElementById("user").textContent = `${data.user.username},`;
-
-            // Clear the course list before displaying new courses
-            const courseList = document.getElementById("course-list");
-            courseList.innerHTML = '';  // Clears any previous content
-
-            // Loop through courses and display them
-            data.courses.forEach(course => {
-                const courseCard = document.createElement("div");
-                courseCard.className = "course-card";
-
-                const buttonLabel = course.progress === 100 ? "Enroll Again" : "Continue Learning";
-                const progressText = course.progress === 100 ? "Completed" : `${course.progress}% Complete`;
-
-                courseCard.innerHTML = `
-                    <div class="left-section">
-                        <div class="course-image">
-                            <img src="${course.imageUrl}" alt="${course.title}">
-                        </div>
-                        <button class="unenroll-button">Unenroll</button>
-                    </div>
-
-                    <div class="right-section">
-                        <h3>${course.title}</h3>
-                        <div class="progress-bar">
-                            <div style="width: ${course.progress}%"></div>
-                            <span id="progress-percentage">${progressText}</span>
-                        </div>
-                        <button class="continue-button">${buttonLabel}</button>
-                    </div>
-                `;
-
-                courseList.appendChild(courseCard);
-            });
-        } else {
-            if (data.message === "Invalid Token") {
-                alert("Your session has expired. Please log in again.");
-            }
-            console.error(data.message);
-            setTimeout(() => window.location.href = "../register/", 500); // Redirect after delay
-        }
-    } catch (error) {
-        console.error('Error fetching user data:', error);
-    }
-}
-
-
 
 // Add a new To-Do reminder
 async function addTodoReminder(event) {
