@@ -1,3 +1,4 @@
+//contents.js
 const courses = [
     {
         title: "INTRODUCTION TO DATA SCIENCE",

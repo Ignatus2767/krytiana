@@ -1,3 +1,4 @@
+//trying.js
 document.addEventListener("DOMContentLoaded", function () {
   const courseList = document.getElementById("course-list");
   const courseContent = document.getElementById("course-content");
