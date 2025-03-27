@@ -10,6 +10,7 @@ declare global {
         email: string;
         username: string;
       };
+      files?: express.Multer.File[]; // This is for the uploaded files
     }
   }
 }

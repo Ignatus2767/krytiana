@@ -61,28 +61,9 @@ const courses = [
 
 
             `
-            
+ 
         },
-        {
-            heading: "",
-            content: `
-                
-            `,
-            codes: [
-                { lang: "bash", code: `python script.py` },
-                { lang: "bash", code: `pip install notebook` },
-                { lang: "bash", code: `jupyter notebook` },
-                { lang: "python", code: `print("Hello, Jupyter Notebook!")` },
-            ],
-            images: [
-                "images/facebook.png",
-                "images/twitter.png",
-                "images/whatsapp.png"]
-        },
-        
-        
-        
-        
+
         ]
     },
     {
@@ -131,8 +112,7 @@ const courses = [
                 { lang: "python", code: `print("Hello, Jupyter Notebook!")` },
             ]
         },
-        
-        
+           
     ]
     },
     {
@@ -1301,6 +1281,25 @@ const courses = [
                 ]
 
         },
+        {
+            heading: "",
+            video: "", 
+            content: `
+                
+            `,
+            codes: [
+                { lang: "python", code: `
+                
+                ` },
+                
+            ],
+
+            images: [
+                    "images/facebook.png",
+                ]
+
+        },
+       
             
         ]
     },

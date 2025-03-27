@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Course</title>
+    <link rel="stylesheet" href="insert-course.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Insert Course</h1>
+        <form id="course-form" enctype="multipart/form-data">
+            <label>Course Title:</label>
+            <input type="text" id="course-title" required>
+
+            <h2>Sections</h2>
+            <div id="sections-container"></div>
+            <button type="button" id="add-section">+ Add Section</button>
+
+            <button type="button" id="preview-btn">Preview</button>
+            <button type="submit">Save Course</button>
+        </form>
+    </div>
+
+    <div id="preview-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Course Preview</h2>
+            <div id="preview-content"></div>
+        </div>
+    </div>
+
+    <script src="insert-course.js"></script>
+</body>
+</html>

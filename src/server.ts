@@ -11,6 +11,7 @@ import coursesRoutes from "./routes/coursesRoute";
 import profileRoute from "./routes/profileRoute";
 import todoRoutes from "./routes/todoRoutes";
 import authRoutes from "./routes/authRoutes"; // Import authentication routes
+import courseDataRoutes from "./routes/courseDataRoutes";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ connectDB();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json()); 
 
 // Serve static files
 app.use(express.static(path.join(__dirname, "public")));
@@ -38,6 +40,8 @@ app.use("/api/user", profileRoute);
 app.use("/api/courses", coursesRoutes);
 app.use("/api", todoRoutes);
 app.use("/api/auth", authRoutes); // Add authentication routes
+app.use("/api/coursedata", courseDataRoutes);
+app.use("/api/courses", courseDataRoutes);
 
 app.get("/reset-password/:token", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "reset-password.html"));
