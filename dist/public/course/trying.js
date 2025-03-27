@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // ✅ Fetch courses from backend
     async function fetchCourses() {
         try {
-            const response = await fetch("http://localhost:3000/api/coursedata");
+            const response = await fetch("/api/coursedata");
             const data = await response.json();
             
             if (!Array.isArray(data)) throw new Error("Fetched data is not an array");
