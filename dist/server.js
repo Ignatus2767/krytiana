@@ -40,7 +40,6 @@ app.use("/api/courses", coursesRoute_1.default);
 app.use("/api", todoRoutes_1.default);
 app.use("/api/auth", authRoutes_1.default); // Add authentication routes
 app.use("/api/coursedata", courseDataRoutes_1.default);
-app.use("/api/courses", courseDataRoutes_1.default);
 app.get("/reset-password/:token", (req, res) => {
     res.sendFile(path_1.default.join(__dirname, "public", "reset-password.html"));
 });

@@ -1,5 +1,4 @@
-//trying.js
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", function () {
     const courseList = document.getElementById("course-list");
     const courseContent = document.getElementById("course-content");
     const progressBar = document.getElementById("progress-bar");
@@ -13,11 +12,62 @@ document.addEventListener("DOMContentLoaded", async function () {
     const searchResults = document.getElementById("search-results");
     const videoContainer = document.getElementById("videoContainer");
 
-    let courses = [];
-    let currentCourseIndex = 0;
-    let currentSectionIndex = 0;
+    let currentTopicIndex = 0; // Add this line to define the variable
+    let currentSectionIndex = 0; // Your existing code
+    
+    let topics = [];
 
-      // Search function
+
+    // Function to fetch topics based on course title
+    async function loadTopics() {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseTitle = urlParams.get("courseTitle");
+
+            if (!courseTitle) {
+                console.error("❌ No course title found in URL.");
+                return;
+            }
+
+
+            // Fetch course data from MongoDB API
+            const response = await fetch(`/api/coursedata/${encodeURIComponent(courseTitle)}`);
+            const courseData = await response.json();
+
+            // Ensure valid course data with topics
+            if (!courseData || !courseData.courseTitle || !Array.isArray(courseData.topics)) {
+                throw new Error("Course not found or invalid response");
+            }
+
+            console.log("✅ Course loaded:", courseData);
+
+            // Directly store the topics in a variable
+            topics = courseData.topics;
+
+            if (topics.length === 0) {
+                throw new Error("❌ No topics found in the course.");
+            }
+
+            // ✅ Populate sidebar dynamically AFTER topics are fetched
+            courseList.innerHTML = ""; // Clear existing list
+            topics.forEach((topic, index) => {
+                let li = document.createElement("li");
+                li.textContent = topic.title;
+                li.addEventListener("click", () => loadTopic(index));
+                courseList.appendChild(li);
+            });
+
+            // Load the first topic
+            loadTopic(currentTopicIndex);  // Ensure this line is correctly placed here
+
+        } catch (error) {
+            console.error("❌ Error fetching course:", error);
+        }
+    }
+    console.log("📌 Fetching topics:", topics);
+    loadTopics();  // Call loadTopics when the page loads
+
+    // Search function
     searchBox.addEventListener("input", function () {
         let query = searchBox.value.toLowerCase();
         searchResults.innerHTML = ""; // Clear previous results
@@ -28,10 +78,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
 
         let matches = [];
-        courses.forEach((course, courseIndex) => {
-            course.sections.forEach((section, sectionIndex) => {
+        topics.forEach((topic, topicIndex) => {
+            topic.sections.forEach((section, sectionIndex) => {
                 if (section.heading.toLowerCase().includes(query)) {
-                    matches.push({ courseIndex, sectionIndex, title: section.heading });
+                    matches.push({ topicIndex, sectionIndex, title: section.heading });
                 }
             });
         });
@@ -43,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 let li = document.createElement("li");
                 li.textContent = match.title;
                 li.addEventListener("click", () => {
-                    loadCourse(match.courseIndex);
+                    loadTopic(match.topicIndex);
                     currentSectionIndex = match.sectionIndex;
                     displaySection();
                     searchResults.style.display = "none"; // Hide results
@@ -56,114 +106,55 @@ document.addEventListener("DOMContentLoaded", async function () {
         searchResults.style.display = "block";
     });
 
-    function saveProgress() {
-        localStorage.setItem("currentCourseIndex", currentCourseIndex);
-        localStorage.setItem("currentSectionIndex", currentSectionIndex);
-    }
-
+    // ✅ Load saved progress BEFORE initializing courses
     function loadProgress() {
         let savedCourse = localStorage.getItem("currentCourseIndex");
         let savedSection = localStorage.getItem("currentSectionIndex");
-    
+
         if (savedCourse !== null && savedSection !== null) {
-            let tempCourseIndex = parseInt(savedCourse);
-            let tempSectionIndex = parseInt(savedSection);
-    
-            // Ensure valid course index
-            if (courses.length > 0 && tempCourseIndex >= 0 && tempCourseIndex < courses.length) {
-                currentCourseIndex = tempCourseIndex;
-            } else {
-                currentCourseIndex = 0; // Reset if invalid
-            }
-    
-            // Ensure valid section index
-            if (courses.length > 0 && tempSectionIndex >= 0 && tempSectionIndex < courses[currentCourseIndex].sections.length) {
-                currentSectionIndex = tempSectionIndex;
-            } else {
-                currentSectionIndex = 0;
-            }
+            currentCourseIndex = parseInt(savedCourse);
+            currentSectionIndex = parseInt(savedSection);
         }
     }
-    
+
+    function saveProgress() {
+        localStorage.setItem("currentTopicIndex", currentTopicIndex);
+        localStorage.setItem("currentSectionIndex", currentSectionIndex);
+    }
     
 
-    // ✅ Fetch courses from backend
-    async function fetchCourses() {
-        try {
-            const response = await fetch("/api/coursedata");
-            const data = await response.json();
-            
-            if (!Array.isArray(data)) throw new Error("Fetched data is not an array");
-    
-            courses = data;
-            
-    
-            loadCourseTitles();
-    
-            // Check if stored index is out of bounds and reset if necessary
-            let savedCourse = parseInt(localStorage.getItem("currentCourseIndex") || "0", 10);
-            if (savedCourse < 0 || savedCourse >= courses.length) {
-                console.warn("⚠️ Resetting course index to 0 (out of bounds)");
-                localStorage.setItem("currentCourseIndex", "0");
-                savedCourse = 0;
+    // ✅ Load progress first before anything else
+    loadProgress();
+
+    // Load course titles into the sidebar
+
+
+    function loadTopic(topicIndex) {
+        currentTopicIndex = topicIndex;
+        currentSectionIndex = 0;  // Start from the first section
+
+        let topic = topics[topicIndex];
+
+        // Update the header title to the topic's title
+        headerTitle.textContent = topic.title;
+
+        // Remove active class from all list items and add to the selected one
+        const courseListItems = document.querySelectorAll("#course-list li");
+        if (courseListItems.length > 0) {
+            courseListItems.forEach(li => li.classList.remove("active"));
+            if (courseListItems[topicIndex]) {
+                courseListItems[topicIndex].classList.add("active");
             }
-            currentCourseIndex = savedCourse;
-    
-            loadProgress();
-            loadCourse(currentCourseIndex);
-        } catch (error) {
-            console.error("❌ Error fetching courses:", error);
         }
-    }
-    
-    
+        displaySection();  // Display the first section of the topic
 
-    function loadCourseTitles() {
-        courseList.innerHTML = ""; // Clear list before adding
-        courses.forEach((course, index) => {
-            let li = document.createElement("li");
-            li.textContent = course.title;
-            li.addEventListener("click", () => loadCourse(index));
-            courseList.appendChild(li);
-        });
-    }
+        saveProgress();  // Save progress
 
-    function loadCourse(courseIndex) {
-        
-    
-        if (courseIndex < 0 || courseIndex >= courses.length) {
-            console.error("❌ Invalid course index:", courseIndex);
-            return;
-        }
-    
-        currentCourseIndex = courseIndex;
-        currentSectionIndex = 0;
-    
-        let course = courses[currentCourseIndex];
-    
-        if (!course) {
-            console.error("❌ Course not found at index:", courseIndex);
-            return;
-        }
-    
-        headerTitle.textContent = course.title;
-    
-        // Highlight active course
-        document.querySelectorAll("#course-list li").forEach(li => li.classList.remove("active"));
-        if (document.querySelectorAll("#course-list li")[courseIndex]) {
-            document.querySelectorAll("#course-list li")[courseIndex].classList.add("active");
-        }
-    
-        displaySection();
-        saveProgress();
-    
-        // Auto-close sidebar on small screens
+        // Close sidebar if screen size is small
         if (window.innerWidth <= 768) {
             sidebar.classList.remove("open");
         }
     }
-    
-
 
     function calculateReadingTime(text) {
         const wordsPerMinute = 80; // Average reading speed
@@ -172,68 +163,39 @@ document.addEventListener("DOMContentLoaded", async function () {
         return readingTime;
     }
 
-    function insertMedia(content, images = [], codes = []) {
-        let mediaHTML = ""; // Final HTML output
-        let codeIndex = 0; // Track which code snippet to insert
-    
-        // Split content by "code1", "code2", etc.
-        let parts = content.split(/(code\d+)/g); // Preserve delimiters (code1, code2...)
-    
-        parts.forEach((part) => {
-            if (/code\d+/.test(part) && codes[codeIndex]) {
-                // If part is a code placeholder (e.g., "code1") and we have a corresponding code snippet
-                let codeSnippet = typeof codes[codeIndex] === "object" && codes[codeIndex].code 
-                    ? codes[codeIndex].code 
-                    : codes[codeIndex];
-    
-                let language = typeof codes[codeIndex] === "object" && codes[codeIndex].language 
-                    ? codes[codeIndex].language 
-                    : "python"; // Default language is Python
-    
-                // Highlight the code using Prism.js
-                let formattedCode = Prism ? Prism.highlight(codeSnippet, Prism.languages[language], language) : codeSnippet;
-    
-                // Ensure proper HTML structure
-                mediaHTML += `<pre class="language-${language}"><code class="language-${language}">${formattedCode}</code></pre>`;
-    
-                codeIndex++; // Move to next code snippet
-            } else {
-                // Ensure paragraphs are properly wrapped
-                mediaHTML += `<p>${part.trim()}</p>`;
+    // Function to dynamically load images and code within content
+    function insertMedia(content, images, codeSnippets) {
+        let contentParts = content.split(/image\d+|code\d+/g); // Split content by image and code placeholders
+        let newContent = "";
+
+        contentParts.forEach((text, index) => {
+            newContent += `<p>${text.trim()}</p>`; // Add text part
+
+            if (images && images[index]) {
+                newContent += `<img src="${images[index]}" alt="Course Image" style="max-width:100%; display:block; margin:10px 0;">`;
+            }
+
+            if (codeSnippets && codeSnippets[index]) {
+                newContent += `<pre><code class="language-${codeSnippets[index].lang}">${codeSnippets[index].code}</code></pre>`;
             }
         });
-    
-        // Remove empty or invalid image URLs
-        let validImages = images.filter(imgSrc => imgSrc.trim() !== "");
-        validImages.forEach(imgSrc => {
-            mediaHTML += `<img src="${imgSrc}" alt="Course Image" onerror="this.style.display='none';">`;
-        });
-    
-        return mediaHTML;
+
+        return newContent;
     }
-    
+
     function displaySection() {
-        if (courses.length === 0) {
-            console.warn("⚠️ No courses loaded, cannot display section.");
-            return;
-        }
-    
-        let course = courses[currentCourseIndex];
-    
-        if (!course || !course.sections || course.sections.length === 0) {
-            console.warn("⚠️ No sections found in the selected course.");
-            return;
-        }
-    
-        let section = course.sections[currentSectionIndex];
+        let topic = topics[currentTopicIndex];
+        let section = topic.sections[currentSectionIndex];
+
         let readingTime = calculateReadingTime(section.content);
-    
+
         courseContent.innerHTML = `
             <p><em>Estimated Reading Time: ${readingTime} min</em></p>
             <h2 class="active-section">${section.heading}</h2>
             ${insertMedia(section.content, section.images || [], section.codes || [])}
         `;
-    
+
+        // Check if there's a video for this section
         if (section.video) {
             videoContainer.innerHTML = `<iframe src="${section.video}" frameborder="0" allowfullscreen></iframe>`;
             videoContainer.style.display = "block";
@@ -241,33 +203,29 @@ document.addEventListener("DOMContentLoaded", async function () {
             videoContainer.innerHTML = "";
             videoContainer.style.display = "none";
         }
-    
-        updateProgress();
-        updateOverallProgress();
-        updateNavigation();
-    
-        // ✅ Apply Prism.js Syntax Highlighting after content is inserted
-        Prism.highlightAll();
+
+        updateProgress();  // Update progress bar
+        updateOverallProgress();  // Update overall progress
+        updateNavigation();  // Update navigation buttons (Next/Previous)
     }
-    
-    
 
     function updateProgress() {
-        let totalSections = courses[currentCourseIndex].sections.length;
+        let totalSections = topics[currentTopicIndex].sections.length;
         let progress = ((currentSectionIndex + 1) / totalSections) * 100;
         progressBar.style.width = progress + "%";
+
         // Change "Next" button to "Done" if at last section
-      if (currentSectionIndex === totalSections - 1) {
-        nextBtn.textContent = "Done";
-    } else {
-        nextBtn.textContent = "Next";
-    }
+        if (currentSectionIndex === totalSections - 1) {
+            nextBtn.textContent = "Done";
+        } else {
+            nextBtn.textContent = "Next";
+        }
     }
 
     function updateOverallProgress() {
-        let totalSections = courses.reduce((total, course) => total + course.sections.length, 0);
-        let completedSections = courses.slice(0, currentCourseIndex).reduce((total, course) => total + course.sections.length, 0) + currentSectionIndex + 1;
-  
+        let totalSections = topics.reduce((total, topic) => total + topic.sections.length, 0);
+        let completedSections = topics.slice(0, currentTopicIndex).reduce((total, topic) => total + topic.sections.length, 0) + currentSectionIndex + 1;
+
         let overallProgress = (completedSections / totalSections) * 100;
         progressText.textContent = Math.round(overallProgress) + "% completed";
     }
@@ -282,27 +240,26 @@ document.addEventListener("DOMContentLoaded", async function () {
             displaySection();
         }
     });
-  
+
     nextBtn.addEventListener("click", () => {
-        let totalSections = courses[currentCourseIndex].sections.length;
-  
+        let totalSections = topics[currentTopicIndex].sections.length;
+
         if (currentSectionIndex < totalSections - 1) {
             currentSectionIndex++;
             displaySection();
         } else {
-            if (currentCourseIndex < courses.length - 1) {
-                loadCourse(currentCourseIndex + 1);
+            if (currentTopicIndex < topics.length - 1) {
+                loadTopic(currentTopicIndex + 1);
             } else {
-                alert("Congratulations! You've completed all courses.");
+                alert("Congratulations! You've completed all topics.");
             }
         }
     });
-  
+
     menuToggle.addEventListener("click", () => {
         sidebar.classList.toggle("open");
     });
 
-
-    // Fetch courses on page load
-    fetchCourses();
+    // ✅ Load the last visited course and section
+    loadTopic(currentTopicIndex);
 });

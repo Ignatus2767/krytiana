@@ -1,30 +1,15 @@
 // Handle the content display and countdown timer
 document.addEventListener('DOMContentLoaded', () => {
   showDiv('content1', 'button1');
+
   
   const countdownDuration = 3 * 60 * 60 * 1000;
   document.querySelectorAll(".offer-container").forEach(container => {
       createCountdown(container, new Date().getTime() + countdownDuration);
   });
 
-  // Handle Enter Course Button
-  const enterCourseBtn = document.getElementById('enter-course-btn');
-  if (enterCourseBtn) {
-      enterCourseBtn.addEventListener('click', (event) => {
-          event.preventDefault();
-          const courseId = enterCourseBtn.dataset.courseId;
-          const courseTitle = enterCourseBtn.dataset.courseTitle;
-          
-          if (!courseId || !courseTitle) {
-              console.error("Missing course ID or title in button data attributes.");
-              return;
-          }
+ 
 
-          localStorage.setItem('selectedCourse', JSON.stringify({ courseId, courseTitle }));
-          console.log(`Selected Course Saved: ${courseTitle} (ID: ${courseId})`);
-          window.location.href = enterCourseBtn.href;
-      });
-  }
 
   // Get course ID from URL and fetch data
   const params = new URLSearchParams(window.location.search);
@@ -111,6 +96,18 @@ function updateCourseDetails(course) {
   updateList('requirements-list', course.requirements);
   
   updateUnits(course.units);
+
+  // ✅ Set course title dynamically in the "Enter Course" button
+  const enterCourseBtn = document.getElementById("enter-course-btn");
+  if (enterCourseBtn) {
+      enterCourseBtn.dataset.courseTitle = course.title;
+      enterCourseBtn.addEventListener("click", () => {
+          window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
+      });
+      console.log(`✅ Enter Course button updated: ${course.title}`);
+  } else {
+      console.error("❌ Enter Course button not found");
+  }
 }
 
 function updateUnits(units) {
