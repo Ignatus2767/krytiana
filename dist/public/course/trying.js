@@ -204,6 +204,10 @@ document.addEventListener("DOMContentLoaded", function () {
             videoContainer.style.display = "none";
         }
 
+        // Apply syntax highlighting (if using Prism.js or another library)
+        if (window.Prism) {
+            Prism.highlightAll();
+        }
         updateProgress();  // Update progress bar
         updateOverallProgress();  // Update overall progress
         updateNavigation();  // Update navigation buttons (Next/Previous)
