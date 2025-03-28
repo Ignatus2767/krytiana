@@ -57,18 +57,20 @@ header {
   position: fixed;
   top: 0;
   left: 0;
+  height: 70px;
   width: 100%;
   background-color: rgb(87, 127, 0);
   z-index: 1000; /* Ensures it stays on top */
-  padding: 10px;
+  padding: 0px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   color: white;
   align-items: center;
+  margin: 0px;
 }
 
 .container {
-  margin-top: 100px; /* Adjust based on header height */
+  margin-top: 70px; /* Adjust based on header height */
 }
 
 
@@ -90,11 +92,17 @@ header {
 
 /* Sidebar */
 aside {
-  width: 50%;
+  width: 30%;
+  max-width: 50%;
   background-color: white;
   padding: 15px;
+  margin-top: 15px;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+}
+#search-box {
+  height: 30px;
+  width: 70%;
 }
 
 #course-list {
@@ -246,7 +254,9 @@ h2 {
 
 @media (max-width: 1070px) {
  aside{
-  width: 100%;
+  
+  min-width: 290px;
+  max-width: 320px;
  }
 }
 
@@ -276,7 +286,17 @@ h2 {
   }
 
   .container{
-    margin-top: 117px;
+    margin-top: 70px;
+  }
+
+  #header-title{
+    font-size: 22px;
+  }
+
+  #progress-bar {
+    position: fixed;
+    z-index: 1001;
+    margin-top: 70px;
   }
 
 }
@@ -291,12 +311,12 @@ h2 {
   }
 
   .container{
-    margin-top: 52px;
+    margin-top: 70px;
   }
 
   #progress-bar {
     position: fixed;
     z-index: 1001;
-    margin-top: 52px;
+    margin-top: 70px;
   }
 }
