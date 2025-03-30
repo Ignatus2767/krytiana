@@ -385,7 +385,7 @@
   line-height: 1.4;
   word-wrap: normal;
   box-sizing: border-box;
-  margin: 0 0 10px;
+  margin: 0 0 0px;
   padding: 8px;
   width: auto;
   display: flex;
@@ -411,6 +411,7 @@
   margin: 10px 0;
   font-size: 1.625rem;
   margin-top: 23px;
+  margin-bottom: 10px;
   clear: both;
   position: relative;
   vertical-align: middle;
@@ -692,6 +693,26 @@
 }
 
 
+
+#outcome-list li::marker {
+  content: "✅ "; /* Replace with your emoji */
+  font-size: 1.0em;
+}
+
+#who-list li::marker {
+  content: "🔹 "; /* Replace with your emoji */
+  font-size: 1.0em;
+}
+
+#requirements-list li::marker {
+  content: "📌 "; /* Replace with your emoji */
+  font-size: 1.0em;
+}
+
+#unit-container li::marker {
+  content: "📚 "; /* Replace with your emoji */
+  font-size: 1.0em;
+}
 
 .h2{
   -webkit-tap-highlight-color: rgba(0,0,0,0);

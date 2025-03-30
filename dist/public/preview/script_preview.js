@@ -67,7 +67,7 @@ async function fetchCourseData(courseId) {
 function updateCourseDetails(course) {
   const elements = {
       'course-title': course.title,
-      'course-description': course.description,
+      'course-description': course.details,
       'lessons': `${course.lessons} lessons`,
       'duration': `(${course.duration})`,
       'exercises': `${course.exercises} exercises`,
@@ -94,6 +94,8 @@ function updateCourseDetails(course) {
   updateList('outcome-list', course.outcomes);
   updateList('who-list', course.who);
   updateList('requirements-list', course.requirements);
+  updateList('materials-list', course.materials);
+  updateList('tools&software-list', course.tools);
   
   updateUnits(course.units);
 
