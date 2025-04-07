@@ -94,8 +94,7 @@ function updateCourseDetails(course) {
   updateList('outcome-list', course.outcomes);
   updateList('who-list', course.who);
   updateList('requirements-list', course.requirements);
-  updateList('materials-list', course.materials);
-  updateList('tools&software-list', course.tools);
+  
   
   updateUnits(course.units);
 
