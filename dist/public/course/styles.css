@@ -259,6 +259,12 @@ h2 {
   margin-top: 20px;
   font-size: 22px;
   font-weight: bold;
+  color: #2c3e50;
+}
+
+.example {
+  font-style: italic;
+  color: #555;
 }
 
 
