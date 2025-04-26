@@ -75,10 +75,15 @@ function updateCourseDetails(course) {
       'files': `(${course.files} files)`,
       'project': `${course.project} Course final project`,
       'badge': course.badge,
-      'Price': `$${course.price}`,
+      'badge1': course.badge,
+      'Price1': `$${course.price}`,
+      'Price2': `$${course.price}`,
       'discount': `-${course.discount}% Disc`,
+      'discount1': `-${course.discount}% Disc`,
       'offer-title': course.OfferTitle,
-      'saleBadge': course.saleBadge
+      'offer-title1': course.OfferTitle,
+      'saleBadge': course.saleBadge,
+      'saleBadge1': course.saleBadge
   };
   
   Object.entries(elements).forEach(([id, value]) => {
@@ -98,11 +103,11 @@ function updateCourseDetails(course) {
   
   updateUnits(course.units);
 
-  // ✅ Set course title dynamically in the "Enter Course" button
+  
    // ✅ Set course title dynamically in the "Enter Course" button
 const enterCourseBtn = document.getElementById("enter-course-btn");
 
-if (enterCourseBtn) {
+    if (enterCourseBtn) {
     enterCourseBtn.dataset.courseTitle = course.title;
 
     enterCourseBtn.addEventListener("click", async () => {
@@ -194,18 +199,18 @@ if (enterCourseBtn) {
         });
 
         console.log(`✅ Enter Course button updated: ${course.title}`);
-    } else {
-        console.error("❌ Enter Course button not found");
+        } else {
+            console.error("❌ Enter Course button not found");
     }
 
 
-    const orderNowBtn = document.querySelector(".buy-button");
+const orderNowBtns = document.querySelectorAll(".buy-button");
 
-    if (orderNowBtn) {
-        orderNowBtn.addEventListener("click", async () => {
+    orderNowBtns.forEach((btn) => {
+        btn.addEventListener("click", async () => {
             const accessToken = localStorage.getItem('token');
             const refreshToken = localStorage.getItem('refreshToken');
-
+    
             if (!accessToken || !refreshToken) {
                 Swal.fire({
                     icon: 'warning',
@@ -218,9 +223,8 @@ if (enterCourseBtn) {
                 });
                 return;
             }
-
+    
             try {
-                // 1. Try validating the access token
                 const response = await fetch('/api/auth/validate-token', {
                     method: 'GET',
                     headers: {
@@ -228,9 +232,8 @@ if (enterCourseBtn) {
                         'Content-Type': 'application/json',
                     },
                 });
-
+    
                 if (response.ok) {
-                    // Access token valid ➔ allow user to place order
                     Swal.fire({
                         icon: 'info',
                         title: 'Congratulations!',
@@ -238,13 +241,12 @@ if (enterCourseBtn) {
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'OK'
                     }).then(() => {
-                        // Redirect to the order page
+                        const courseTitle = btn.getAttribute("data-title"); // important change!
                         window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
                     });
                 } else if (response.status === 401) {
                     console.log('Access token expired. Trying to refresh...');
-
-                    // 2. Try refreshing the access token
+    
                     const refreshResponse = await fetch('/api/auth/refresh-token', {
                         method: 'POST',
                         headers: {
@@ -252,12 +254,12 @@ if (enterCourseBtn) {
                         },
                         body: JSON.stringify({ refreshToken }),
                     });
-
+    
                     if (refreshResponse.ok) {
                         const data = await refreshResponse.json();
                         localStorage.setItem('token', data.accessToken);
-
-                        // New token obtained ➔ allow user to place order
+    
+                        const courseTitle = btn.getAttribute("data-title"); // important change!
                         window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
                     } else {
                         Swal.fire({
@@ -295,11 +297,10 @@ if (enterCourseBtn) {
                 });
             }
         });
-
-        console.log("✅ Order Now button activated");
-    } else {
-        console.error("❌ Order Now button not found");
-    }
+    
+        console.log("✅ Order Now button activated for:", btn);
+    });
+    
 
     
 
