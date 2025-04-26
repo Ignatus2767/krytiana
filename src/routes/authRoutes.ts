@@ -1,12 +1,15 @@
+// src/routes/authRoute.ts
 import express from 'express';
-import { requestPasswordReset, resetPassword } from '../controllers/authController';
+import { requestPasswordReset, resetPassword, validateToken } from '../controllers/authController';
 
 const router = express.Router();
 
-// Route: POST /api/auth/request-password-reset
+// Password Reset Routes
 router.post('/request-password-reset', requestPasswordReset);
-
-// Route: POST /api/auth/reset-password/:token
 router.post('/reset-password/:token', resetPassword);
 
+// Token Validation Route
+router.get('/validate-token',  validateToken);
+
 export default router;
+

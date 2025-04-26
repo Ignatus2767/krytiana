@@ -36,7 +36,7 @@ const sendResetEmail = (email, resetToken) => __awaiter(void 0, void 0, void 0, 
           <p>This link is valid for only 1 hour.</p>
         </body>
       </html>`;
-        sendSmtpEmail.sender = { name: "YourApp", email: "ignatusdonkoh9@gmail.com" };
+        sendSmtpEmail.sender = { name: "LearnRoom", email: "ignatusdonkoh9@gmail.com" };
         sendSmtpEmail.to = [{ email }];
         const response = yield apiInstance.sendTransacEmail(sendSmtpEmail);
         console.log("✅ Password reset email sent successfully!", response);

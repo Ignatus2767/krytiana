@@ -12,11 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requestPasswordReset = exports.resetPassword = void 0;
+exports.validateToken = exports.requestPasswordReset = exports.resetPassword = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = __importDefault(require("crypto"));
 const User_1 = __importDefault(require("../models/User"));
 const emailService_1 = require("../services/emailService");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const resetPassword = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { token } = req.params;
     const { newPassword } = req.body;
@@ -76,4 +77,24 @@ const requestPasswordReset = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.requestPasswordReset = requestPasswordReset;
+const validateToken = (req, res) => {
+    const authHeader = req.header('Authorization');
+    if (!authHeader) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+    try {
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+        // Token is valid
+        res.status(200).json({ message: 'Token is valid', decoded });
+    }
+    catch (err) {
+        console.error('Token validation error:', err);
+        res.status(401).json({ message: 'Token is invalid or expired' });
+    }
+};
+exports.validateToken = validateToken;
 //# sourceMappingURL=authController.js.map

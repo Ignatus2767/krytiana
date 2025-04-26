@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import User from "../models/User";
 import { sendResetEmail } from "../services/emailService";
+import jwt from "jsonwebtoken";
+import { RequestWithUser } from "../middlewares/authMiddleware"; // Import the custom Request interface
 
 export const resetPassword = async (req: Request, res: Response) => {
   const { token } = req.params;
@@ -74,5 +76,28 @@ export const requestPasswordReset = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("❌ Error in password reset request:", error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const validateToken = (req: RequestWithUser, res: Response) => {
+  const authHeader = req.header('Authorization');
+
+  if (!authHeader) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    // Token is valid
+    res.status(200).json({ message: 'Token is valid', decoded });
+  } catch (err) {
+    console.error('Token validation error:', err);
+    res.status(401).json({ message: 'Token is invalid or expired' });
   }
 };

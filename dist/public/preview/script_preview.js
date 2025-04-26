@@ -99,16 +99,211 @@ function updateCourseDetails(course) {
   updateUnits(course.units);
 
   // ✅ Set course title dynamically in the "Enter Course" button
-  const enterCourseBtn = document.getElementById("enter-course-btn");
-  if (enterCourseBtn) {
-      enterCourseBtn.dataset.courseTitle = course.title;
-      enterCourseBtn.addEventListener("click", () => {
-          window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
-      });
-      console.log(`✅ Enter Course button updated: ${course.title}`);
-  } else {
-      console.error("❌ Enter Course button not found");
-  }
+   // ✅ Set course title dynamically in the "Enter Course" button
+const enterCourseBtn = document.getElementById("enter-course-btn");
+
+if (enterCourseBtn) {
+    enterCourseBtn.dataset.courseTitle = course.title;
+
+    enterCourseBtn.addEventListener("click", async () => {
+        const accessToken = localStorage.getItem('token');
+        const refreshToken = localStorage.getItem('refreshToken');
+
+            if (!accessToken || !refreshToken) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Login Required',
+                    text: 'Please log in to access the course!',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('refreshToken');
+                    window.location.href = "../register/";
+                });
+                return;
+            }
+
+            try {
+                // 1. Try validating the access token
+                const response = await fetch('/api/auth/validate-token', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    // Access token valid ➔ allow user to enter course
+                    window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
+                } else if (response.status === 401) {
+                    console.log('Access token expired. Trying to refresh...');
+
+                    // 2. Try refreshing the access token
+                    const refreshResponse = await fetch('/api/auth/refresh-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ refreshToken }),
+                    });
+
+                    if (refreshResponse.ok) {
+                        const data = await refreshResponse.json();
+                        localStorage.setItem('token', data.accessToken);
+
+                        // New token obtained ➔ allow user to enter course
+                        window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
+                    } else {
+                        // Refresh failed ➔ ask user to log in again
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Session Expired',
+                            text: 'Please log in again.',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('refreshToken');
+                            window.location.href = "../register/";
+                        });
+                    }
+                } else {
+                    console.error('Unexpected error:', response.status);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Unexpected Error',
+                        text: 'Something went wrong. Please try again later.',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            } catch (error) {
+                console.error('Error validating token:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please log in again.',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = "../register/";
+                });
+            }
+        });
+
+        console.log(`✅ Enter Course button updated: ${course.title}`);
+    } else {
+        console.error("❌ Enter Course button not found");
+    }
+
+
+    const orderNowBtn = document.querySelector(".buy-button");
+
+    if (orderNowBtn) {
+        orderNowBtn.addEventListener("click", async () => {
+            const accessToken = localStorage.getItem('token');
+            const refreshToken = localStorage.getItem('refreshToken');
+
+            if (!accessToken || !refreshToken) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Login Required',
+                    text: 'Please log in to place an order!',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = "../register/";
+                });
+                return;
+            }
+
+            try {
+                // 1. Try validating the access token
+                const response = await fetch('/api/auth/validate-token', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    // Access token valid ➔ allow user to place order
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Congratulations!',
+                        text: 'This course is available for free.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        // Redirect to the order page
+                        window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
+                    });
+                } else if (response.status === 401) {
+                    console.log('Access token expired. Trying to refresh...');
+
+                    // 2. Try refreshing the access token
+                    const refreshResponse = await fetch('/api/auth/refresh-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ refreshToken }),
+                    });
+
+                    if (refreshResponse.ok) {
+                        const data = await refreshResponse.json();
+                        localStorage.setItem('token', data.accessToken);
+
+                        // New token obtained ➔ allow user to place order
+                        window.location.href = `/course/?courseTitle=${encodeURIComponent(course.title)}`;
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Session Expired',
+                            text: 'Please log in again.',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('refreshToken');
+                            window.location.href = "../register/";
+                        });
+                    }
+                } else {
+                    console.error('Unexpected error:', response.status);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Unexpected Error',
+                        text: 'Something went wrong. Please try again later.',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            } catch (error) {
+                console.error('Error validating token:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please log in again.',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = "../register/";
+                });
+            }
+        });
+
+        console.log("✅ Order Now button activated");
+    } else {
+        console.error("❌ Order Now button not found");
+    }
+
+    
+
+
 }
 
 function updateUnits(units) {
