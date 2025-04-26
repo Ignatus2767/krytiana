@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    const signupBtn = document.getElementById('signup-btn');
-    const signinBtn = document.getElementById('signin-btn');
+    const signupBtn = document.getElementById('signin-btn');
+    const signinBtn = document.getElementById('signup-btn');
     const signupFormElement = document.getElementById('signup-form');
     const signinFormElement = document.getElementById('signin-form');
     const forgotPasswordLink = document.getElementById('forgot-password-link');

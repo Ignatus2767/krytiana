@@ -8,14 +8,20 @@
 </head>
 
 <body>
+    <header class="header" style="padding: 20px; height: 40px; ">
+        <div class="logo" style="height: 100%;">
+            <a href="/"><img src="logo.png" alt="Logo" style="height: 100%;"></a>
+        </div>
+        
+    </header>
     <div class="switcher">
-        <button id="signup-btn" class="active">Sign Up</button>
-        <button id="signin-btn">Sign In</button>
+        <button id="signup-btn" class="active">Sign In</button>
+        <button id="signin-btn">Sign Up</button>
     </div>
 
     <div id="feedback-message" class="hidden"></div>
     
-    <div id="signup-form" class="form-container">
+    <div id="signup-form" class="form-container hidden">
         <h2>Create Free Account</h2>
         <form id="signupForm" method="POST">
             <input type="text" id="signup-fullname" name="fullname" placeholder="Full Name" required>
@@ -25,9 +31,33 @@
             <input type="password" id="signup-confirm-password" name="confirm-password" placeholder="Confirm Password" required>
             <select id="signup-country" name="country" required>
                 <option value="" disabled selected>Country/Region</option>
-                <option value="us">United States</option>
-                <option value="ca">Canada</option>
-                <option value="uk">United Kingdom</option>
+                <option value="ng">Nigeria</option>
+                <option value="gh">Ghana</option>
+                <option value="ke">Kenya</option>
+                <option value="za">South Africa</option>
+                <option value="ug">Uganda</option>
+                <option value="tz">Tanzania</option>
+                <option value="zm">Zambia</option>
+                <option value="zw">Zimbabwe</option>
+                <option value="sl">Sierra Leone</option>
+                <option value="gm">Gambia</option>
+                <option value="lr">Liberia</option>
+                <option value="bw">Botswana</option>
+                <option value="mw">Malawi</option>
+                <option value="ls">Lesotho</option>
+                <option value="sz">Eswatini (Swaziland)</option>
+                <option value="na">Namibia</option>
+                <option value="rw">Rwanda</option>
+                <option value="cm">Cameroon</option>
+                <option value="mu">Mauritius</option>
+                <option value="et">Ethiopia</option>
+                <option value="europe">Any Europe</option>
+                <option value="asia">Any Asia</option>
+                <option value="north-america">Any North America</option>
+                <option value="south-america">Any South America</option>
+                <option value="australia">Any Australia</option>
+                <option value="antarctica">Any Antarctica</option>
+
                 <!-- Add more options as needed -->
             </select>
             <div class="terms">
@@ -38,7 +68,7 @@
         </form>
     </div>
     
-    <div id="signin-form" class="form-container hidden">
+    <div id="signin-form" class="form-container ">
         <h2>Sign In</h2>
         <form id="signinForm" method="POST">
             <input type="text" id="signin-email" name="email" placeholder="Username or Email" required>
