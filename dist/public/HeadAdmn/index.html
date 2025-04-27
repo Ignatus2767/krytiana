@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="headcss/general-styles.css">
   <link rel="stylesheet" href="headcss/addcourse.css">
   <link rel="stylesheet" href="headcss/insert-course.css">
-
+  <link rel="stylesheet" href="headcss/usersMail.css">
 
 </head>
 <body>
@@ -24,6 +24,8 @@
             <li data-target="content1">Content 1</li>
             <li data-target="content2">Content 2</li>
             <li data-target="content3">Content 3</li>
+            <li data-target="content4">Content 4</li>
+            <li data-target="content5">Content 5</li>
           </ul>
         </aside>
 
@@ -131,6 +133,29 @@
                   <h2>Course List</h2>
                   <div id="coursesContainer"></div>
                 </div>
+
+                <div class="content4">
+                  <h1>All Users</h1>
+                  <!-- Display total number of users -->
+                  <p id="user-count">Total Users: 0</p> <!-- New element for user count -->
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>Created Date</th> <!-- 👈 New column -->
+                      </tr>
+                    </thead>
+                    <tbody id="user-table-body">
+                      <!-- Table rows will be inserted here -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="content5">
+                  <h2>Course Units</h2>
+                </div>
                 
               </div>
               
@@ -144,5 +169,7 @@
     <script src="headjs/general.js"></script>
     <script src="headjs/addCourse.js"></script>
     <script src="headjs/insert-course.js"></script>
+    <script src="headjs/usersMail.js"></script>
+
 </body>
 </html>

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.refreshAccessToken = exports.handleForgotPassword = exports.handleSignIn = exports.handleSignUp = void 0;
+exports.getUsers = exports.refreshAccessToken = exports.handleForgotPassword = exports.handleSignIn = exports.handleSignUp = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const crypto_1 = __importDefault(require("crypto"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -153,4 +153,16 @@ const refreshAccessToken = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.refreshAccessToken = refreshAccessToken;
+// Get Users
+const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield User_1.default.find({}, "-password -refreshToken -resetToken -resetTokenExpiry"); // Exclude sensitive fields
+        res.status(200).json({ success: true, users });
+    }
+    catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+});
+exports.getUsers = getUsers;
 //# sourceMappingURL=userController.js.map

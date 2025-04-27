@@ -18,6 +18,7 @@ router.post("/signup", userController_1.handleSignUp);
 router.post("/signin", userController_1.handleSignIn);
 router.post("/forgot-password", userController_1.handleForgotPassword);
 router.post("/refresh-token", userController_1.refreshAccessToken);
+router.get('/', userController_1.getUsers);
 // Get user profile
 router.get("/profile", authMiddleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;

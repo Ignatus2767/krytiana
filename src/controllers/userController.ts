@@ -188,3 +188,14 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
     res.status(403).json({ success: false, message: "Invalid or expired refresh token" });
   }
 };
+
+// Get Users
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find({}, "-password -refreshToken -resetToken -resetTokenExpiry"); // Exclude sensitive fields
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};

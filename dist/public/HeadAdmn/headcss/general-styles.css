@@ -82,6 +82,15 @@ body.dark-mode {
   border-radius: 4px;
 }
 
+.dark-mode tr:nth-child(even) {
+  background-color: #000000;
+}
+
+.dark-mode tr:hover {
+  background-color: rgb(87, 127, 0);
+  cursor: pointer;
+}
+
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: #00f0ff; /* light blue border when clicked */

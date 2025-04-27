@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { handleSignUp, handleSignIn, handleForgotPassword, refreshAccessToken } from "../controllers/userController";
+import { handleSignUp, handleSignIn, handleForgotPassword, refreshAccessToken, getUsers } from "../controllers/userController";
 import { authenticateToken } from "../middlewares/authMiddleware";
 import { db } from "../config/mongo"; // Import MongoDB connection
 
@@ -9,7 +9,7 @@ router.post("/signup", handleSignUp);
 router.post("/signin", handleSignIn);
 router.post("/forgot-password", handleForgotPassword);
 router.post("/refresh-token", refreshAccessToken);
-
+router.get('/', getUsers);
 // Get user profile
 router.get("/profile", authenticateToken, async (req, res) => {
     try {
