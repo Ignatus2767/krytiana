@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Head Admn</title>
+  <link rel="stylesheet" href="headcss/general-styles.css">
+  <link rel="stylesheet" href="headcss/addcourse.css">
+  <link rel="stylesheet" href="headcss/insert-course.css">
+
+
+</head>
+<body>
+    <header>
+        <button id="menu-toggle">☰</button>
+        <h1 id="header-title">Head Administrator</h1>
+        <button id="dark-mode-toggle">🌙</button>
+    </header>
+
+    <div class="container-wrapper">
+        <aside id="sidebar">
+          <h2>All Info</h2>
+          <ul id="course-list">
+            <li data-target="content1">Content 1</li>
+            <li data-target="content2">Content 2</li>
+            <li data-target="content3">Content 3</li>
+          </ul>
+        </aside>
+
+        <main id="reading-area">
+            
+            <article id="content-wrapper">
+              <div class="content" id="content">
+
+                <div class="content1">
+                  <div class="container">
+                    <h1>Add New Course</h1>
+                    <form id="courseForm">
+                        <label for="title">Course Title:</label>
+                        <input type="text" id="title" name="title" required>
+            
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" required></textarea>
+            
+                        <label for="detailsDesc">Details Description:</label>
+                        <textarea id="detailsDesc" name="detailsDesc" required></textarea>
+            
+                        <label for="image">Image URL:</label>
+                        <input type="text" id="image" name="image" required>
+            
+                        <label for="outcomes">Outcomes (comma separated):</label>
+                        <textarea id="outcomes" name="outcomes" required></textarea>
+            
+                        <label for="who">Who is this course for?</label>
+                        <textarea id="who" name="who" required></textarea>
+            
+                        <label for="requirements">Requirements:</label>
+                        <textarea id="requirements" name="requirements" required></textarea>
+                        
+                        <h3>Course Details</h3>
+                        <label for="lessons">Number of Lessons:</label>
+                        <input type="text" id="lessons" name="lessons" required>
+            
+                        <label for="duration">Course Duration:</label>
+                        <input type="text" id="duration" name="duration" required>
+            
+                        <label for="exercises">Number of Exercises:</label>
+                        <input type="text" id="exercises" name="exercises" required>
+            
+                        <label for="downloads">Downloads:</label>
+                        <input type="text" id="downloads" name="downloads" required>
+            
+                        <label for="files">Number of Files:</label>
+                        <input type="text" id="files" name="files" required>
+            
+                        <label for="project">Number of Final Projects:</label>
+                        <input type="text" id="project" name="project" required>
+            
+                        <h3>Pricing & Offers</h3>
+                        <label for="OfferTitle">Offer Title:</label>
+                        <input type="text" id="OfferTitle" name="OfferTitle" required>
+            
+                        <label for="badge">Badge:</label>
+                        <input type="text" id="badge" name="badge" required>
+            
+                        <label for="price">Price:</label>
+                        <input type="text" id="price" name="price" required>
+            
+                        <label for="discount">Discount:</label>
+                        <input type="text" id="discount" name="discount" required>
+            
+                        <label for="saleBadge">Sale Badge:</label>
+                        <input type="text" id="saleBadge" name="saleBadge" required>
+                        
+                        <h3>Course Units</h3>
+                        <div id="units"></div>
+                        <button type="button" id="addUnit">Add Unit</button>
+                        
+                        <button type="submit">Add Course</button>
+                    </form>
+                    
+                    
+                </div>
+                </div>
+
+                <div class="content2">
+                  <div class="container">
+                    <h1>Insert Course</h1>
+                    <form id="course-form">
+                        
+            
+                        <h2>Topics</h2>
+                        <div id="topics-container"></div>
+                        <button type="button" id="add-topic">+ Add Topic</button>
+            
+                        <button type="button" id="preview-btn">Preview</button>
+                        <button type="submit">Save Course</button>
+                    </form>
+                  </div>
+            
+                  <div id="preview-modal" class="modal">
+                      <div class="modal-content">
+                          <span class="close">&times;</span>
+                          <h2>Course Preview</h2>
+                          <div id="preview-content"></div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="content3">
+                  <h2>Course List</h2>
+                  <div id="coursesContainer"></div>
+                </div>
+                
+              </div>
+              
+                
+            </article>
+            
+
+        </main>
+    </div>
+
+    <script src="headjs/general.js"></script>
+    <script src="headjs/addCourse.js"></script>
+    <script src="headjs/insert-course.js"></script>
+</body>
+</html>

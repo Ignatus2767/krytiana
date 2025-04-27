@@ -1,0 +1,247 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+#dark-mode-toggle {
+  position: fixed;
+  
+  right: 8px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1000; /* Ensures it stays on top */
+}
+
+body.dark-mode {
+  background-color: #222;
+  color: #fff;
+}
+
+/* Dark mode for header */
+.dark-mode header {
+  background-color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark mode for sidebar */
+.dark-mode #sidebar  {
+  background-color: #444;
+}
+
+/* Dark mode for main reading area */
+.dark-mode #content-wrapper p {
+  background-color: #222;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.dark-mode #reading-area {
+  background-color: #222;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.dark-mode #course-list li, p {
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+}
+
+/* Dark mode for buttons */
+.dark-mode button {
+  background-color: #555;
+  color: #fff;
+}
+
+/* Dark mode for progress bar */
+.dark-mode #progress-bar {
+  background-color: #c78484;
+}
+
+.dark-mode input {
+  background-color: black;
+  color: white;
+  border: 1px solid white; /* optional: white border */
+  padding: 8px;
+  border-radius: 4px; /* optional: make it a bit rounded */
+}
+
+/* Optional: if you also want textarea and select */
+.dark-mode textarea, select {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  padding: 8px;
+  
+  border-radius: 4px;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #00f0ff; /* light blue border when clicked */
+  box-shadow: 0 0 5px #00f0ff; /* glowing effect */
+}
+
+
+
+/* Header */
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 70px;
+  width: 100%;
+  background-color: rgb(87, 127, 0);
+  z-index: 1000; /* Ensures it stays on top */
+  padding: 0px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  color: white;
+  align-items: center;
+  margin: 0px;
+}
+
+
+
+
+
+#menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/* Container */
+.container-wrapper {
+  display: flex;
+  height: 100vh;
+  margin-top: 70px;
+}
+
+/* Sidebar */
+aside {
+  width: 20%;
+  max-width: 50%;
+  background-color: rgba(87, 127, 0, 0.13);
+  padding: 15px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+
+#content > div {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+  display: none;
+}
+
+#content > div.active {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* Main Content */
+main {
+  flex-grow: 1;
+  padding: 20px;
+  background: white;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* General text styling */
+p,ul,li,text {
+  font-family: "Roboto", sans-serif; 
+  font-size: 16px; 
+  line-height: 1.6; 
+  color: #333; 
+}
+#course-list {
+  list-style-type: none;   /* empty circle */
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  background: #578000;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+@media (max-width: 1070px) {
+ aside{
+  
+  min-width: 30%;
+  max-width: 320px;
+ }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+  }
+
+  aside {
+      width: 100%;
+      height: auto;
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      background: white;
+      z-index: 10;
+  }
+
+  aside.open {
+      display: block;
+  }
+
+  header {
+    padding: 0px;
+  }
+
+  .container{
+    margin-top: 70px;
+  }
+
+  #header-title{
+    font-size: 22px;
+  }
+
+ 
+
+}
+
+@media (max-width: 500px) {
+  header {
+    padding: 0px;
+  }
+
+  #header-title{
+    font-size: 18px;
+  }
+
+  .container{
+    margin-top: 70px;
+  }
+
+ 
+}
